@@ -4,10 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:CustomWindow="clr-namespace:CustomWindow;assembly=CustomWindow"
     AllowsTransparency="True" Background="Transparent"
-    Title="Window1" Height="300" Width="300">
+    Title="Window1" Height="700" Width="300">
 
     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="#3BB2EA">
-        <Border BorderBrush="#55FFFFFF" BorderThickness="1" CornerRadius="5">
+        <Border BorderBrush="#55FFFF" BorderThickness="1" CornerRadius="5">
             <DockPanel Background="#EFF7FA">
                 <Border Height="200" MouseMove="Header_MouseMove" DockPanel.Dock="Top">
                     <Border.Background>
@@ -16,11 +16,15 @@
                             <GradientStop Color="#EFF7FA" Offset="0.3" />
                         </LinearGradientBrush>
                     </Border.Background>
-                    <Border Name="WindowButtonsPlaceholder" HorizontalAlignment="Right" VerticalAlignment="Top"
-                             Margin="0,-1,10,0" />
+                    <DockPanel>
+                        <DockPanel Name="Login" Visibility="Collapsed"></DockPanel>
+                        <DockPanel Name="Main">
+                            <TextBlock Width="50" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" Background="White">X</TextBlock>
+                            <Border Name="WindowButtonsPlaceholder" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-1,10,0" />
+                        </DockPanel>
+                    </DockPanel>
                 </Border>
-                <Thumb DragDelta="Thumb_DragDelta" HorizontalAlignment="Right" DockPanel.Dock="Bottom"
-                       Cursor="SizeNWSE" />
+                <Thumb DragDelta="Thumb_DragDelta" HorizontalAlignment="Right" DockPanel.Dock="Bottom" Cursor="SizeNWSE" />
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Essential Window</TextBlock>
             </DockPanel>
         </Border>
