@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <DataTemplate x:Key="TweetsTemplate">
+        <Grid x:Name="grid" Background="#01FFFFFF">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Border Width="50" Height="50" Background="#FFF" Grid.RowSpan="2" BorderBrush="White" BorderThickness="1" CornerRadius="2">
+                <Image Width="48" Height="48" Source="{Binding Path=User.HeadImage, Converter={StaticResource ImageConverter}}" x:Name="UserImage" />
+            </Border>
+        </Grid>
+    </DataTemplate>
+    
+    <!--
+    <XmlDataProvider x:Key="SampleData" Source="testdata\sample.xml" XPath="Books"/>
+    -->
+</ResourceDictionary>

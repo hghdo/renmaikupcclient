@@ -35,33 +35,85 @@
                 <Thumb DragDelta="Thumb_DragDelta" HorizontalAlignment="Right" DockPanel.Dock="Bottom" Cursor="SizeNWSE" />
                 <Border Name="MainFrame">
 
+                    <Border.Resources>
+                        <XmlDataProvider x:Key="SampleData" XPath="/result/tList">
+                            <x:XData>
+                                <result id="twitter" xmlns="">
+                                    <userId>294530</userId>
+                                    <listType/>
+                                    <minTime>1294328193000</minTime>
+                                    <maxTime>1294328193000</maxTime>
+                                    <count>2</count>
+                                    <tList>
+                                        <twitter>
+                                            <user>
+                                                <userId>294530</userId>
+                                                <email>hbcjob@126.com</email>
+                                                <nickName>霍保冲</nickName>
+                                                <sex>1</sex>
+                                                <headImgUrl>http://photo.renmaiku.com/295/294530/head/3-head_image.jpg</headImgUrl>
+                                                <company/>
+                                                <position>工程师</position>
+                                            </user>
+                                            <tContent>//@霍保冲:ttp://image10.renmaiku.com/face/19.gif http://image10.renmaiku.com/face/36.gif</tContent>
+                                            <tPublishTime>2011-01-06 23:36:33.0</tPublishTime>
+                                            <tForwardCount>1</tForwardCount>
+                                            <tCommentCount>0</tCommentCount>
+                                            <clientType>0</clientType>
+                                        </twitter>
+                                        <twitter>
+                                            <user>
+                                                <userId>294530</userId>
+                                                <email>hbcjob@126.com</email>
+                                                <nickName>霍保冲</nickName>
+                                                <sex>1</sex>
+                                                <headImgUrl>http://photo.renmaiku.com/295/294530/head/3-head_image.jpg</headImgUrl>
+                                                <company/>
+                                                <position>工程师</position>
+                                            </user>
+                                            <tContent>http://image10.renmaiku.com/face/3.gif http://image10.renmaiku.com/face/1.gif</tContent>
+                                            <tPublishTime>2011-01-07 00:07:56.0</tPublishTime>
+                                            <tForwardCount>0</tForwardCount>
+                                            <tCommentCount>2</tCommentCount>
+                                            <clientType>0</clientType>
+                                        </twitter>
+                                    </tList>
+                                </result>
+                            </x:XData>
+                        </XmlDataProvider>
+                    </Border.Resources>
 
-                    <Grid VerticalAlignment="Top" HorizontalAlignment="Left" ShowGridLines="True" Width="250" Height="100">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
+                    <ListBox ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled"> 
+                        <ListBox.ItemsSource>
+                            <Binding Source="{StaticResource SampleData}" XPath="*"/>
+                        </ListBox.ItemsSource>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid x:Name="grid" Background="#01FFFFFF">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="70" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Column="0" Width="50" Height="50" Background="#FFF" BorderBrush="White" BorderThickness="1" CornerRadius="2">
+                                        <Image Width="48" Height="48" Source="{Binding XPath=user/headImgUrl}"/>
+                                    </Border>
+                                    <TextBlock Grid.Column="1" FontSize="12" Foreground="Red" TextWrapping="Wrap">
+                                        <TextBlock.Text>
+                                            <Binding XPath="tContent"/>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </Grid>
 
-                        <TextBlock FontSize="20" FontWeight="Bold" Grid.ColumnSpan="3" Grid.Row="0">2005 Products Shipped</TextBlock>
-                        <TextBlock FontSize="12" FontWeight="Bold" Grid.Row="1" Grid.Column="0">Quarter 1</TextBlock>
-                        <TextBlock FontSize="12" FontWeight="Bold" Grid.Row="1" Grid.Column="1">Quarter 2</TextBlock>
-                        <TextBlock FontSize="12" FontWeight="Bold" Grid.Row="1" Grid.Column="2">Quarter 3</TextBlock>
-                        <TextBlock Grid.Row="2" Grid.Column="0">50000</TextBlock>
-                        <TextBlock Grid.Row="2" Grid.Column="1">100000</TextBlock>
-                        <TextBlock Grid.Row="2" Grid.Column="2">150000</TextBlock>
-                        <TextBlock FontSize="16" FontWeight="Bold" Grid.ColumnSpan="3" Grid.Row="3">Total Units: 300000</TextBlock>
-                    </Grid>
-
-
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Border>
             </DockPanel>
         </Border>
     </Border>
+
+
 </CustomWindow:EssentialWindow >
