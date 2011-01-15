@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pcclient", "pcclient.csproj", "{17CFAB2C-AA4F-49D6-AFF1-A56C1C8D63EC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenmeiLib", "..\RenmeiLib\RenmeiLib.csproj", "{6CB55919-6C11-43A1-8769-57461BE5B0AE}"
+EndProject
 Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -13,6 +19,10 @@ Global
 		{17CFAB2C-AA4F-49D6-AFF1-A56C1C8D63EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17CFAB2C-AA4F-49D6-AFF1-A56C1C8D63EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17CFAB2C-AA4F-49D6-AFF1-A56C1C8D63EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CB55919-6C11-43A1-8769-57461BE5B0AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CB55919-6C11-43A1-8769-57461BE5B0AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CB55919-6C11-43A1-8769-57461BE5B0AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CB55919-6C11-43A1-8769-57461BE5B0AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
