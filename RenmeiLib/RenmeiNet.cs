@@ -1317,7 +1317,6 @@ namespace RenmeiLib
             }
 
             timelineUrl += "?authCode=" + authToken + "&userId=" + email;
-            timelineUrl += "&limit=10&timePoint=1293851276000&direction=forward";
 
             if (!string.IsNullOrEmpty(userId))
             {
@@ -1327,16 +1326,22 @@ namespace RenmeiLib
             else
                 //timelineUrl += Format;
 
-            if (!string.IsNullOrEmpty(since))
-            {
-                DateTime sinceDate;
-                DateTime.TryParse(since, out sinceDate);
+                if (!string.IsNullOrEmpty(since))
+                {
+                    DateTime sinceDate;
+                    DateTime.TryParse(since, out sinceDate);
 
-                // Go back a minute to compensate for latency.
-                sinceDate = sinceDate.AddMinutes(-1);
-                string sinceDateString = sinceDate.ToString(twitterSinceDateFormat);
-                timelineUrl = timelineUrl + "?since=" + sinceDateString;
-            }
+                    // Go back a minute to compensate for latency.
+                    sinceDate = sinceDate.AddMinutes(-1);
+                    string sinceDateString = sinceDate.ToString(twitterSinceDateFormat);
+                    timelineUrl = timelineUrl + "?since=" + sinceDateString;
+                }
+                else
+                {
+                    DateTime sinceDate=DateTime.Now.AddHours(-70);
+                    timelineUrl += "&timePoint=" + sinceDate.ToString("yyyy-MM-dd HH:mm:ss") + "&direction=forward";
+
+                }
 
             // Create the web request
             HttpWebRequest request = CreateTwitterRequest(timelineUrl);

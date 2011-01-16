@@ -5,41 +5,35 @@
     xmlns:CustomWindow="clr-namespace:CustomWindow;assembly=CustomWindow"
     AllowsTransparency="True" Background="Transparent"
     Title="MainWindows" Height="700" Width="300"
-    xmlns:wp="clr-namespace:pcclient"
+    xmlns:pcclient="clr-namespace:pcclient"
     >
 
     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="#3BB2EA" x:Name="LayoutRoot">
         <Border BorderBrush="#55FFFF" BorderThickness="1" CornerRadius="5">
-            <DockPanel Background="#EFF7FA" LastChildFill="True">
+            <DockPanel Background="#EFF7FA"><!--  LastChildFill="True" -->
+                <!-- Title Bar -->
                 <Border Height="20" MouseMove="Header_MouseMove" DockPanel.Dock="Top" Background="#169DE1" >
                     <DockPanel>
                         <Border Name="TitleFrame"></Border>
                         <Border Name="WindowButtonsPlaceholder" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-1,10,0" />
                     </DockPanel>
                 </Border>
+                <!-- User Head Image -->
                 <Border Name="TopFrame" DockPanel.Dock="Top" Background="#169DE1" Padding="10,0,10,10">
                     <StackPanel>
                         <DockPanel LastChildFill="True">
                             <Border BorderBrush="#FFFFFF" BorderThickness="1" Padding="1,1,1,1" DockPanel.Dock="Left">
-                                <Image Width="50">
-                                    <Image.Source>
-                                        <BitmapImage UriSource="assets/zzz.jpg" />
-                                    </Image.Source>
-                                </Image>
+                                <Image Width="50" x:Name="CurrentUserHeadImage"></Image>
                             </Border>
                             <Border Margin="15,0,0,0">
                                 <StackPanel >
                                 <TextBlock Foreground="White" FontSize="12" x:Name="StatusTextBlock">我的人脉库</TextBlock>
                                 <Button x:Name="RefreshButton" Content="refresh" IsDefault="True" Click="RefreshButton_Click"/>
-                                <Image Width="16" >
-                                    <Image.Source>
-                                        <BitmapImage UriSource="assets/refresh_16.png" />
-                                    </Image.Source>
-                                </Image>
+                                <Image Width="16" Source="assets/refresh_16.png" ></Image>
                                 </StackPanel>
                             </Border>
                         </DockPanel>
-                        <TextBox x:Name="NewTweetBox" BorderThickness="1" BorderBrush="Black" Margin="0,10,0,10" GotFocus="NewTweetBox_GotFocus"></TextBox>
+                        <TextBox x:Name="NewTweetBox" BorderThickness="0" BorderBrush="Black" Margin="0,10,0,10" Height="35" GotFocus="NewTweetBox_GotFocus" LostFocus="NewTweetBox_LostFocus"></TextBox>
                         <StackPanel Orientation="Horizontal">
                             <Button x:Name="AddAttachment" Width="16">
                                 <Image Source="assets/paperclip4_black_16.png"/>
@@ -49,64 +43,43 @@
                         </StackPanel>
                     </StackPanel>
                 </Border>
+                <!-- Login Control -->
                 <Border x:Name="LoginLayoutRoot" CornerRadius="5,5,5,5" BorderBrush="{DynamicResource PrimaryBorderBrush}" BorderThickness="1,1,1,1" Background="{DynamicResource LoginBackgroundBrush}" Width="280">
                     <StackPanel Width="280" VerticalAlignment="Center">
                         <ComboBox HorizontalAlignment="Stretch" Margin="5,0,0,0" x:Name="UserNameBox" Width="Auto" IsEditable="True" />
-
                         <PasswordBox HorizontalAlignment="Stretch" Margin="5,0,0,0" x:Name="PasswordTextBox" Width="Auto"/>
                         <Button HorizontalAlignment="Stretch" Margin="10,15,10,0" x:Name="LoginButton" Content="Login" IsDefault="True" Click="LoginButton_Click"/>
-
                     </StackPanel>
                 </Border>
-                <Thumb DragDelta="Thumb_DragDelta" HorizontalAlignment="Right" DockPanel.Dock="Bottom" Cursor="SizeNWSE" />
+                <!-- Window Resize Control -->
+                <Border Background="#1D9CDF" >
+                </Border>
+                <!-- Bottom Menu Bar -->
+                <Border DockPanel.Dock="Bottom" Height="35" Background="#1D9CDF" BorderThickness="0" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="5" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Column="0" Grid.Row="0" Width="26" Source="assets/tx.png"/>
+                        <Image Grid.Column="1" Grid.Row="0" Width="26" Source="assets/2.png"/>
+                        <Image Grid.Column="2" Grid.Row="0" Width="26" Source="assets/3.png"/>
+                        <Image Grid.Column="3" Grid.Row="0" Width="26" Source="assets/4.png"/>
+                        <DockPanel Grid.Column="4" Grid.Row="0" VerticalAlignment="Bottom">
+                            <Thumb DragDelta="Thumb_DragDelta" Cursor="SizeNWSE" Height="5" Opacity="1.0" HorizontalAlignment="Right" DockPanel.Dock="Bottom"/>
+                        </DockPanel>
+                    </Grid>
+                </Border>
+                <!-- Main Frame -->
                 <Border Name="MainFrame" BorderThickness="0">
                     <Border.Resources>
-                        <wp:ImageConverter x:Key="ImageConverter"/>
-                        <XmlDataProvider x:Key="SampleData" XPath="/result/tList">
-                            <x:XData>
-                                <result id="twitter" xmlns="">
-                                    <userId>294530</userId>
-                                    <listType/>
-                                    <minTime>1294328193000</minTime>
-                                    <maxTime>1294328193000</maxTime>
-                                    <count>2</count>
-                                    <tList>
-                                        <twitter>
-                                            <user>
-                                                <userId>294530</userId>
-                                                <email>hbcjob@126.com</email>
-                                                <nickName>霍保冲</nickName>
-                                                <sex>1</sex>
-                                                <headImgUrl>http://photo.renmaiku.com/295/294530/head/3-head_image.jpg</headImgUrl>
-                                                <company/>
-                                                <position>工程师</position>
-                                            </user>
-                                            <tContent>//@霍保冲:ttp://image10.renmaiku.com/face/19.gif http://image10.renmaiku.com/face/36.gif</tContent>
-                                            <tPublishTime>2011-01-06 23:36:33.0</tPublishTime>
-                                            <tForwardCount>1</tForwardCount>
-                                            <tCommentCount>0</tCommentCount>
-                                            <clientType>0</clientType>
-                                        </twitter>
-                                        <twitter>
-                                            <user>
-                                                <userId>294530</userId>
-                                                <email>hbcjob@126.com</email>
-                                                <nickName>霍保冲</nickName>
-                                                <sex>1</sex>
-                                                <headImgUrl>http://photo.renmaiku.com/295/294530/head/3-head_image.jpg</headImgUrl>
-                                                <company/>
-                                                <position>工程师</position>
-                                            </user>
-                                            <tContent>http://image10.renmaiku.com/face/3.gif http://image10.renmaiku.com/face/1.gif</tContent>
-                                            <tPublishTime>2011-01-07 00:07:56.0</tPublishTime>
-                                            <tForwardCount>0</tForwardCount>
-                                            <tCommentCount>2</tCommentCount>
-                                            <clientType>0</clientType>
-                                        </twitter>
-                                    </tList>
-                                </result>
-                            </x:XData>
-                        </XmlDataProvider>
+                        <pcclient:ImageConverter x:Key="ImageConverter"/>
                     </Border.Resources>
                     <ListBox x:Name="TweetsListBox" BorderThickness="0" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
                         <ListBox.ItemTemplate>

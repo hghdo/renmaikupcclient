@@ -103,6 +103,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Settings.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -132,6 +133,14 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\refresh_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\tx.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\2.png" />
+    <Resource Include="assets\3.png" />
+    <Resource Include="assets\4.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -324,6 +324,12 @@ namespace pcclient
 
                 RaiseEvent(new RoutedEventArgs(LoginEvent));
                 HideLogin();
+                // Display current login user Head Image
+                BitmapImage myBitmapImage = new BitmapImage();
+                myBitmapImage.BeginInit();
+                myBitmapImage.UriSource = new Uri(App.LoggedInUser.ImageUrl);
+                myBitmapImage.EndInit();
+                CurrentUserHeadImage.Source = myBitmapImage;
                 DelegateRecentFetch();
             }
             else
@@ -350,7 +356,12 @@ namespace pcclient
 
         private void NewTweetBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            NewTweetBox.Height = 100;
+            NewTweetBox.Height = 85;
+        }
+
+        private void NewTweetBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            NewTweetBox.Height = 35;
         }
 
         private void SendTweet_Click(object sender, RoutedEventArgs e)
