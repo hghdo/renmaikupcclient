@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{17CFAB2C-AA4F-49D6-AFF1-A56C1C8D63EC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -37,6 +37,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalDependencies\CustomWindow.dll</HintPath>
     </Reference>
+    <Reference Include="Growl.Connector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=980c2339411be384, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalDependencies\Growl.Connector.dll</HintPath>
+    </Reference>
+    <Reference Include="Growl.CoreLibrary, Version=2.0.0.0, Culture=neutral, PublicKeyToken=13e59d82e007b064, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalDependencies\Growl.CoreLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalDependencies\log4net.dll</HintPath>
@@ -45,6 +53,10 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -89,7 +101,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClickOnce\Deployment.cs" />
+    <Compile Include="ClickOnce\Utils.cs" />
     <Compile Include="ImageConverter.cs" />
+    <Compile Include="Misc\Growl\GrowlCommunicator.cs" />
+    <Compile Include="Misc\Snarl\M_RESULT.cs" />
+    <Compile Include="Misc\Snarl\SnarlConnector.cs" />
+    <Compile Include="Misc\Snarl\SnarlException.cs" />
+    <Compile Include="Misc\Snarl\SNARLSTRUCT.cs" />
+    <Compile Include="Misc\Snarl\SNARLSTRUCTEX.cs" />
+    <Compile Include="Misc\Snarl\SNARL_COMMAND.cs" />
+    <Compile Include="Misc\Snarl\WindowsMessage.cs" />
+    <Compile Include="Misc\Snarl\WittySnarlMsgWnd.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -103,7 +126,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Settings.cs" />
+    <Compile Include="Misc\Settings.cs" />
+    <Compile Include="Misc\Shortcut.cs" />
+    <Compile Include="Misc\SingleInstanceManager.cs" />
+    <Compile Include="Misc\WebProxyHelper.cs" />
+    <Compile Include="Misc\Win32.cs" />
+    <Compile Include="Misc\WindowSettings.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -141,6 +169,12 @@
     <Resource Include="assets\2.png" />
     <Resource Include="assets\3.png" />
     <Resource Include="assets\4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\title.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Renmei_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

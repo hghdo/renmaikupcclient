@@ -60,6 +60,13 @@ namespace pcclient.Properties {
             }
         }
         
+        internal static System.Drawing.Icon Renmei_icon {
+            get {
+                object obj = ResourceManager.GetObject("Renmei_icon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to 重新登录....
         /// </summary>

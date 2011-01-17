@@ -18,6 +18,8 @@ using System.Net;
 using System.Windows.Media.Animation;
 using log4net.Repository.Hierarchy;
 using log4net;
+using System.ComponentModel;
+using Snarl;
 
 namespace pcclient
 {
@@ -28,6 +30,9 @@ namespace pcclient
     {
 
         #region Fields and Properties
+        private IntPtr SnarlConfighWnd;
+        private NativeWindowApplication.WittySnarlMsgWnd snarlComWindow;
+        private bool reallyexit = false;
 
 
         // Main collection of tweets
@@ -63,16 +68,16 @@ namespace pcclient
         {
             InitializeComponent();
 
+            SetupNotifyIcon();
+
+            //SetupSingleInstance();
+
             LayoutRoot.DataContext = tweets;
 
             //Handle login DebugAutoLogin() used to login auto use hbcjob@126.com/hbcjob and it is for dev only.
             DebugAutoLogin();
             //DisplayLoginIfUserNotLoggedIn();
-            
-            //Retrieve tweets
-            //DelegateRecentFetch();
-            
-            
+ 
         }
         #endregion
 
@@ -120,20 +125,26 @@ namespace pcclient
                 //NoArgDelegate loginFetcher = new NoArgDelegate(this.TryLogin);
                 //loginFetcher.BeginInvoke(null, null);
 
+                //Retrieve tweets
+                //DelegateRecentFetch();
+
             }
         }
 
         private void ShowLogin()
         {
             LoginLayoutRoot.Visibility = Visibility.Visible;
-            TopFrame.Visibility = Visibility.Hidden;
+            TopFrame.Visibility = Visibility.Collapsed;
+            BottmNavigation.Visibility = Visibility.Collapsed;
             TweetsListBox.Visibility = Visibility.Collapsed;
         }
 
         private void HideLogin()
         {
             LoginLayoutRoot.Visibility = Visibility.Collapsed;
+
             TopFrame.Visibility = Visibility.Visible;
+            BottmNavigation.Visibility = Visibility.Collapsed;
             TweetsListBox.Visibility = Visibility.Visible;
         }
         
@@ -154,9 +165,9 @@ namespace pcclient
                 //TODO: Make DM and Reply threshold configurable.  Rework this logic once concept of viewed tweets is introduced to Witty.
                 string since = DateTime.Now.AddHours(-70).ToString();
 
-                //LayoutRoot.Dispatcher.BeginInvoke(
-                //    DispatcherPriority.Loaded,
-                //    new OneArgDelegate(UpdateUserInterface), twitter.GetReplies(since));
+                LayoutRoot.Dispatcher.BeginInvoke(
+                    DispatcherPriority.Loaded,
+                    new OneArgDelegate(UpdateUserInterface), twitter.GetReplies(since));
 
                 //LayoutRoot.Dispatcher.BeginInvoke(
                 //    DispatcherPriority.Loaded,
@@ -272,14 +283,22 @@ namespace pcclient
         #region Login
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            PasswordTextBox.IsEnabled = false;
+            UserNameBox.IsEnabled = false;
+
             //HttpRequest htr = new HttpRequest(MainWindows.website);
             twitter = new RenmeiNet(UserNameBox.Text,RenmeiNet.ToSecureString(PasswordTextBox.Password));
             twitter.TwitterServerUrl = AppSettings.RenmeiHost;
 
-            TryLogin(twitter);
-            //LoginButton.Dispatcher.BeginInvoke(
-            //    System.Windows.Threading.DispatcherPriority.Normal,
-            //    new LoginDelegate(TryLogin), rmnet);
+            // 等待效果
+            // 加一个等待循环的图片，然后现在enable可见
+
+            
+            // 用线程实现的效果比较好
+            //# TryLogin(twitter);
+            LoginButton.Dispatcher.BeginInvoke(
+                System.Windows.Threading.DispatcherPriority.Normal,
+                new LoginDelegate(TryLogin), twitter);
 
         }
 
@@ -353,6 +372,174 @@ namespace pcclient
         }
         #endregion
 
+        #region notification
+
+        void CheckTrayIcon()
+        {
+            ShowTrayIcon(!IsVisible);
+        }
+
+        void ShowTrayIcon(bool show)
+        {
+            if (_notifyIcon != null)
+                _notifyIcon.Visible = show;
+        }
+
+        void openMenuItem_Click(object sender, EventArgs e)
+        {
+            Show();
+            WindowState = _storedWindowState;
+        }
+
+        void exitMenuItem_Click(object sender, EventArgs e)
+        {
+            this.reallyexit = true;
+            this.Close();
+        }
+        private void SetupNotifyIcon()
+        {
+            _notifyIcon = new System.Windows.Forms.NotifyIcon();
+            _notifyIcon.BalloonTipText = "Right-click for more options";
+            _notifyIcon.BalloonTipTitle = "人脉";
+            _notifyIcon.Text = "人脉";
+            _notifyIcon.Icon = pcclient.Properties.Resources.Renmei_icon;
+            _notifyIcon.DoubleClick += new EventHandler(m_notifyIcon_Click);
+
+            System.Windows.Forms.ContextMenu notifyMenu = new System.Windows.Forms.ContextMenu();
+            System.Windows.Forms.MenuItem openMenuItem = new System.Windows.Forms.MenuItem();
+            System.Windows.Forms.MenuItem exitMenuItem = new System.Windows.Forms.MenuItem();
+
+            notifyMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] { openMenuItem, exitMenuItem });
+            openMenuItem.Index = 0;
+            openMenuItem.Text = "Open";
+            openMenuItem.Click += new EventHandler(openMenuItem_Click);
+            exitMenuItem.Index = 1;
+            exitMenuItem.Text = "Exit";
+            exitMenuItem.Click += new EventHandler(exitMenuItem_Click);
+
+            _notifyIcon.ContextMenu = notifyMenu;
+
+            this.Closed += new EventHandler(OnClosed);
+            this.StateChanged += new EventHandler(OnStateChanged);
+            this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(OnIsVisibleChanged);
+            //this.Loaded += new RoutedEventHandler(OnLoaded);
+            OverrideClosing();
+        }
+        private void OverrideClosing()
+        {
+            this.Closing += new CancelEventHandler(MainWindow_Closing);
+        }
+        void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+            // If the user selected to minimize on close and the window state is normal
+            // just minimize the app
+            if (AppSettings.MinimizeOnClose && this.reallyexit == false)
+            {
+                e.Cancel = true;
+                _storedWindowState = this.WindowState;
+                this.WindowState = WindowState.Minimized;
+                if (_notifyIcon != null)
+                {
+                    _notifyIcon.ShowBalloonTip(2000);
+                }
+            }
+        }
+
+        #endregion
+        #region Minimize to Tray
+
+        private System.Windows.Forms.NotifyIcon _notifyIcon;
+
+        void OnClosed(object sender, EventArgs e)
+        {
+            if (!AppSettings.PersistLogin)
+            {
+                AppSettings.UserName = string.Empty;
+                AppSettings.Password = string.Empty;
+                AppSettings.Save();
+            }
+
+            _notifyIcon.Dispose();
+            _notifyIcon = null;
+
+            if (SnarlConnector.GetSnarlWindow().ToInt32() != 0 && this.SnarlConfighWnd != null)
+            {
+                SnarlConnector.RevokeConfig(this.SnarlConfighWnd);
+            }
+            if (this.SnarlConfighWnd != null && snarlComWindow != null)
+            {
+                snarlComWindow.DestroyHandle();
+            }
+        }
+
+        private WindowState _storedWindowState = WindowState.Normal;
+
+        DispatcherTimer hideTimer = new DispatcherTimer();
+
+        void OnStateChanged(object sender, EventArgs args)
+        {
+            if (AppSettings.MinimizeToTray)
+            {
+                if (WindowState == WindowState.Minimized)
+                {
+                    hideTimer.Interval = new TimeSpan(500);
+                    hideTimer.Tick += new EventHandler(HideTimer_Elapsed);
+                    hideTimer.Start();
+                }
+                else
+                {
+                    _storedWindowState = WindowState;
+                }
+            }
+        }
+
+        private void HideTimer_Elapsed(object sender, EventArgs e)
+        {
+            this.Hide();
+            hideTimer.Stop();
+        }
+
+        void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs args)
+        {
+            CheckTrayIcon();
+        }
+
+        void m_notifyIcon_Click(object sender, EventArgs e)
+        {
+            Show();
+            WindowState = _storedWindowState;
+        }
+
+        #endregion
+
+        #region Single Instance
+//        /// <summary>
+//        /// Enforce single instance for release mode
+//        /// </summary>
+//        private void SetupSingleInstance()
+//        {
+//#if !DEBUG
+//            Application.Current.Exit += new ExitEventHandler(Current_Exit);
+//            _instanceManager = new SingleInstanceManager(this, ShowApplication);
+//#endif
+//        }
+
+//        SingleInstanceManager _instanceManager;
+
+//        public void ShowApplication()
+//        {
+//            if (this.Visibility == Visibility.Hidden)
+//            {
+//                this.Visibility = Visibility.Visible;
+//            }
+//        }
+
+//        void Current_Exit(object sender, ExitEventArgs e)
+//        {
+//            Environment.Exit(0);
+//        }
+
+        #endregion
 
         private void NewTweetBox_GotFocus(object sender, RoutedEventArgs e)
         {
