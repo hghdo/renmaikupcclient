@@ -144,7 +144,7 @@ namespace pcclient
             LoginLayoutRoot.Visibility = Visibility.Collapsed;
 
             TopFrame.Visibility = Visibility.Visible;
-            BottmNavigation.Visibility = Visibility.Collapsed;
+            BottmNavigation.Visibility = Visibility.Visible;
             TweetsListBox.Visibility = Visibility.Visible;
         }
         

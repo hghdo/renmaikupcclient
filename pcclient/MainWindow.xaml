@@ -72,12 +72,30 @@
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <Image Grid.Column="0" Grid.Row="0" Width="26" Source="assets/tx.png"/>
+                        <Menu Grid.Column="0" Grid.Row="0" Background="#1D9CDF">
+                            <MenuItem Width="200">
+                                <MenuItem.Header >
+                                    <Image Width="26" Source="assets/tx.png"/>
+                                </MenuItem.Header>
+                                <MenuItem Header="退出" />
+                                <MenuItem Header="退出" />
+                                <Separator/>
+                                <MenuItem Header="退出" />
+                                <MenuItem Header="退出" />
+                                <MenuItem Header="退出" />
+                                <MenuItem Header="退出" />
+                                <Separator/>
+                                <MenuItem Header="退出" />
+                                <MenuItem Header="退出" />
+                                <MenuItem Header="退出" />
+                                <MenuItem Header="退出" />
+                            </MenuItem>
+                        </Menu>
                         <Image Grid.Column="1" Grid.Row="0" Width="26" Source="assets/2.png"/>
                         <Image Grid.Column="2" Grid.Row="0" Width="26" Source="assets/3.png"/>
                         <Image Grid.Column="3" Grid.Row="0" Width="26" Source="assets/4.png"/>
                         <DockPanel Grid.Column="4" Grid.Row="0" VerticalAlignment="Bottom">
-                            <Thumb DragDelta="Thumb_DragDelta" Cursor="SizeNWSE" Height="5" Opacity="1.0" HorizontalAlignment="Right" DockPanel.Dock="Bottom"/>
+                            <Thumb DragDelta="Thumb_DragDelta" Cursor="SizeNWSE" Height="5" Opacity="1.0" HorizontalAlignment="Right" DockPanel.Dock="Bottom" Visibility="Hidden"/>
                         </DockPanel>
                     </Grid>
                 </Border>
