@@ -440,9 +440,10 @@ namespace pcclient
                 _storedWindowState = this.WindowState;
                 this.WindowState = WindowState.Minimized;
                 this.Visibility = Visibility.Hidden;
-                _notifyIcon.Visible = true;
+                
                 if (_notifyIcon != null)
                 {
+                    _notifyIcon.Visible = true;
                     _notifyIcon.ShowBalloonTip(2000);
                 }
             }
