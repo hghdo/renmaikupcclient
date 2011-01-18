@@ -229,7 +229,8 @@ namespace RenmeiLib
             get
             {
                 if (string.IsNullOrEmpty(updateUrl))
-                    return TwitterServerUrl + "statuses/update";
+                    return TwitterServerUrl + "service/twitter/publish.do?";
+                    //return TwitterServerUrl + "statuses/update";
                 else
                     return updateUrl;
             }
@@ -765,31 +766,37 @@ namespace RenmeiLib
             text = HttpUtility.UrlEncode(text);
 
             // Create the web request  
-            HttpWebRequest request = CreateTwitterRequest(UpdateUrl + Format);
+            UpdateUrl+=string.Format("userId={0}&authCode={1}", email, authToken);
+            //UpdateUrl += string.Format("&content={0}&previousId={1}", text, replyid.ToString());
+            HttpWebRequest request = CreateTwitterRequest(UpdateUrl);
 
             request.ServicePoint.Expect100Continue = false;
 
             request.Method = "POST";
 
+
+
             // Set values for the request back
             request.ContentType = "application/x-www-form-urlencoded";
-            string param = "status=" + text;
-            string replyParam = "&in_reply_to_status_id=" + replyid.ToString();
-            string sourceParam = "&source=" + ClientName;
-            request.ContentLength = param.Length + sourceParam.Length;
-            if (replyid > 0)
-            {
-                request.ContentLength += replyParam.Length;
-            }
+            string param = "content=" + text;
+            string replyParam = "&previousId=" + replyid.ToString();
+            //string sourceParam = "&source=" + ClientName;
+            request.ContentLength = param.Length;// +sourceParam.Length;
+            request.ContentLength += replyParam.Length;
+            //if (replyid > 0)
+            //{
+            //    request.ContentLength += replyParam.Length;
+            //}
 
             // Write the request paramater
             StreamWriter stOut = new StreamWriter(request.GetRequestStream(), System.Text.Encoding.ASCII);
             stOut.Write(param);
-            stOut.Write(sourceParam);
-            if (replyid > 0)
-            {
-                stOut.Write(replyParam);
-            }
+            //stOut.Write(sourceParam);
+            stOut.Write(replyParam);
+            //if (replyid > 0)
+            //{
+            //    stOut.Write(replyParam);
+            //}
             stOut.Close();
 
             // Do the request to get the response
@@ -802,34 +809,36 @@ namespace RenmeiLib
                 XmlDocument doc = new XmlDocument();
                 doc.Load(reader);
 
-                 XmlNode node = doc.SelectSingleNode("status");
+                 XmlNode node = doc.SelectSingleNode("result/tweet");
 
-                 tweet.Id = double.Parse(node.SelectSingleNode("id").InnerText);
-
+                tweet.Id = double.Parse(node.SelectSingleNode("tweetId").InnerText);
+                tweet.Text=HttpUtility.HtmlDecode(node.SelectSingleNode("tContent").InnerText);
                  //Defect 43 - Twitter incorrectly returns last tweet sent when you direct message someone.
-                 tweet.Text = tweet.IsDirectMessage
-                                    ? HttpUtility.UrlDecode(text)
-                                    : HttpUtility.HtmlDecode(node.SelectSingleNode("text").InnerText);
+                 //tweet.Text = tweet.IsDirectMessage
+                 //                   ? HttpUtility.UrlDecode(text)
+                 //                   : HttpUtility.HtmlDecode(node.SelectSingleNode("text").InnerText);
 
-                string source = HttpUtility.HtmlDecode(node.SelectSingleNode("source").InnerText);
+                string source = HttpUtility.HtmlDecode(node.SelectSingleNode("clientType").InnerText);
                 // Remove html from the source string
                 if (!string.IsNullOrEmpty(source))
                     tweet.Source = Regex.Replace(source, @"<(.|\n)*?>", string.Empty);
 
-                string dateString = node.SelectSingleNode("created_at").InnerText;
+                string dateString = node.SelectSingleNode("tPublishTime").InnerText;
                 if (!string.IsNullOrEmpty(dateString))
                 {
                     tweet.DateCreated = DateTime.ParseExact(
                         dateString,
-                        twitterCreatedAtDateFormat,
-                        CultureInfo.GetCultureInfoByIetfLanguageTag("en-us"), DateTimeStyles.AllowWhiteSpaces);
+                        renmaikuPublishDateFormat,//twitterCreatedAtDateFormat,
+                        CultureInfo.InvariantCulture,
+                        DateTimeStyles.AllowWhiteSpaces);
+                    //CultureInfo.GetCultureInfoByIetfLanguageTag("en-us"), DateTimeStyles.AllowWhiteSpaces);
                 }
-                string replyTo = HttpUtility.HtmlDecode(node.SelectSingleNode("in_reply_to_status_id").InnerText);
-                if (!string.IsNullOrEmpty(replyTo))
-                {
-                    tweet.InReplyTo = double.Parse(HttpUtility.HtmlDecode(node.SelectSingleNode("in_reply_to_status_id").InnerText));
+                //string replyTo = HttpUtility.HtmlDecode(node.SelectSingleNode("in_reply_to_status_id").InnerText);
+                //if (!string.IsNullOrEmpty(replyTo))
+                //{
+                //    tweet.InReplyTo = double.Parse(HttpUtility.HtmlDecode(node.SelectSingleNode("in_reply_to_status_id").InnerText));
 
-                }
+                //}
                 tweet.IsNew = true;
 
 
