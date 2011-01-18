@@ -51,7 +51,7 @@ namespace RenmeiLib
         // REMARK: might need to fix this for globalization
         private readonly string twitterCreatedAtDateFormat = "ddd MMM dd HH:mm:ss zzzz yyyy"; // Thu Apr 26 01:36:08 +0000 2007
         private readonly string twitterSinceDateFormat = "ddd MMM dd yyyy HH:mm:ss zzzz";
-        private readonly string renmaikuPublishDateFormat = "yyyy-MM-dd HH:mm:ss.f";
+        private readonly string renmaikuPublishDateFormat = "yyyy-MM-dd HH:mm:ss";
 
         private static int characterLimit;
         private string clientName;
@@ -1324,27 +1324,30 @@ namespace RenmeiLib
                 //timelineUrl += "?anthCode=" + authToken + "&userId=" + userId;
             }
             else
+            {
                 //timelineUrl += Format;
+            }
 
-                if (!string.IsNullOrEmpty(since))
-                {
-                    DateTime sinceDate;
-                    DateTime.TryParse(since, out sinceDate);
+            if (!string.IsNullOrEmpty(since))
+            {
+                DateTime sinceDate;
+                DateTime.TryParse(since, out sinceDate);
 
-                    // Go back a minute to compensate for latency.
-                    sinceDate = sinceDate.AddMinutes(-1);
-                    string sinceDateString = sinceDate.ToString(twitterSinceDateFormat);
-                    timelineUrl = timelineUrl + "?since=" + sinceDateString;
-                }
-                else
-                {
-                    DateTime sinceDate=DateTime.Now.AddHours(-70);
-                    timelineUrl += "&timePoint=" + sinceDate.ToString("yyyy-MM-dd HH:mm:ss") + "&direction=forward";
+                // Go back a minute to compensate for latency.
+                sinceDate = sinceDate.AddMinutes(-1);
+                string sinceDateString = sinceDate.ToString(twitterSinceDateFormat);
+                timelineUrl = timelineUrl + "?since=" + sinceDateString;
+            }
+            else
+            {
+                DateTime sinceDate=DateTime.Now.AddHours(-70);
+                timelineUrl += "&timePoint=" + sinceDate.ToString("yyyy-MM-dd HH:mm:ss") + "&direction=forward";
 
-                }
+            }
+            timelineUrl += "&limit=50";
 
             // Create the web request
-            HttpWebRequest request = CreateTwitterRequest(timelineUrl);
+           HttpWebRequest request = CreateTwitterRequest(timelineUrl);
 
             // moved this out of the try catch to use it later on in the XMLException
             // trying to fix a bug someone report
@@ -1360,12 +1363,12 @@ namespace RenmeiLib
                     // Load the response data into a XmlDocument  
                     doc.Load(reader);
                     // Get statuses with XPath  
-                    XmlNodeList nodes = doc.SelectNodes("/result/tList/twitter");
+                    XmlNodeList nodes = doc.SelectNodes("/result/tList/tweet");
 
                     foreach (XmlNode node in nodes)
                     {
                         Tweet tweet = new Tweet();
-                        //tweet.Id = double.Parse(node.SelectSingleNode("tweetId").InnerText);
+                        tweet.Id = double.Parse(node.SelectSingleNode("tweetId").InnerText);
                         tweet.Text = HttpUtility.HtmlDecode(node.SelectSingleNode("tContent").InnerText);
                         string source = HttpUtility.HtmlDecode(node.SelectSingleNode("clientType").InnerText);
                         if (!string.IsNullOrEmpty(source))
