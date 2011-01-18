@@ -582,7 +582,7 @@ namespace pcclient
                     DispatcherPriority.Normal,
                     new OneArgDelegate(UpdateUserInterface), twitter.GetFriendsTimeline());
                 //twitter.AddTweet(NewTweetBox.Text);
-                UpdateUserInterface(tweets);
+                //UpdateUserInterface(tweets);
             }
         }
 
