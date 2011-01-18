@@ -162,6 +162,10 @@
                     <Border.Resources>
                         <pcclient:ImageConverter x:Key="ImageConverter"/>
                     </Border.Resources>
+                    <Grid>
+                        <TabControl>
+                            <TabItem Header="All Tweets">
+                    
                     <ListBox x:Name="TweetsListBox" BorderThickness="0" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
@@ -197,6 +201,15 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
+                                </TabItem>
+                            <TabItem Header="My Tweets">
+                                <TextBlock>我的微博</TextBlock>
+                            </TabItem>
+                            
+                        <TabItem Header="My Firends">
+                                <TextBlock>我的好友</TextBlock>
+                            </TabItem></TabControl>
+                        </Grid>
                 </Border>
             </DockPanel>
         </Border>
