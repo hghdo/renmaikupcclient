@@ -174,7 +174,12 @@
     <Resource Include="assets\title.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Renmei_icon.ico" />
+    <Resource Include="Resources\Renmei_icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\Homepage.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

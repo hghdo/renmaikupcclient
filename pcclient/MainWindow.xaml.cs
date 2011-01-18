@@ -545,6 +545,21 @@ namespace pcclient
 
         #endregion
 
+        #region Bottom Menu
+        private void SystemMenu_Initialized(object sender, EventArgs e)
+        {
+            SystemLogo.ContextMenu = null;
+        }
+
+        private void SystemLogo_Click(object sender, RoutedEventArgs e)
+        {
+            SystemLogoMenu.PlacementTarget = SystemLogo;
+            SystemLogoMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Top;
+            SystemLogoMenu.IsOpen = true;
+        }
+
+        #endregion
+
         private void NewTweetBox_GotFocus(object sender, RoutedEventArgs e)
         {
             NewTweetBox.Height = 85;

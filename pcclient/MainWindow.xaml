@@ -72,6 +72,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
+                        <!--
                         <Menu Grid.Column="0" Grid.Row="0" Background="#1D9CDF">
                             <MenuItem Width="200">
                                 <MenuItem.Header >
@@ -91,6 +92,63 @@
                                 <MenuItem Header="退出" />
                             </MenuItem>
                         </Menu>
+                        -->
+                        <Image Name="SystemLogo" Grid.Column="0" Grid.Row="0" Width="26" Source="assets/tx.png" MouseDown="SystemLogo_Click">
+                            <Image.ContextMenu>
+                                <ContextMenu Name="SystemLogoMenu">
+                                    <MenuItem>
+                                        <MenuItem.Header>
+                                            <TextBlock>我的人脉库</TextBlock>
+                                        </MenuItem.Header>
+                                        <MenuItem.Icon>
+                                            <Image Source="assets/Homepage.ico"></Image>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <MenuItem.Header>
+                                            <TextBlock>我的公司</TextBlock>
+                                        </MenuItem.Header>
+                                        <MenuItem.Icon>
+                                            <Image Source="assets/Homepage.ico"></Image>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <MenuItem.Header>
+                                            <TextBlock>身份认证</TextBlock>
+                                        </MenuItem.Header>
+                                        <MenuItem.Icon>
+                                            <Image Source="assets/Homepage.ico"></Image>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <Separator/>
+                                    <MenuItem>
+                                        <MenuItem.Header>
+                                            <TextBlock>系统设置</TextBlock>
+                                        </MenuItem.Header>
+                                        <MenuItem.Icon>
+                                            <Image Source="assets/Homepage.ico"></Image>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <MenuItem.Header>
+                                            <TextBlock>帮助</TextBlock>
+                                        </MenuItem.Header>
+                                        <MenuItem.Icon>
+                                            <Image Source="assets/Homepage.ico"></Image>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <Separator/>
+                                    <MenuItem>
+                                        <MenuItem.Header>
+                                            <TextBlock>退出</TextBlock>
+                                        </MenuItem.Header>
+                                        <MenuItem.Icon>
+                                            <Image Source="assets/Homepage.ico"></Image>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </Image.ContextMenu>
+                        </Image>
                         <Image Grid.Column="1" Grid.Row="0" Width="26" Source="assets/2.png"/>
                         <Image Grid.Column="2" Grid.Row="0" Width="26" Source="assets/3.png"/>
                         <Image Grid.Column="3" Grid.Row="0" Width="26" Source="assets/4.png"/>
