@@ -165,9 +165,9 @@ namespace pcclient
                 //TODO: Make DM and Reply threshold configurable.  Rework this logic once concept of viewed tweets is introduced to Witty.
                 string since = DateTime.Now.AddHours(-70).ToString();
 
-                LayoutRoot.Dispatcher.BeginInvoke(
-                    DispatcherPriority.Loaded,
-                    new OneArgDelegate(UpdateUserInterface), twitter.GetReplies(since));
+                //LayoutRoot.Dispatcher.BeginInvoke(
+                //    DispatcherPriority.Loaded,
+                //    new OneArgDelegate(UpdateUserInterface), twitter.GetReplies(since));
 
                 //LayoutRoot.Dispatcher.BeginInvoke(
                 //    DispatcherPriority.Loaded,
@@ -551,17 +551,28 @@ namespace pcclient
 
         private void NewTweetBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            NewTweetBox.Height = 35;
+            //NewTweetBox.Height = 35;
         }
 
         private void SendTweet_Click(object sender, RoutedEventArgs e)
         {
+            if (NewTweetBox.Text.Length > 0)
+            {
 
+
+                TweetCollection tweets = new TweetCollection();
+                tweets.Add(twitter.AddTweet(NewTweetBox.Text));
+                LayoutRoot.Dispatcher.BeginInvoke(
+                    DispatcherPriority.Normal,
+                    new OneArgDelegate(UpdateUserInterface), twitter.GetFriendsTimeline());
+                //twitter.AddTweet(NewTweetBox.Text);
+                UpdateUserInterface(tweets);
+            }
         }
 
         private void CancelTweet_Click(object sender, RoutedEventArgs e)
         {
-
+            NewTweetBox.Height = 35;
         }
 
     }
