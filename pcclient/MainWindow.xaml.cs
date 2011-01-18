@@ -75,8 +75,8 @@ namespace pcclient
             LayoutRoot.DataContext = tweets;
 
             //Handle login DebugAutoLogin() used to login auto use hbcjob@126.com/hbcjob and it is for dev only.
-            DebugAutoLogin();
-            //DisplayLoginIfUserNotLoggedIn();
+            //DebugAutoLogin();
+            DisplayLoginIfUserNotLoggedIn();
  
         }
         #endregion
@@ -376,7 +376,7 @@ namespace pcclient
 
         void CheckTrayIcon()
         {
-            ShowTrayIcon(!IsVisible);
+            ShowTrayIcon(IsVisible);
         }
 
         void ShowTrayIcon(bool show)
@@ -404,6 +404,7 @@ namespace pcclient
             _notifyIcon.Text = "人脉";
             _notifyIcon.Icon = pcclient.Properties.Resources.Renmei_icon;
             _notifyIcon.DoubleClick += new EventHandler(m_notifyIcon_Click);
+            _notifyIcon.Visible = true;
 
             System.Windows.Forms.ContextMenu notifyMenu = new System.Windows.Forms.ContextMenu();
             System.Windows.Forms.MenuItem openMenuItem = new System.Windows.Forms.MenuItem();
@@ -438,6 +439,7 @@ namespace pcclient
                 e.Cancel = true;
                 _storedWindowState = this.WindowState;
                 this.WindowState = WindowState.Minimized;
+
                 if (_notifyIcon != null)
                 {
                     _notifyIcon.ShowBalloonTip(2000);
