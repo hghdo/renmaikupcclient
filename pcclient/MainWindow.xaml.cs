@@ -439,7 +439,8 @@ namespace pcclient
                 e.Cancel = true;
                 _storedWindowState = this.WindowState;
                 this.WindowState = WindowState.Minimized;
-
+                this.Visibility = Visibility.Hidden;
+                _notifyIcon.Visible = true;
                 if (_notifyIcon != null)
                 {
                     _notifyIcon.ShowBalloonTip(2000);
