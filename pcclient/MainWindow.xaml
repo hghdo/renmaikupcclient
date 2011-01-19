@@ -10,7 +10,8 @@
 
     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="#3BB2EA" x:Name="LayoutRoot">
         <Border BorderBrush="#55FFFF" BorderThickness="1" CornerRadius="5">
-            <DockPanel Background="#EFF7FA"><!--  LastChildFill="True" -->
+            <DockPanel Background="#EFF7FA">
+                <!--  LastChildFill="True" -->
                 <!-- Title Bar -->
                 <Border Height="20" MouseMove="Header_MouseMove" DockPanel.Dock="Top" Background="#169DE1" >
                     <DockPanel>
@@ -27,9 +28,9 @@
                             </Border>
                             <Border Margin="15,0,0,0">
                                 <StackPanel >
-                                <TextBlock Foreground="White" FontSize="12" x:Name="StatusTextBlock">我的人脉库</TextBlock>
-                                <Button x:Name="RefreshButton" Content="refresh" IsDefault="True" Click="RefreshButton_Click"/>
-                                <Image Width="16" Source="assets/refresh_16.png" ></Image>
+                                    <TextBlock Foreground="White" FontSize="12" x:Name="StatusTextBlock">我的人脉库</TextBlock>
+                                    <Button x:Name="RefreshButton" Content="refresh" IsDefault="True" Click="RefreshButton_Click"/>
+                                    <Image Width="16" Source="assets/refresh_16.png" ></Image>
                                 </StackPanel>
                             </Border>
                         </DockPanel>
@@ -162,41 +163,63 @@
                     <Border.Resources>
                         <pcclient:ImageConverter x:Key="ImageConverter"/>
                     </Border.Resources>
-                    <ListBox x:Name="TweetsListBox" BorderThickness="0" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid x:Name="grid" Background="#01FFFFFF">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="70" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <Border Grid.RowSpan="3" VerticalAlignment="Top" Grid.Column="0" Width="50" Height="50" Background="#FFF" BorderBrush="White" BorderThickness="1" CornerRadius="2">
-                                        <Image Width="48" Height="48" Source="{Binding Path=User.ImageUrl}"/>
-                                    </Border>
-                                    <TextBlock Grid.Column="1" Grid.Row="0" FontSize="12" Foreground="Red" TextWrapping="Wrap">
+                    <Grid>
+                        <TabControl  TabStripPlacement="Top">
+                            <TabItem>
+                                <TabItem.Header>
+                                    <StackPanel>
+                                        <Image Source="assets/Tweets.ico" Stretch="None"/>
+                                        <!--<TextBlock>微博</TextBlock>  -->
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <TabItem.Content>
+
+                                    <ListBox x:Name="TweetsListBox" BorderThickness="0" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid x:Name="grid" Background="#01FFFFFF">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="70" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition/>
+                                                        <RowDefinition/>
+                                                        <RowDefinition/>
+                                                    </Grid.RowDefinitions>
+                                                    <Border Grid.RowSpan="3" VerticalAlignment="Top" Grid.Column="0" Width="50" Height="50" Background="#FFF" BorderBrush="White" BorderThickness="1" CornerRadius="2">
+                                                        <Image Width="48" Height="48" Source="{Binding Path=User.ImageUrl}"/>
+                                                    </Border>
+                                                    <TextBlock Grid.Column="1" Grid.Row="0" FontSize="12" Foreground="Red" TextWrapping="Wrap">
                                     <TextBlock.Text>
                                         <Binding Path="User.ScreenName"/>
                                     </TextBlock.Text>
                                     </TextBlock>
-                                    <TextBlock Grid.Column="1" Grid.Row="1" FontSize="12" TextWrapping="Wrap">
+                                                    <TextBlock Grid.Column="1" Grid.Row="1" FontSize="12" TextWrapping="Wrap">
                                     <TextBlock.Text>
                                         <Binding Path="Text"/>
                                     </TextBlock.Text>
                                     </TextBlock>
-                                    <StackPanel Grid.Column="1" Grid.Row="2">
-                                        <TextBlock FontSize="12" TextWrapping="Wrap" Text="{Binding Path=Source}">
+                                                    <StackPanel Grid.Column="1" Grid.Row="2">
+                                                        <TextBlock FontSize="12" TextWrapping="Wrap" Text="{Binding Path=Source}">
                                         </TextBlock>
-                                    </StackPanel>
-                                </Grid>
+                                                    </StackPanel>
+                                                </Grid>
 
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </TabItem.Content>
+                            </TabItem>
+                            <TabItem Header="My Tweets">
+                                <TextBlock>我的微博</TextBlock>
+                            </TabItem>
+
+                            <TabItem Header="My Firends">
+                                <TextBlock>我的好友</TextBlock>
+                            </TabItem>
+                        </TabControl>
+                    </Grid>
                 </Border>
             </DockPanel>
         </Border>
