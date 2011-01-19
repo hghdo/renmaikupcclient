@@ -942,6 +942,75 @@ namespace RenmeiLib
             return user;
         }
 
+
+        private FriendGroup CreateFriendGroup(XmlNode groupNode)
+        {
+            FriendGroup group = new FriendGroup();
+            if (groupNode != null)
+            {
+                int temp = -1;
+                int.TryParse(GetPropertyFromXml(groupNode, "groupId"), out temp);
+                group.Id = temp;
+                group.Title = GetPropertyFromXml(groupNode, "title");
+                int.TryParse(GetPropertyFromXml(groupNode, "binzhi_user_id"), out temp);
+                group.UserId = temp;
+                int.TryParse(GetPropertyFromXml(groupNode, "order_num"), out temp);
+                group.Order = temp;
+                int.TryParse(GetPropertyFromXml(groupNode, "friend_count"), out temp);
+                group.Count = temp;
+            }
+            return group;
+        }
+
+        public FriendGroupCollection getFriendGroups(int userId)
+        {
+            FriendGroupCollection groups = new FriendGroupCollection();
+            string groupUrl = TwitterServerUrl + "service/twitter/groupList.do";
+            groupUrl += "?" + getAuthUrl();
+            // Create the web request
+            HttpWebRequest request = CreateTwitterRequest(groupUrl);
+
+            // moved this out of the try catch to use it later on in the XMLException
+            // trying to fix a bug someone report
+            XmlDocument doc = new XmlDocument();
+            try
+            {
+                // Get the Web Response  
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                {
+                    // Get the response stream  
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+
+                    // Load the response data into a XmlDocument  
+                    doc.Load(reader);
+                    // Get statuses with XPath  
+                    XmlNodeList nodes = doc.SelectNodes("/result/groupList/group");
+
+                    foreach (XmlNode node in nodes)
+                    {
+                        groups.Add(CreateFriendGroup(node));
+                    }
+                }
+            }
+            catch (XmlException exXML)
+            {
+                // adding the XML document data to the exception so it will get logged
+                // so we can debug the issue
+                exXML.Data.Add("XMLDoc", doc);
+                throw;
+            }
+            catch (WebException webExcp)
+            {
+                ParseWebException(webExcp);
+            }
+            return groups;
+        }
+
+        private string getAuthUrl()
+        {
+            return string.Format("userId={0}&authCode={1}", email, authToken);
+        }
+
         /// <summary>
         /// Authenticating with the provided credentials and retrieve the user's settings
         /// </summary>
