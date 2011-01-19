@@ -199,13 +199,13 @@
                                                             <RowDefinition Height="Auto"/>
                                                         </Grid.RowDefinitions>
                                                         <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Path=User.ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
-                                                        <StackPanel Grid.Column="1" Grid.Row="0"></StackPanel>
+                                                        <StackPanel Grid.Column="1" Grid.Row="0"><!-- 右上角的图标按钮，向下的小三角，删除 --></StackPanel>
                                                         <TextBlock Grid.ColumnSpan="2" Grid.Row="1" FontSize="12" Margin="0,8,0,8" Text="{Binding Path=Text}" TextWrapping="Wrap"></TextBlock>
                                                         <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" Margin="0">
                                                             <TextBlock FontSize="12" TextWrapping="Wrap" Text="{Binding Path=RelativeTime}" Foreground="#AAAAAA"></TextBlock>
                                                             <TextBlock FontSize="12" TextWrapping="Wrap" Text="{Binding Path=Source}" Foreground="#AAAAAA"></TextBlock>
                                                         </StackPanel>
-                                                        <StackPanel Grid.Column="1" Grid.Row="2"></StackPanel>
+                                                        <StackPanel Grid.Column="1" Grid.Row="2"><!-- 右下角的那些图标按钮，回复，收藏，评论 --></StackPanel>
                                                     </Grid>
                                                 </Grid>
                                                 </Border>
