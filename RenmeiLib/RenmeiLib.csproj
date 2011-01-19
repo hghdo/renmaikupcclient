@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{6CB55919-6C11-43A1-8769-57461BE5B0AE}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="DirectMessage.cs" />
     <Compile Include="Exceptions.cs" />
+    <Compile Include="FriendGroup.cs" />
     <Compile Include="ITweet.cs" />
     <Compile Include="ITwitterNet.cs" />
     <Compile Include="IUser.cs" />
