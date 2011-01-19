@@ -91,7 +91,7 @@ namespace RenmeiLib
         /// </summary>
         public string Source
         {
-            get { return "from " + source; }
+            get { return "通过" + source; }//"from " + source; }
             set
             {
                 if (value != source)
@@ -265,35 +265,35 @@ namespace RenmeiLib
 
             if (delta <= 1)
             {
-                return "a second ago";
+                return "1秒钟前";// "a second ago";
             }
             else if (delta < 60)
             {
-                return ts.Seconds + " seconds ago";
+                return ts.Seconds + "秒钟前";// " seconds ago";
             }
             else if (delta < 120)
             {
-                return "about a minute ago";
+                return "1分钟前";//"about a minute ago";
             }
             else if (delta < (45 * 60))
             {
-                return ts.Minutes + " minutes ago";
+                return ts.Minutes + "分钟前";// " minutes ago";
             }
             else if (delta < (90 * 60))
             {
-                return "about an hour ago";
+                return "1小时前";//"about an hour ago";
             }
             else if (delta < (24 * 60 * 60))
             {
-                return "about " + ts.Hours + " hours ago";
+                return ts.Hours + "小时前"; //"about " + ts.Hours + " hours ago";
             }
             else if (delta < (48 * 60 * 60))
             {
-                return "1 day ago";
+                return "1天前";//"1 day ago";
             }
             else
             {
-                return ts.Days + " days ago";
+                return ts.Days + "天前";//" days ago";
             }
         }
 
