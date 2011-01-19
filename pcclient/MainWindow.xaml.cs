@@ -304,7 +304,9 @@ namespace pcclient
 
         private void DebugAutoLogin()
         {
-            twitter = new RenmeiNet("hbcjob@126.com", RenmeiNet.ToSecureString("hbcjob"));
+
+            //twitter = new RenmeiNet("hbcjob@126.com", RenmeiNet.ToSecureString("hbcjob"));
+            twitter = new RenmeiNet("binzhi_web@126.com", RenmeiNet.ToSecureString("111111"));
             twitter.TwitterServerUrl = AppSettings.RenmeiHost;
             TryLogin(twitter);
         }
@@ -580,9 +582,9 @@ namespace pcclient
                 tweets.Add(twitter.AddTweet(NewTweetBox.Text));
                 LayoutRoot.Dispatcher.BeginInvoke(
                     DispatcherPriority.Normal,
-                    new OneArgDelegate(UpdateUserInterface), twitter.GetFriendsTimeline());
+                    new OneArgDelegate(UpdateUserInterface), tweets);
                 //twitter.AddTweet(NewTweetBox.Text);
-                UpdateUserInterface(tweets);
+                //UpdateUserInterface(tweets);
             }
         }
 

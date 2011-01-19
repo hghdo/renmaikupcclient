@@ -764,11 +764,11 @@ namespace RenmeiLib
                 return null;
 
             text = HttpUtility.UrlEncode(text);
-
+            string upUrl = UpdateUrl + string.Format("userId={0}&authCode={1}", email, authToken);
             // Create the web request  
-            UpdateUrl+=string.Format("userId={0}&authCode={1}", email, authToken);
+            //UpdateUrl+=string.Format("userId={0}&authCode={1}", email, authToken);
             //UpdateUrl += string.Format("&content={0}&previousId={1}", text, replyid.ToString());
-            HttpWebRequest request = CreateTwitterRequest(UpdateUrl);
+            HttpWebRequest request = CreateTwitterRequest(upUrl);
 
             request.ServicePoint.Expect100Continue = false;
 
@@ -809,7 +809,8 @@ namespace RenmeiLib
                 XmlDocument doc = new XmlDocument();
                 doc.Load(reader);
 
-                 XmlNode node = doc.SelectSingleNode("result/tweet");
+                XmlNode node = doc.SelectSingleNode("result/tweet");
+                if (node == null) return null;
 
                 tweet.Id = double.Parse(node.SelectSingleNode("tweetId").InnerText);
                 tweet.Text=HttpUtility.HtmlDecode(node.SelectSingleNode("tContent").InnerText);
@@ -832,6 +833,10 @@ namespace RenmeiLib
                         CultureInfo.InvariantCulture,
                         DateTimeStyles.AllowWhiteSpaces);
                     //CultureInfo.GetCultureInfoByIetfLanguageTag("en-us"), DateTimeStyles.AllowWhiteSpaces);
+                }
+                else
+                {
+                    tweet.DateCreated = DateTime.Now;
                 }
                 //string replyTo = HttpUtility.HtmlDecode(node.SelectSingleNode("in_reply_to_status_id").InnerText);
                 //if (!string.IsNullOrEmpty(replyTo))
