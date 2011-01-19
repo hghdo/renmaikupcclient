@@ -164,8 +164,7 @@
                         <pcclient:ImageConverter x:Key="ImageConverter"/>
                     </Border.Resources>
                     <Grid>
-                        <!-- Tab 页在底部 临时 -->
-                        <TabControl  TabStripPlacement="Bottom">
+                        <TabControl  TabStripPlacement="Top">
                             <TabItem>
                                 <TabItem.Header>
                                     <StackPanel>
