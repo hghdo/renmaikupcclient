@@ -190,19 +190,11 @@
                                                     <Border Grid.RowSpan="3" VerticalAlignment="Top" Grid.Column="0" Width="50" Height="50" Background="#FFF" BorderBrush="White" BorderThickness="1" CornerRadius="2">
                                                         <Image Width="48" Height="48" Source="{Binding Path=User.ImageUrl}"/>
                                                     </Border>
-                                                    <TextBlock Grid.Column="1" Grid.Row="0" FontSize="12" Foreground="Red" TextWrapping="Wrap">
-                                    <TextBlock.Text>
-                                        <Binding Path="User.ScreenName"/>
-                                    </TextBlock.Text>
-                                    </TextBlock>
-                                                    <TextBlock Grid.Column="1" Grid.Row="1" FontSize="12" TextWrapping="Wrap">
-                                    <TextBlock.Text>
-                                        <Binding Path="Text"/>
-                                    </TextBlock.Text>
-                                    </TextBlock>
-                                                    <StackPanel Grid.Column="1" Grid.Row="2">
-                                                        <TextBlock FontSize="12" TextWrapping="Wrap" Text="{Binding Path=Source}">
-                                        </TextBlock>
+                                                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Path=User.ScreenName}" FontSize="12" Foreground="Red" TextWrapping="Wrap"></TextBlock>
+                                                    <TextBlock Grid.Column="1" Grid.Row="1" FontSize="12" Text="{Binding Path=Text}" TextWrapping="Wrap"></TextBlock>
+                                                    <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
+                                                        <TextBlock FontSize="12" TextWrapping="Wrap" Text="{Binding Path=Source}"></TextBlock>
+                                                        <TextBlock FontSize="12" TextWrapping="Wrap" Text="4分钟前来自人脉库"></TextBlock>
                                                     </StackPanel>
                                                 </Grid>
 
