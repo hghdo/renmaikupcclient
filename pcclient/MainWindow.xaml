@@ -218,8 +218,24 @@
                                 <TextBlock>我的微博</TextBlock>
                             </TabItem>
 
-                            <TabItem Header="My Firends">
-                                <TextBlock>我的好友</TextBlock>
+                            <TabItem x:Name="FriendsTab">
+                                <TabItem.Header>
+                                    <StackPanel>
+                                        <Image Source="assets/Tweets.ico" Stretch="None"/>
+                                        <!--<TextBlock>好友</TextBlock>  -->
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <!--<TreeView>
+                                        <TreeViewItem>
+                                            <DataTemplate>
+                                                <TreeViewItem.Header> -->
+                                                        <TextBlock>好友</TextBlock>
+                                       <!--         </TreeViewItem.Header>
+                                            </DataTemplate>
+                                        </TreeViewItem>
+                                    </TreeView> -->
+                                </TabItem.Content>
                             </TabItem>
                         </TabControl>
                     </Grid>

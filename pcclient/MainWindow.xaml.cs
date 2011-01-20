@@ -70,9 +70,9 @@ namespace pcclient
 
             SetupNotifyIcon();
 
-            //SetupSingleInstance();
+            SetDataContextForAllOfTabs();
 
-            LayoutRoot.DataContext = tweets;
+            
 
             //Handle login DebugAutoLogin() used to login auto use hbcjob@126.com/hbcjob and it is for dev only.
             DebugAutoLogin();
@@ -81,6 +81,12 @@ namespace pcclient
         }
         #endregion
 
+        private void SetDataContextForAllOfTabs()
+        {
+            TweetsTab.DataContext = tweets;
+            //LayoutRoot.DataContext = tweets;
+
+        }
 
         #region Get Tweets
         private void DisplayLoginIfUserNotLoggedIn()
@@ -140,7 +146,7 @@ namespace pcclient
             try
             {
                 // Schedule the update functions in the UI thread.
-                LayoutRoot.Dispatcher.BeginInvoke(
+                TweetsTab.Dispatcher.BeginInvoke(
                     DispatcherPriority.Normal,
                     new OneArgDelegate(UpdateUserInterface), twitter.GetFriendsTimeline());
 
@@ -163,7 +169,7 @@ namespace pcclient
             catch (RateLimitException ex)
             {
                 //App.Logger.Debug(String.Format("There was a problem fetching new tweets from Twitter.com: {0}", ex.ToString()));
-                LayoutRoot.Dispatcher.BeginInvoke(
+                TweetsTab.Dispatcher.BeginInvoke(
                     DispatcherPriority.ApplicationIdle,
                     new OneStringArgDelegate(ShowStatus), ex.Message);
             }
@@ -182,6 +188,11 @@ namespace pcclient
                 MessageBox.Show(ex.Message);
             }
 
+        }
+
+        private void ShowStatus(string status)
+        {
+            StatusTextBlock.Text = status;
         }
 
         private void UpdateUserInterface(TweetCollection newTweets)
@@ -575,11 +586,6 @@ namespace pcclient
         private void CancelTweet_Click(object sender, RoutedEventArgs e)
         {
             NewTweetBox.Height = 35;
-        }
-
-        private void ShowStatus(string status)
-        {
-            StatusTextBlock.Text = status;
         }
 
         protected override Decorator GetWindowButtonsPlaceholder()
