@@ -164,8 +164,8 @@
                         <pcclient:ImageConverter x:Key="ImageConverter"/>
                     </Border.Resources>
                     <Grid>
-                        <TabControl  TabStripPlacement="Top">
-                            <TabItem>
+                        <TabControl TabStripPlacement="Top">
+                            <TabItem x:Name="TweetsTab">
                                 <TabItem.Header>
                                     <StackPanel>
                                         <Image Source="assets/Tweets.ico" Stretch="None"/>

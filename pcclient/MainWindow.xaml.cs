@@ -81,21 +81,8 @@ namespace pcclient
         }
         #endregion
 
-        private void DelegateRecentFetch()
-        {
-            // Let the user know what's going on
-            //StatusTextBlock.Text = "Retrieving tweets...";
 
-            //PlayStoryboard("Fetching");
-
-            // Create a Dispatcher to fetching new tweets
-            NoArgDelegate fetcher = new NoArgDelegate(
-                this.GetTweets);
-
-            fetcher.BeginInvoke(null, null);
-
-        }
-
+        #region Get Tweets
         private void DisplayLoginIfUserNotLoggedIn()
         {
             // Does the user need to login?
@@ -247,37 +234,9 @@ namespace pcclient
             }
         }
 
-        private void ShowStatus(string status)
-        {
-            StatusTextBlock.Text = status;
-        }
+        #endregion
 
-        protected override Decorator GetWindowButtonsPlaceholder()
-        {
-            return WindowButtonsPlaceholder;
-        }
-
-        private void Header_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
-                this.DragMove();
-        }
-
-        private void Thumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
-        {
-            if (this.Width + e.HorizontalChange > 10)
-                this.Width += e.HorizontalChange;
-            if (this.Height + e.VerticalChange > 10)
-                this.Height += e.VerticalChange;
-        }
-
-
-        #region unknown
-
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            DelegateRecentFetch();
-        }
+        #region Get Friends
         #endregion
 
         #region Login
@@ -357,6 +316,21 @@ namespace pcclient
             {
                 MessageBox.Show("Incorrect username or password. Please try again");
             }
+        }
+
+        private void DelegateRecentFetch()
+        {
+            // Let the user know what's going on
+            //StatusTextBlock.Text = "Retrieving tweets...";
+
+            //PlayStoryboard("Fetching");
+
+            // Create a Dispatcher to fetching new tweets
+            NoArgDelegate fetcher = new NoArgDelegate(
+                this.GetTweets);
+
+            fetcher.BeginInvoke(null, null);
+
         }
 
         public static readonly RoutedEvent LoginEvent =
@@ -452,6 +426,7 @@ namespace pcclient
         }
 
         #endregion
+
         #region Minimize to Tray
 
         private System.Windows.Forms.NotifyIcon _notifyIcon;
@@ -562,6 +537,15 @@ namespace pcclient
 
         #endregion
 
+        #region Refresh Button click
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            DelegateRecentFetch();
+        }
+        #endregion
+
+        #region Unknown
         private void NewTweetBox_GotFocus(object sender, RoutedEventArgs e)
         {
             NewTweetBox.Height = 85;
@@ -592,6 +576,33 @@ namespace pcclient
         {
             NewTweetBox.Height = 35;
         }
+
+        private void ShowStatus(string status)
+        {
+            StatusTextBlock.Text = status;
+        }
+
+        protected override Decorator GetWindowButtonsPlaceholder()
+        {
+            return WindowButtonsPlaceholder;
+        }
+
+        private void Header_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
+                this.DragMove();
+        }
+
+        private void Thumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        {
+            if (this.Width + e.HorizontalChange > 10)
+                this.Width += e.HorizontalChange;
+            if (this.Height + e.VerticalChange > 10)
+                this.Height += e.VerticalChange;
+        }
+
+        #endregion
+
 
     }
 
