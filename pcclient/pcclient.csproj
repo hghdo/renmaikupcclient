@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{17CFAB2C-AA4F-49D6-AFF1-A56C1C8D63EC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -132,6 +132,7 @@
     <Compile Include="Misc\WebProxyHelper.cs" />
     <Compile Include="Misc\Win32.cs" />
     <Compile Include="Misc\WindowSettings.cs" />
+    <Compile Include="TabSizeConverter.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -183,6 +184,22 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\Tweets.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\14.png" />
+    <Resource Include="assets\15.png" />
+    <Resource Include="assets\16.png" />
+    <Resource Include="assets\17.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\13.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\reply.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\delete.png" />
+    <Resource Include="assets\menu_dropdown.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

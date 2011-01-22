@@ -37,6 +37,10 @@ namespace pcclient
 
         // Main collection of tweets
         private TweetCollection tweets = new TweetCollection();
+        private TweetCollection tweetsSentByMe = new TweetCollection();
+        private TweetCollection tweetsRefersMe = new TweetCollection();
+        private TweetCollection tweetsCommentByMe = new TweetCollection();
+        private TweetCollection favTweets = new TweetCollection();
 
         // Main TwitterNet object used to make Twitter API calls
         private IServiceApi twitter;
@@ -68,11 +72,11 @@ namespace pcclient
         {
             InitializeComponent();
 
+            ShowLogin();
+
             SetupNotifyIcon();
 
             SetDataContextForAllOfTabs();
-
-            
 
             //Handle login DebugAutoLogin() used to login auto use hbcjob@126.com/hbcjob and it is for dev only.
             DebugAutoLogin();
@@ -84,6 +88,10 @@ namespace pcclient
         private void SetDataContextForAllOfTabs()
         {
             TweetsTab.DataContext = tweets;
+            TweetsSendByMeTab.DataContext = tweetsSentByMe;
+            TweetsRefersMeTab.DataContext = tweetsRefersMe;
+            TweetsCommentedByMeTab.DataContext = tweetsCommentByMe;
+            TweetsFavTab.DataContext = favTweets;
             //LayoutRoot.DataContext = tweets;
 
         }
@@ -129,7 +137,7 @@ namespace pcclient
             LoginLayoutRoot.Visibility = Visibility.Visible;
             TopFrame.Visibility = Visibility.Collapsed;
             BottmNavigation.Visibility = Visibility.Collapsed;
-            TweetsListBox.Visibility = Visibility.Collapsed;
+            MainFrame.Visibility = Visibility.Collapsed;
         }
 
         private void HideLogin()
@@ -138,7 +146,7 @@ namespace pcclient
 
             TopFrame.Visibility = Visibility.Visible;
             BottmNavigation.Visibility = Visibility.Visible;
-            TweetsListBox.Visibility = Visibility.Visible;
+            MainFrame.Visibility = Visibility.Visible;
         }
         
         private void GetTweets()
