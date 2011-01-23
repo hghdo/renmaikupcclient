@@ -33,7 +33,11 @@ namespace pcclient
         private IntPtr SnarlConfighWnd;
         private NativeWindowApplication.WittySnarlMsgWnd snarlComWindow;
         private bool reallyexit = false;
+        private bool isLoggedIn = false;
 
+        // How often the automatic tweet updates occur.  TODO: Make this configurable
+        private TimeSpan refreshInterval;
+        private TimeSpan friendsRefreshInterval = new TimeSpan(0, 45, 0);
 
         // Main collection of tweets
         private TweetCollection tweets = new TweetCollection();
@@ -41,6 +45,11 @@ namespace pcclient
         private TweetCollection tweetsRefersMe = new TweetCollection();
         private TweetCollection tweetsCommentByMe = new TweetCollection();
         private TweetCollection favTweets = new TweetCollection();
+
+        // For Friend Group
+        private FriendGroupCollection group = new FriendGroupCollection();
+        private DispatcherTimer friendsRefreshTimer = new DispatcherTimer();
+        private DateTime lastFriendsUpdate = DateTime.MinValue;
 
         // Main TwitterNet object used to make Twitter API calls
         private IServiceApi twitter;
@@ -50,6 +59,7 @@ namespace pcclient
         private delegate void NoArgDelegate();
         private delegate void OneArgDelegate(TweetCollection arg);
         private delegate void OneStringArgDelegate(string arg);
+        private delegate void OneArgDelegateFriend(FriendGroupCollection arg);
         private delegate void OneDoubleArgDelegate(double id);
         private delegate void AddTweetsUpdateDelegate(TweetCollection arg);
         private delegate void MessagesDelegate(DirectMessageCollection arg);
@@ -135,17 +145,16 @@ namespace pcclient
         private void ShowLogin()
         {
             LoginLayoutRoot.Visibility = Visibility.Visible;
-            TopFrame.Visibility = Visibility.Collapsed;
-            BottmNavigation.Visibility = Visibility.Collapsed;
+            //TopFrame.Visibility = Visibility.Collapsed;
+            //BottmNavigation.Visibility = Visibility.Collapsed;
             MainFrame.Visibility = Visibility.Collapsed;
         }
 
         private void HideLogin()
         {
             LoginLayoutRoot.Visibility = Visibility.Collapsed;
-
-            TopFrame.Visibility = Visibility.Visible;
-            BottmNavigation.Visibility = Visibility.Visible;
+            //TopFrame.Visibility = Visibility.Visible;
+            //BottmNavigation.Visibility = Visibility.Visible;
             MainFrame.Visibility = Visibility.Visible;
         }
         
@@ -352,6 +361,92 @@ namespace pcclient
 
         }
 
+
+        private void DispatchFriendsList()
+        {
+            NoArgDelegate fetcher = new NoArgDelegate(this.GetFirends);
+
+            fetcher.BeginInvoke(null, null);
+
+        }
+
+        #region Get Friends
+        private void GetFirends()
+        {
+            try
+            {
+                // Schedule the update functions in the UI thread.
+                AllFriendTab.Dispatcher.BeginInvoke(
+                    DispatcherPriority.Normal,
+                    new OneArgDelegateFriend(UpdateFriendsList), twitter.getFriendGroups());
+
+            }
+            catch (RateLimitException ex)
+            {
+                //App.Logger.Debug(String.Format("There was a problem fetching new tweets from Twitter.com: {0}", ex.ToString()));
+                AllFriendTab.Dispatcher.BeginInvoke(
+                    DispatcherPriority.ApplicationIdle,
+                    new OneStringArgDelegate(ShowStatus), ex.Message);
+            }
+            catch (WebException ex)
+            {
+                App.Logger.Debug(String.Format("There was a problem fetching new tweets from Twitter.com: {0}", ex.ToString()));
+            }
+            catch (ProxyAuthenticationRequiredException ex)
+            {
+                App.Logger.Error("Incorrect proxy configuration.", ex);
+                MessageBox.Show("Proxy server is configured incorrectly.  Please correct the settings on the Options menu.");
+            }
+            catch (ProxyNotFoundException ex)
+            {
+                App.Logger.Error("Incorrect proxy configuration.");
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+        private void UpdateFriendsList(FriendGroupCollection newFriends)
+        {
+            //if (isLoggedIn)
+            //{
+                //friends = twitter.GetFriends() ?? friends;
+                group = newFriends;
+
+                //lastFriendsUpdate = DateTime.Now;
+                FriendsTreeView.DataContext = group;
+            //}
+        }
+
+        private void SetupFriendsListTimer()
+        {
+            friendsRefreshTimer.Interval = new TimeSpan(0, 0, 5);
+            friendsRefreshTimer.IsEnabled = true;
+            friendsRefreshTimer.Start();
+            friendsRefreshTimer.Tick += new EventHandler(friendsRefreshTimer_Tick);
+        }
+
+        void friendsRefreshTimer_Tick(object sender, EventArgs e)
+        {
+            friendsRefreshTimer.Interval = friendsRefreshInterval;
+            DispatchFriendsList();
+        }
+
+        private void AllFirendTab_Loaded(object sender, RoutedEventArgs e)
+        {
+            DispatchFriendsList();
+        }
+        #endregion
+
+
+
+
+
+
+
+
+
+
+
+
         public static readonly RoutedEvent LoginEvent =
             EventManager.RegisterRoutedEvent("Login", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MainWindow));
 
@@ -553,6 +648,22 @@ namespace pcclient
             SystemLogoMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Top;
             SystemLogoMenu.IsOpen = true;
         }
+
+
+        private void OpenFriendsPad(object sender, MouseButtonEventArgs e)
+        {
+            TweetsPad.Visibility = Visibility.Collapsed;
+            FriendsPad.Visibility = Visibility.Visible;
+            DispatchFriendsList();
+        }
+
+        private void OpenTweetsPad(object sender, MouseButtonEventArgs e)
+        {
+            TweetsPad.Visibility = Visibility.Visible;
+            FriendsPad.Visibility = Visibility.Collapsed;
+            DelegateRecentFetch();
+        }
+
 
         #endregion
 

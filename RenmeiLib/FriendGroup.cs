@@ -10,31 +10,45 @@ namespace RenmeiLib
     /// <summary>
     /// Represents the status post for a Twitter User.
     /// </summary>
+    /// 
     [Serializable]
-    public class FriendGroup : INotifyPropertyChanged, IEquatable<FriendGroup>
+    public class FriendGroup : INotifyPropertyChanged
     {
         #region Private fields
 
-        private double id;
-
-        public double Id
+        private int id;
+        public int Id
         {
             get { return id; }
             set { id = value; }
         }
-        private long userId;
 
-        public long UserId
+        private long groupId;
+        public long GroupId
         {
-            get { return userId; }
-            set { userId = value; }
+            get { return groupId; }
+            set
+            {
+                if (value != groupId)
+                {
+                    groupId = value;
+                    OnPropertyChanged("GroupId");
+                }
+            }
         }
-        private string title;
 
+        private string title;
         public string Title
         {
             get { return title; }
-            set { title = value; }
+            set
+            {
+                if (value != title)
+                {
+                    title = value;
+                    OnPropertyChanged("Title");
+                }
+            }
         }
 
         private int order;
@@ -51,6 +65,23 @@ namespace RenmeiLib
             get { return count; }
             set { count = value; }
         }
+
+        private UserCollection memberlist;
+
+        public UserCollection MemberList
+        {
+            get { return memberlist; }
+            set
+            {
+                if (value != memberlist)
+                {
+                    memberlist = value;
+                    OnPropertyChanged("MemberListChange");
+                }
+            }
+
+        }
+
         #endregion
 
         #region IEquatable<FriendGroup> Members
@@ -67,7 +98,7 @@ namespace RenmeiLib
             if (id != other.id)
                 return false;
             if (Id == -1)  // special type of tweet, so compare the user and text
-                return ((userId == other.UserId) && (title == other.Title));
+                return ((GroupId == other.GroupId) && (title == other.Title));
 
             return true;
         }
@@ -95,16 +126,11 @@ namespace RenmeiLib
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        #endregion
-
-        #region INotifyPropertyChanged Members
-
-        event PropertyChangedEventHandler INotifyPropertyChanged.PropertyChanged
+        protected virtual void OnPropertyChanged(string propertyName)
         {
-            add { throw new NotImplementedException(); }
-            remove { throw new NotImplementedException(); }
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
-
         #endregion
     }
 

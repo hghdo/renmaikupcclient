@@ -948,6 +948,7 @@ namespace RenmeiLib
         }
 
 
+
         private FriendGroup CreateFriendGroup(XmlNode groupNode)
         {
             FriendGroup group = new FriendGroup();
@@ -957,8 +958,11 @@ namespace RenmeiLib
                 int.TryParse(GetPropertyFromXml(groupNode, "groupId"), out temp);
                 group.Id = temp;
                 group.Title = GetPropertyFromXml(groupNode, "title");
-                int.TryParse(GetPropertyFromXml(groupNode, "binzhi_user_id"), out temp);
-                group.UserId = temp;
+
+                long ltmp;
+                long.TryParse(GetPropertyFromXml(groupNode, "binzhi_user_id"), out ltmp);
+                group.GroupId = ltmp;
+
                 int.TryParse(GetPropertyFromXml(groupNode, "order_num"), out temp);
                 group.Order = temp;
                 int.TryParse(GetPropertyFromXml(groupNode, "friend_count"), out temp);
@@ -967,7 +971,7 @@ namespace RenmeiLib
             return group;
         }
 
-        public FriendGroupCollection getFriendGroups(int userId)
+        public FriendGroupCollection getFriendGroups()
         {
             FriendGroupCollection groups = new FriendGroupCollection();
             string groupUrl = TwitterServerUrl + "service/twitter/groupList.do";
@@ -993,7 +997,9 @@ namespace RenmeiLib
 
                     foreach (XmlNode node in nodes)
                     {
-                        groups.Add(CreateFriendGroup(node));
+                        FriendGroup fg = CreateFriendGroup(node);
+                        fg.MemberList = GetFriendsbyGroupID(fg.Id, "", 20);
+                        groups.Add(fg);
                     }
                 }
             }
@@ -1009,6 +1015,67 @@ namespace RenmeiLib
                 ParseWebException(webExcp);
             }
             return groups;
+        }
+
+        /// <summary>
+        /// Returns the authenticated user's friends who have most recently updated, each with current status inline.
+        /// </summary>
+        public UserCollection GetFriendsbyGroupID(int groupId, string listTpye, int limit)
+        {
+            UserCollection members = new UserCollection();
+            string groupUrl = TwitterServerUrl + "service/twitter/friendList.do";
+            if (0 != groupId)
+            {
+                groupUrl += "?groupId=" + groupId.ToString();
+            }
+            if (!string.IsNullOrEmpty(listTpye))
+            {
+                groupUrl += "&listType=" + listTpye;
+            }
+            if (0 != limit)
+            {
+                groupUrl += "&limit=" + limit.ToString();
+            }
+            groupUrl += "&" + getAuthUrl();
+            // Create the web request
+            HttpWebRequest request = CreateTwitterRequest(groupUrl);
+
+            // moved this out of the try catch to use it later on in the XMLException
+            // trying to fix a bug someone report
+            XmlDocument doc = new XmlDocument();
+            try
+            {
+                // Get the Web Response  
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                {
+                    // Get the response stream  
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+
+                    // Load the response data into a XmlDocument  
+                    doc.Load(reader);
+                    // Get statuses with XPath  
+                    XmlNodeList nodes = doc.SelectNodes("/result/friendList/user");
+
+                    foreach (XmlNode node in nodes)
+                    {
+                        User us = CreateUser(node);
+                        members.Add(us);
+                    }
+                }
+            }
+            catch (XmlException exXML)
+            {
+                // adding the XML document data to the exception so it will get logged
+                // so we can debug the issue
+                exXML.Data.Add("XMLDoc", doc);
+                throw;
+            }
+            catch (WebException webExcp)
+            {
+                ParseWebException(webExcp);
+            }
+            return members;
+
         }
 
         private string getAuthUrl()

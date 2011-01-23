@@ -27,8 +27,10 @@
         void FollowUser(string userName);
         void SendMessage(string user, string text);
 
-        UserCollection GetFriends(int userId);
-        UserCollection GetFriends();
+
+        //UserCollection GetFriends(int userId);
+        //UserCollection GetFriends();
+        FriendGroupCollection getFriendGroups();
         User CurrentlyLoggedInUser { get; set; }
         User GetUser(int userId);
         User Login();
