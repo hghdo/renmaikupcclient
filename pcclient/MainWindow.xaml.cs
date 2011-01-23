@@ -102,6 +102,7 @@ namespace pcclient
             TweetsRefersMeTab.DataContext = tweetsRefersMe;
             TweetsCommentedByMeTab.DataContext = tweetsCommentByMe;
             TweetsFavTab.DataContext = favTweets;
+            FriendsGroupTab.DataContext = group;
             //LayoutRoot.DataContext = tweets;
 
         }
@@ -265,6 +266,69 @@ namespace pcclient
         #endregion
 
         #region Get Friends
+        private void GetFirends()
+        {
+            try
+            {
+                // Schedule the update functions in the UI thread.
+                AllFriendTab.Dispatcher.BeginInvoke(
+                    DispatcherPriority.Normal,
+                    new OneArgDelegateFriend(UpdateFriendsList), twitter.getFriendGroups());
+
+            }
+            catch (RateLimitException ex)
+            {
+                //App.Logger.Debug(String.Format("There was a problem fetching new tweets from Twitter.com: {0}", ex.ToString()));
+                AllFriendTab.Dispatcher.BeginInvoke(
+                    DispatcherPriority.ApplicationIdle,
+                    new OneStringArgDelegate(ShowStatus), ex.Message);
+            }
+            catch (WebException ex)
+            {
+                App.Logger.Debug(String.Format("There was a problem fetching new tweets from Twitter.com: {0}", ex.ToString()));
+            }
+            catch (ProxyAuthenticationRequiredException ex)
+            {
+                App.Logger.Error("Incorrect proxy configuration.", ex);
+                MessageBox.Show("Proxy server is configured incorrectly.  Please correct the settings on the Options menu.");
+            }
+            catch (ProxyNotFoundException ex)
+            {
+                App.Logger.Error("Incorrect proxy configuration.");
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+        private void UpdateFriendsList(FriendGroupCollection newFriends)
+        {
+            group = newFriends;
+        }
+
+        private void DispatchFriendsList()
+        {
+            NoArgDelegate fetcher = new NoArgDelegate(this.GetFirends);
+
+            fetcher.BeginInvoke(null, null);
+        }
+ 
+        private void SetupFriendsListTimer()
+        {
+            friendsRefreshTimer.Interval = new TimeSpan(0, 0, 5);
+            friendsRefreshTimer.IsEnabled = true;
+            friendsRefreshTimer.Start();
+            friendsRefreshTimer.Tick += new EventHandler(friendsRefreshTimer_Tick);
+        }
+
+        void friendsRefreshTimer_Tick(object sender, EventArgs e)
+        {
+            friendsRefreshTimer.Interval = friendsRefreshInterval;
+            DispatchFriendsList();
+        }
+
+        private void AllFirendTab_Loaded(object sender, RoutedEventArgs e)
+        {
+            DispatchFriendsList();
+        }
         #endregion
 
         #region Login
@@ -339,6 +403,7 @@ namespace pcclient
                 myBitmapImage.EndInit();
                 CurrentUserHeadImage.Source = myBitmapImage;
                 DelegateRecentFetch();
+                DispatchFriendsList();
             }
             else
             {
@@ -360,92 +425,6 @@ namespace pcclient
             fetcher.BeginInvoke(null, null);
 
         }
-
-
-        private void DispatchFriendsList()
-        {
-            NoArgDelegate fetcher = new NoArgDelegate(this.GetFirends);
-
-            fetcher.BeginInvoke(null, null);
-
-        }
-
-        #region Get Friends
-        private void GetFirends()
-        {
-            try
-            {
-                // Schedule the update functions in the UI thread.
-                AllFriendTab.Dispatcher.BeginInvoke(
-                    DispatcherPriority.Normal,
-                    new OneArgDelegateFriend(UpdateFriendsList), twitter.getFriendGroups());
-
-            }
-            catch (RateLimitException ex)
-            {
-                //App.Logger.Debug(String.Format("There was a problem fetching new tweets from Twitter.com: {0}", ex.ToString()));
-                AllFriendTab.Dispatcher.BeginInvoke(
-                    DispatcherPriority.ApplicationIdle,
-                    new OneStringArgDelegate(ShowStatus), ex.Message);
-            }
-            catch (WebException ex)
-            {
-                App.Logger.Debug(String.Format("There was a problem fetching new tweets from Twitter.com: {0}", ex.ToString()));
-            }
-            catch (ProxyAuthenticationRequiredException ex)
-            {
-                App.Logger.Error("Incorrect proxy configuration.", ex);
-                MessageBox.Show("Proxy server is configured incorrectly.  Please correct the settings on the Options menu.");
-            }
-            catch (ProxyNotFoundException ex)
-            {
-                App.Logger.Error("Incorrect proxy configuration.");
-                MessageBox.Show(ex.Message);
-            }
-
-        }
-        private void UpdateFriendsList(FriendGroupCollection newFriends)
-        {
-            //if (isLoggedIn)
-            //{
-                //friends = twitter.GetFriends() ?? friends;
-                group = newFriends;
-
-                //lastFriendsUpdate = DateTime.Now;
-                FriendsTreeView.DataContext = group;
-            //}
-        }
-
-        private void SetupFriendsListTimer()
-        {
-            friendsRefreshTimer.Interval = new TimeSpan(0, 0, 5);
-            friendsRefreshTimer.IsEnabled = true;
-            friendsRefreshTimer.Start();
-            friendsRefreshTimer.Tick += new EventHandler(friendsRefreshTimer_Tick);
-        }
-
-        void friendsRefreshTimer_Tick(object sender, EventArgs e)
-        {
-            friendsRefreshTimer.Interval = friendsRefreshInterval;
-            DispatchFriendsList();
-        }
-
-        private void AllFirendTab_Loaded(object sender, RoutedEventArgs e)
-        {
-            DispatchFriendsList();
-        }
-        #endregion
-
-
-
-
-
-
-
-
-
-
-
 
         public static readonly RoutedEvent LoginEvent =
             EventManager.RegisterRoutedEvent("Login", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MainWindow));
@@ -728,7 +707,27 @@ namespace pcclient
 
         #endregion
 
+        #region Friend Group right click
+        private void taHomePage_onClick(object sender, RoutedEventArgs e)
+        {
+        }
 
+        private void sendTweet_onClick(object sender, RoutedEventArgs e)
+        {
+        }
+        private void sendPrivateMsg_onClick(object sender, RoutedEventArgs e)
+        {
+        }
+        private void viewTwitter_onClick(object sender, RoutedEventArgs e)
+        {
+        }
+        private void removeFriend_onClick(object sender, RoutedEventArgs e)
+        {
+        }
+        private void shildTweets_onClick(object sender, RoutedEventArgs e)
+        {
+        }
+        #endregion
     }
 
 }

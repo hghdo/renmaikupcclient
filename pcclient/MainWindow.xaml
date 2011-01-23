@@ -10,6 +10,7 @@
     
     <CustomWindow:EssentialWindow.Resources>
         <pcclient:ImageConverter x:Key="ImageConverter"/>
+        <pcclient:IndentConverter Indent="10" x:Key="indentConverter"/>
         <Style x:Key="SimpleListBoxItem" TargetType="ListBoxItem">
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
             <Setter Property="Template">
@@ -26,6 +27,167 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+        <Style x:Key="TreeViewItemFocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <StreamGeometry x:Key="TreeArrow" >M0.5,0L0.5,7 4.5,3.5z</StreamGeometry>
+        <Style x:Key="ExpandCollapseToggleStyle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border Background="Transparent">
+                            <Path x:Name="ExpandPath" Data="{StaticResource TreeArrow}" Fill="Transparent" Stroke="#FF989898" Margin="0,2,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="RenderTransform" TargetName="ExpandPath">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="45" CenterX="0" CenterY="2.5"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Fill" TargetName="ExpandPath" Value="#FF595959"/>
+                                <Setter Property="Stroke" TargetName="ExpandPath" Value="#FF262626"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Stroke" TargetName="ExpandPath" Value="#FF1BBBFA"/>
+                                <Setter Property="Fill" TargetName="ExpandPath" Value="Transparent"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect ShadowDepth="0" Color="#FF2CC8F8" BlurRadius="5"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type TreeViewItem}" x:Key="AeroTreeStyle">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="1,0,0,0"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="FocusVisualStyle" Value="{StaticResource TreeViewItemFocusVisual}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TreeViewItem}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition MinWidth="19" Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <ToggleButton x:Name="Expander" ClickMode="Press" IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource ExpandCollapseToggleStyle}"/>
+                            <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="1" Padding="{TemplateBinding Padding}" CornerRadius="2">
+                                <Border x:Name="InnerBd" BorderThickness="1" CornerRadius="1">
+                                    <ContentPresenter x:Name="PART_Header" ContentSource="Header" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="0,-1,0,0"/>
+                                </Border>
+                            </Border>
+                            <ItemsPresenter x:Name="ItemsHost" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsExpanded" Value="false">
+                                <Setter Property="Visibility" TargetName="ItemsHost" Value="Collapsed"/>
+                            </Trigger>
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter Property="Visibility" TargetName="Expander" Value="Hidden"/>
+                            </Trigger>
+                            <Trigger SourceName="Bd" Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="Bd">
+                                    <Setter.Value>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FFFAFBFD" Offset="0"/>
+                                            <GradientStop Color="#FFEBF3FD" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="BorderBrush" Value="#FFB8D6FB"/>
+                                <Setter Property="BorderBrush" TargetName="InnerBd">
+                                    <Setter.Value>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FFFCFDFE" Offset="0"/>
+                                            <GradientStop Color="#FFF2F7FE" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter Property="Background" TargetName="Bd">
+                                    <Setter.Value>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FFECF5FF" Offset="0"/>
+                                            <GradientStop Color="#FFD0E5FF" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="BorderBrush" Value="#FF84ACDD"/>
+                                <Setter Property="BorderBrush" TargetName="InnerBd">
+                                    <Setter.Value>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FFF2F8FF" Offset="0"/>
+                                            <GradientStop Color="#FFDFEEFF" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="true"/>
+                                    <Condition Property="IsSelectionActive" Value="false"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" TargetName="Bd">
+                                    <Setter.Value>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FFF9F9F9" Offset="0"/>
+                                            <GradientStop Color="#FFE6E6E6" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="BorderBrush" Value="#FFDADADA"/>
+                                <Setter Property="BorderBrush" TargetName="InnerBd">
+                                    <Setter.Value>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FFFBFBFC" Offset="0"/>
+                                            <GradientStop Color="#FFF1F1F1" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="VirtualizingStackPanel.IsVirtualizing" Value="true">
+                    <Setter Property="ItemsPanel">
+                        <Setter.Value>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel/>
+                            </ItemsPanelTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
         </Style>
         <!-- DateTemplate for Tweets -->
         <DataTemplate x:Key="TweetsTemplate">
@@ -89,16 +251,65 @@
             </DataTemplate.Triggers>
         </DataTemplate>
         <!-- DateTemplate for FriendsGroup -->
-        <HierarchicalDataTemplate x:Key="GroupNameTemplate" ItemsSource="{Binding Path=MemberList}">
-            <!--  ItemTemplate="{StaticResource MembersUserTemplate}" -->
+        <!--
+        <HierarchicalDataTemplate  x:Key="GroupNameTemplate" ItemsSource="{Binding Path=MemberList}">
             <TextBlock Text="{Binding Path=Title}" FontWeight="Bold" />
             <HierarchicalDataTemplate.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Path=ScreenName}"/>
+                    <Grid Margin="{Binding Converter={StaticResource indentConverter},RelativeSource={RelativeSource TemplatedParent}}">
+                        <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="50" BorderBrush="White" BorderThickness="0">
+                        <Image Width="40" Height="40" Source="{Binding Path=ImageUrl}"/>
+                    </Border>
+                    <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Text="{Binding Path=ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
+                    </Grid>
                 </DataTemplate>
             </HierarchicalDataTemplate.ItemTemplate>
         </HierarchicalDataTemplate>
-      
+        -->
+        <ContextMenu x:Key="SingleFirend_ContextMenu">
+                <MenuItem Header="TA主页" Click="taHomePage_onClick" />
+                <MenuItem Header="发微博" Click="sendTweet_onClick" />
+                <MenuItem Header="发私信" Click="sendPrivateMsg_onClick" />
+                <MenuItem Header="查看微博" Click="viewTwitter_onClick" />
+                <MenuItem Header="解除好友" Click="removeFriend_onClick" />
+                <MenuItem Header="屏蔽微博" Click="shildTweets_onClick" />
+        </ContextMenu>
+        <DataTemplate x:Key="SingleFriendTemplate">
+            <Grid Margin="{Binding Converter={StaticResource indentConverter},RelativeSource={RelativeSource TemplatedParent}}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="50" BorderBrush="White" BorderThickness="0">
+                    <Image Width="40" Height="40" Source="{Binding Path=ImageUrl}"/>
+                </Border>
+                <TextBlock Grid.Row="0"  Grid.Column="1" VerticalAlignment="Center" Text="{Binding Path=ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0" />
+                <Image Grid.Row="0"  Grid.Column="2" Source="assets/10.png" Stretch="UniformToFill" Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+             </Grid>
+        </DataTemplate>
+        <HierarchicalDataTemplate x:Key="GroupNameTemplate">
+            <TreeView BorderThickness="0">
+                <TreeView.Resources>
+                    <Style TargetType="{x:Type TreeViewItem}"
+                       BasedOn="{StaticResource AeroTreeStyle}" />
+                </TreeView.Resources>
+                <TreeViewItem Header="{Binding Path=Title}" ItemsSource="{Binding Path=MemberList}" ItemTemplate="{StaticResource SingleFriendTemplate}" ContextMenu="{StaticResource SingleFirend_ContextMenu}">
+                </TreeViewItem>
+            </TreeView>
+        </HierarchicalDataTemplate>
+        
         <pcclient:TabSizeConverter x:Key="tabSizeConverter" />
         <Style  TargetType="{x:Type TabControl}">
             <Setter Property="Template">
