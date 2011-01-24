@@ -955,12 +955,12 @@ namespace RenmeiLib
             if (groupNode != null)
             {
                 int temp = -1;
-                int.TryParse(GetPropertyFromXml(groupNode, "groupId"), out temp);
-                group.Id = temp;
+                //int.TryParse(GetPropertyFromXml(groupNode, "groupId"), out temp);
+                //group.Id = temp;
                 group.Title = GetPropertyFromXml(groupNode, "title");
 
                 long ltmp;
-                long.TryParse(GetPropertyFromXml(groupNode, "binzhi_user_id"), out ltmp);
+                long.TryParse(GetPropertyFromXml(groupNode, "groupId"), out ltmp);
                 group.GroupId = ltmp;
 
                 int.TryParse(GetPropertyFromXml(groupNode, "order_num"), out temp);
@@ -998,7 +998,7 @@ namespace RenmeiLib
                     foreach (XmlNode node in nodes)
                     {
                         FriendGroup fg = CreateFriendGroup(node);
-                        fg.MemberList = GetFriendsbyGroupID(fg.Id, "", 20);
+                        fg.MemberList = GetFriendsbyGroupID(fg.GroupId, "", 20);
                         groups.Add(fg);
                     }
                 }
@@ -1020,7 +1020,7 @@ namespace RenmeiLib
         /// <summary>
         /// Returns the authenticated user's friends who have most recently updated, each with current status inline.
         /// </summary>
-        public UserCollection GetFriendsbyGroupID(int groupId, string listTpye, int limit)
+        public UserCollection GetFriendsbyGroupID(long groupId, string listTpye, int limit)
         {
             UserCollection members = new UserCollection();
             string groupUrl = TwitterServerUrl + "service/twitter/friendList.do";

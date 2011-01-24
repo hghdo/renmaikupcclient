@@ -250,65 +250,8 @@
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
-        <!-- DateTemplate for FriendsGroup -->
-        <!--
-        <HierarchicalDataTemplate  x:Key="GroupNameTemplate" ItemsSource="{Binding Path=MemberList}">
-            <TextBlock Text="{Binding Path=Title}" FontWeight="Bold" />
-            <HierarchicalDataTemplate.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="{Binding Converter={StaticResource indentConverter},RelativeSource={RelativeSource TemplatedParent}}">
-                        <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="60" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="50" BorderBrush="White" BorderThickness="0">
-                        <Image Width="40" Height="40" Source="{Binding Path=ImageUrl}"/>
-                    </Border>
-                    <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Text="{Binding Path=ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
-                    </Grid>
-                </DataTemplate>
-            </HierarchicalDataTemplate.ItemTemplate>
-        </HierarchicalDataTemplate>
-        -->
-        <ContextMenu x:Key="SingleFirend_ContextMenu">
-                <MenuItem Header="TA主页" Click="taHomePage_onClick" />
-                <MenuItem Header="发微博" Click="sendTweet_onClick" />
-                <MenuItem Header="发私信" Click="sendPrivateMsg_onClick" />
-                <MenuItem Header="查看微博" Click="viewTwitter_onClick" />
-                <MenuItem Header="解除好友" Click="removeFriend_onClick" />
-                <MenuItem Header="屏蔽微博" Click="shildTweets_onClick" />
-        </ContextMenu>
-        <DataTemplate x:Key="SingleFriendTemplate">
-            <Grid Margin="{Binding Converter={StaticResource indentConverter},RelativeSource={RelativeSource TemplatedParent}}">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="60" />
-                    <ColumnDefinition Width="100" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="50" BorderBrush="White" BorderThickness="0">
-                    <Image Width="40" Height="40" Source="{Binding Path=ImageUrl}"/>
-                </Border>
-                <TextBlock Grid.Row="0"  Grid.Column="1" VerticalAlignment="Center" Text="{Binding Path=ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0" />
-                <Image Grid.Row="0"  Grid.Column="2" Source="assets/10.png" Stretch="UniformToFill" Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-             </Grid>
-        </DataTemplate>
-        <HierarchicalDataTemplate x:Key="GroupNameTemplate">
-            <TreeView BorderThickness="0">
-                <TreeView.Resources>
-                    <Style TargetType="{x:Type TreeViewItem}"
-                       BasedOn="{StaticResource AeroTreeStyle}" />
-                </TreeView.Resources>
-                <TreeViewItem Header="{Binding Path=Title}" ItemsSource="{Binding Path=MemberList}" ItemTemplate="{StaticResource SingleFriendTemplate}" ContextMenu="{StaticResource SingleFirend_ContextMenu}">
-                </TreeViewItem>
-            </TreeView>
-        </HierarchicalDataTemplate>
+        
         
         <!--pcclient:TabSizeConverter x:Key="tabSizeConverter" /-->
         <Style  TargetType="{x:Type TabControl}">
@@ -361,8 +304,43 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-
+ 
+        <!-- DateTemplate for FriendsGroup -->
+         <ContextMenu x:Key="SingleFirend_ContextMenu">
+            <MenuItem Header="TA主页" Click="taHomePage_onClick" />
+            <MenuItem Header="发微博" Click="sendTweet_onClick" />
+            <MenuItem Header="发私信" Click="sendPrivateMsg_onClick" />
+            <MenuItem Header="查看微博" Click="viewTwitter_onClick" />
+            <MenuItem Header="解除好友" Click="removeFriend_onClick" />
+            <MenuItem Header="屏蔽微博" Click="shildTweets_onClick" />
+        </ContextMenu>       
+        <DataTemplate x:Key="SingleFriendTemplate">
+            <Grid Margin="{Binding Converter={StaticResource indentConverter},RelativeSource={RelativeSource TemplatedParent}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="50" BorderBrush="White" BorderThickness="0">
+                    <Image Width="40" Height="40" Source="{Binding Path=ImageUrl}"/>
+                </Border>
+                <TextBlock Grid.Row="0"  Grid.Column="1" VerticalAlignment="Center" Text="{Binding Path=ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0" />
+                <Image Grid.Row="0"  Grid.Column="2" Source="assets/10.png" Stretch="UniformToFill" Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+             </Grid>
+        </DataTemplate>
+        <HierarchicalDataTemplate x:Key="GroupNameTemplate">
+            <TreeView BorderThickness="0">
+                <TreeView.Resources>
+                    <Style TargetType="{x:Type TreeViewItem}"
+                       BasedOn="{StaticResource AeroTreeStyle}" />
+                </TreeView.Resources>
+                <TreeViewItem Header="{Binding Path=Title}" ItemsSource="{Binding Path=MemberList}" ItemTemplate="{StaticResource SingleFriendTemplate}" ContextMenu="{StaticResource SingleFirend_ContextMenu}">
+                </TreeViewItem>
+            </TreeView>
+        </HierarchicalDataTemplate>
     </CustomWindow:EssentialWindow.Resources>
     
     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="#3BB2EA" x:Name="LayoutRoot" SnapsToDevicePixels="True">
@@ -497,7 +475,7 @@
                 <TabControl x:Name="TweetsPad" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <TabItem x:Name="TweetsTab" BorderThickness="0" >
                         <TabItem.Header>
-                            <StackPanel Width="52" VerticalAlignment="Stretch">
+                            <StackPanel Width="52" HorizontalAlignment="Stretch">
                             <Image Stretch="None" Source="assets/13.png"/>
                             </StackPanel>
                         </TabItem.Header>
@@ -513,7 +491,7 @@
                     </TabItem>
                     <TabItem x:Name="TweetsSendByMeTab" BorderThickness="0">
                         <TabItem.Header>
-                            <StackPanel Width="52" VerticalAlignment="Stretch">
+                            <StackPanel Width="52" HorizontalAlignment="Stretch">
                             <Image  Stretch="None"  Source="assets/14.png"/>
                             </StackPanel>
                         </TabItem.Header>
@@ -524,7 +502,7 @@
                     </TabItem>
                     <TabItem x:Name="TweetsRefersMeTab" BorderThickness="0">
                         <TabItem.Header>
-                            <StackPanel Width="52" VerticalAlignment="Stretch">
+                            <StackPanel Width="52" HorizontalAlignment="Stretch">
                             <Image Stretch="None" Source="assets/16.png"/>
                             </StackPanel>
                         </TabItem.Header>
@@ -535,7 +513,7 @@
                     </TabItem>
                     <TabItem x:Name="TweetsCommentedByMeTab" BorderThickness="0">
                         <TabItem.Header>
-                            <StackPanel Width="52" VerticalAlignment="Stretch">
+                            <StackPanel Width="52" HorizontalAlignment="Stretch">
                             <Image Stretch="None" Source="assets/15.png"/>
                             </StackPanel>
                         </TabItem.Header>
@@ -546,7 +524,7 @@
                     </TabItem>
                     <TabItem x:Name="TweetsFavTab" BorderThickness="0">
                         <TabItem.Header>
-                            <StackPanel Width="52" VerticalAlignment="Stretch">
+                            <StackPanel Width="52" HorizontalAlignment="Stretch">
                             <Image Stretch="None" Source="assets/17.png"/>
                             </StackPanel>
                         </TabItem.Header>
@@ -557,40 +535,46 @@
                     </TabItem>
                 </TabControl>
                 <!-- Friends TabControl -->
-                <TabControl x:Name="FriendsPad" TabStripPlacement="Top" Visibility="Collapsed" >
+                <TabControl x:Name="FriendsPad" TabStripPlacement="Top" Visibility="Collapsed">
                     <TabItem x:Name="FriendsGroupTab">
                         <TabItem.Header>
-                            <StackPanel>
-                                <Image Source="assets/Tweets.ico" Stretch="None"/>
+                            <StackPanel Width="65" HorizontalAlignment="Stretch">
+                                <TextBlock HorizontalAlignment="Center">我的好友</TextBlock>
                             </StackPanel>
                         </TabItem.Header>
                         <TabItem.Content>
-                            <!-- <Grid x:Name="AllFriendTab" Background="White" Loaded="AllFirendTab_Loaded"> -->
-                            <Grid x:Name="AllFriendTab" Background="White">
-                                <TreeView x:Name="FriendsTreeView" ItemsSource="{Binding Mode=OneWay}" ItemTemplate="{StaticResource GroupNameTemplate}"></TreeView>
+                            <Grid x:Name="AllFriendTab" Background="White" PresentationTraceSources.TraceLevel="High">
+                                <TreeView x:Name="FriendsTreeView" ItemsSource="{Binding Mode=OneWay}" ItemTemplate="{StaticResource GroupNameTemplate}"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                     HorizontalContentAlignment="Stretch"></TreeView>
                             </Grid>
                         </TabItem.Content>
                     </TabItem>
 
-                    <TabItem Header="FollowMeTab">
-                        <TextBlock>粉丝</TextBlock>
+                    <TabItem x:Name="FollowMeTab">
+                        <TabItem.Header>
+                            <StackPanel Width="65" HorizontalAlignment="Stretch">
+                                <TextBlock HorizontalAlignment="Center">关注我的</TextBlock>
+                            </StackPanel>
+                        </TabItem.Header>
                     </TabItem>
 
                     <TabItem x:Name="MyFollowTab">
                         <TabItem.Header>
-                            <StackPanel>
-                                <Image Source="assets/Tweets.ico" Stretch="None"/>
+                            <StackPanel Width="65" HorizontalAlignment="Stretch">
+                                <TextBlock HorizontalAlignment="Center">我关注的</TextBlock>
                             </StackPanel>
                         </TabItem.Header>
                         <TabItem.Content>
-                            <TextBlock>好友</TextBlock>
+                            <TextBlock HorizontalAlignment="Center">好友</TextBlock>
                         </TabItem.Content>
                     </TabItem>
                     <TabItem x:Name="WaitingConfirmTab">
                         <TabItem.Header>
-                            <StackPanel>
-                                <Image Source="assets/Tweets.ico" Stretch="None"/>
-                            </StackPanel>
+                                <StackPanel Width="65" HorizontalAlignment="Stretch">
+                                    <TextBlock HorizontalAlignment="Center">等待确认的</TextBlock>
+                                </StackPanel>
                         </TabItem.Header>
                         <TabItem.Content>
                             <TextBlock>好友</TextBlock>
