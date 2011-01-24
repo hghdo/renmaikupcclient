@@ -176,6 +176,14 @@ namespace pcclient
                 //TODO: Make DM and Reply threshold configurable.  Rework this logic once concept of viewed tweets is introduced to Witty.
                 string since = DateTime.Now.AddHours(-70).ToString();
 
+
+        //private TweetCollection tweets = new TweetCollection();
+        //private TweetCollection tweetsSentByMe = new TweetCollection();
+        //private TweetCollection tweetsRefersMe = new TweetCollection();
+        //private TweetCollection tweetsCommentByMe = new TweetCollection();
+        //private TweetCollection favTweets = new TweetCollection();
+
+
                 //LayoutRoot.Dispatcher.BeginInvoke(
                 //    DispatcherPriority.Loaded,
                 //    new OneArgDelegate(UpdateUserInterface), twitter.GetReplies(since));
@@ -234,7 +242,7 @@ namespace pcclient
             for (int i = newTweets.Count - 1; i >= 0; i--)
             {
                 Tweet tweet = newTweets[i];
-
+                
                 if (tweets.Contains(tweet)) continue;
 
                 tweets.Add(tweet);

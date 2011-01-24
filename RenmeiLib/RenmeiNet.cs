@@ -779,7 +779,7 @@ namespace RenmeiLib
             // Set values for the request back
             request.ContentType = "application/x-www-form-urlencoded";
             string param = "content=" + text;
-            string replyParam = "&previousId=" + replyid.ToString();
+            string replyParam = "previousId=" + replyid.ToString();
             //string sourceParam = "&source=" + ClientName;
             request.ContentLength = param.Length;// +sourceParam.Length;
             request.ContentLength += replyParam.Length;
@@ -1490,8 +1490,8 @@ namespace RenmeiLib
             }
             else
             {
-                DateTime sinceDate=DateTime.Now.AddHours(-70);
-                timelineUrl += "&timePoint=" + sinceDate.ToString("yyyy-MM-dd HH:mm:ss") + "&direction=forward";
+                DateTime sinceDate=DateTime.Now;//.AddHours(-70);
+                timelineUrl += "&timePoint=" + sinceDate.ToString("yyyy-MM-dd HH:mm:ss") + "&direction=back";
 
             }
             timelineUrl += "&limit=50";

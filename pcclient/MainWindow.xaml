@@ -362,6 +362,7 @@
             </Setter>
         </Style>
 
+
     </CustomWindow:EssentialWindow.Resources>
     
     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="#3BB2EA" x:Name="LayoutRoot" SnapsToDevicePixels="True">
@@ -499,7 +500,13 @@
                             <Image Width="16" Source="assets/13.png"/>
                         </TabItem.Header>
                         <TabItem.Content>
-                            <ListBox ItemTemplate="{StaticResource TweetsTemplate}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListBox>
+                            <ListBox ItemTemplate="{StaticResource TweetsTemplate}" 
+                                     ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
+                                     BorderThickness="0" HorizontalContentAlignment="Stretch" 
+                                     ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" 
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                     ContextMenu="{StaticResource SingleFirend_ContextMenu}"/>
                         </TabItem.Content>
                     </TabItem>
                     <TabItem x:Name="TweetsSendByMeTab" BorderThickness="0">
