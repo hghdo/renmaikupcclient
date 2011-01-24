@@ -364,8 +364,8 @@ namespace pcclient
         private void DebugAutoLogin()
         {
 
-            //twitter = new RenmeiNet("hbcjob@126.com", RenmeiNet.ToSecureString("hbcjob"));
-            twitter = new RenmeiNet("binzhi_web@126.com", RenmeiNet.ToSecureString("111111"));
+            twitter = new RenmeiNet("hbcjob@126.com", RenmeiNet.ToSecureString("hbcjob"));
+            //twitter = new RenmeiNet("binzhi_web@126.com", RenmeiNet.ToSecureString("111111"));
             twitter.TwitterServerUrl = AppSettings.RenmeiHost;
             TryLogin(twitter);
         }

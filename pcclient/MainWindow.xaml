@@ -191,7 +191,7 @@
         </Style>
         <!-- DateTemplate for Tweets -->
         <DataTemplate x:Key="TweetsTemplate">
-            <Border x:Name="listBorder" Background="#ffffff" BorderBrush="#61738B" Margin="0" Padding="0,8,5,8" BorderThickness="0 0 0 1">
+            <Border x:Name="listBorder" Background="#ffffff" BorderBrush="#61738B" Margin="0" Padding="0,8,5,8" BorderThickness="0 0 0 1" VerticalAlignment="Stretch">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60" />
@@ -390,7 +390,7 @@
                 </StackPanel>
             </Border>
             <!-- This is used for After Logged in-->
-            <DockPanel Name="MainFrame" HorizontalAlignment="Stretch" Width="Auto">
+            <DockPanel Name="MainFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <!-- User Head Image -->
                 <Border Name="TopFrame" DockPanel.Dock="Top" Background="#169DE1" Padding="10,0,10,10">
                     <StackPanel>
@@ -494,10 +494,12 @@
                     </Grid>
                 </Border>
                 <!-- Tweets TabControl -->
-                <TabControl x:Name="TweetsPad" BorderThickness="0" HorizontalAlignment="Stretch">
+                <TabControl x:Name="TweetsPad" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <TabItem x:Name="TweetsTab" BorderThickness="0" >
                         <TabItem.Header>
-                            <Image Width="16" Source="assets/13.png"/>
+                            <StackPanel Width="52" VerticalAlignment="Stretch">
+                            <Image Stretch="None" Source="assets/13.png"/>
+                            </StackPanel>
                         </TabItem.Header>
                         <TabItem.Content>
                             <ListBox ItemTemplate="{StaticResource TweetsTemplate}" 
@@ -511,7 +513,9 @@
                     </TabItem>
                     <TabItem x:Name="TweetsSendByMeTab" BorderThickness="0">
                         <TabItem.Header>
-                            <Image Width="16" Source="assets/14.png"/>
+                            <StackPanel Width="52" VerticalAlignment="Stretch">
+                            <Image  Stretch="None"  Source="assets/14.png"/>
+                            </StackPanel>
                         </TabItem.Header>
                         <TabItem.Content>
                             <!--ListBox x:Name="TweetsListBox" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"-->
@@ -520,7 +524,9 @@
                     </TabItem>
                     <TabItem x:Name="TweetsRefersMeTab" BorderThickness="0">
                         <TabItem.Header>
-                            <Image Width="16" Source="assets/16.png"/>
+                            <StackPanel Width="52" VerticalAlignment="Stretch">
+                            <Image Stretch="None" Source="assets/16.png"/>
+                            </StackPanel>
                         </TabItem.Header>
                         <TabItem.Content>
                             <!--ListBox x:Name="TweetsListBox" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"-->
@@ -529,7 +535,9 @@
                     </TabItem>
                     <TabItem x:Name="TweetsCommentedByMeTab" BorderThickness="0">
                         <TabItem.Header>
-                            <Image Width="16" Source="assets/15.png"/>
+                            <StackPanel Width="52" VerticalAlignment="Stretch">
+                            <Image Stretch="None" Source="assets/15.png"/>
+                            </StackPanel>
                         </TabItem.Header>
                         <TabItem.Content>
                             <!--ListBox x:Name="TweetsListBox" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"-->
@@ -538,7 +546,9 @@
                     </TabItem>
                     <TabItem x:Name="TweetsFavTab" BorderThickness="0">
                         <TabItem.Header>
-                            <Image Width="16" Source="assets/17.png"/>
+                            <StackPanel Width="52" VerticalAlignment="Stretch">
+                            <Image Stretch="None" Source="assets/17.png"/>
+                            </StackPanel>
                         </TabItem.Header>
                         <TabItem.Content>
                             <!--ListBox x:Name="TweetsListBox" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"-->
@@ -547,7 +557,7 @@
                     </TabItem>
                 </TabControl>
                 <!-- Friends TabControl -->
-                <TabControl x:Name="FriendsPad" TabStripPlacement="Top" Visibility="Collapsed">
+                <TabControl x:Name="FriendsPad" TabStripPlacement="Top" Visibility="Collapsed" >
                     <TabItem x:Name="FriendsGroupTab">
                         <TabItem.Header>
                             <StackPanel>
