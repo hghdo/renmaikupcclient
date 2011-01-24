@@ -1491,7 +1491,7 @@ namespace RenmeiLib
             else
             {
                 DateTime sinceDate=DateTime.Now.AddHours(-70);
-                timelineUrl += "&timePoint=" + sinceDate.ToString("yyyy-MM-dd HH:mm:ss") + "&direction=forward";
+                timelineUrl += "&timePoint=" + sinceDate.ToString("yyyy-MM-dd HH:mm:ss") + "&direction=back";
 
             }
             timelineUrl += "&limit=50";
