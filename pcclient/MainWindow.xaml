@@ -420,6 +420,24 @@
                 </TreeViewItem>
             </TreeView>
         </HierarchicalDataTemplate>
+        <!-- Follow me and My follow friends list -->
+        <DataTemplate x:Key="FollowMeTemplate">
+            <Border x:Name="listBorder" Background="#ffffff" BorderBrush="#61738B" Margin="0" Padding="0,8,5,8" BorderThickness="0 0 0 1" VerticalAlignment="Stretch">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="50" BorderBrush="White" BorderThickness="0">
+                        <Image Width="40" Height="40" Source="{Binding Path=ImageUrl}"/>
+                    </Border>
+                    <TextBlock HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0" Text="{Binding Path=ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
+                </Grid>
+            </Border>
+        </DataTemplate>
     </CustomWindow:EssentialWindow.Resources>
     
     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="#3BB2EA" x:Name="LayoutRoot" SnapsToDevicePixels="True">
@@ -642,6 +660,9 @@
                                         <TextBlock HorizontalAlignment="Center">关注我的</TextBlock>
                                     </StackPanel>
                                 </TabItem.Header>
+                                <TabItem.Content>
+                                    <ListBox ItemTemplate="{StaticResource FollowMeTemplate}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListBox>
+                                </TabItem.Content>
                             </TabItem>
 
                             <TabItem x:Name="MyFollowTab">
@@ -651,7 +672,7 @@
                                     </StackPanel>
                                 </TabItem.Header>
                                 <TabItem.Content>
-                                    <TextBlock HorizontalAlignment="Center">好友</TextBlock>
+                                    <ListBox ItemTemplate="{StaticResource FollowMeTemplate}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListBox>
                                 </TabItem.Content>
                             </TabItem>
                             <TabItem x:Name="WaitingConfirmTab">

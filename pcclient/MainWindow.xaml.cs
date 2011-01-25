@@ -53,6 +53,9 @@ namespace pcclient
         private DispatcherTimer friendsRefreshTimer = new DispatcherTimer();
         private DateTime lastFriendsUpdate = DateTime.MinValue;
 
+        private UserCollection followMeGroup = new UserCollection();
+        private UserCollection myFollowGroup = new UserCollection();
+
         // Main TwitterNet object used to make Twitter API calls
         private IServiceApi twitter;
 
@@ -62,6 +65,7 @@ namespace pcclient
         private delegate void OneArgDelegate(TweetCollection arg);
         private delegate void OneStringArgDelegate(string arg);
         private delegate void OneArgDelegateFriend(FriendGroupCollection arg);
+        private delegate void OneArgDelegateFollow(UserCollection arg);
         private delegate void OneDoubleArgDelegate(double id);
         private delegate void AddTweetsUpdateDelegate(TweetCollection arg);
         private delegate void MessagesDelegate(DirectMessageCollection arg);
@@ -108,7 +112,8 @@ namespace pcclient
             TweetsCommentedByMeTab.DataContext = tweetsCommentByMe;
             TweetsFavTab.DataContext = favTweets;
             AllFriendTab.DataContext = group;
-            //LayoutRoot.DataContext = tweets;
+            FollowMeTab.DataContext = followMeGroup;
+            MyFollowTab.DataContext = myFollowGroup;
 
         }
 
@@ -310,6 +315,13 @@ namespace pcclient
                 AllFriendTab.Dispatcher.BeginInvoke(
                     DispatcherPriority.Normal,
                     new OneArgDelegateFriend(UpdateFriendsList), twitter.getFriendGroups());
+                FollowMeTab.Dispatcher.BeginInvoke(
+                    DispatcherPriority.Normal,
+                    new OneArgDelegateFollow(UpdateFollowMeList), twitter.getFollowMeFriendsList());
+                MyFollowTab.Dispatcher.BeginInvoke(
+                    DispatcherPriority.Normal,
+                    new OneArgDelegateFollow(UpdateMyFollowList), twitter.getMyFollowFriendsList());
+
 
             }
             catch (RateLimitException ex)
@@ -341,6 +353,22 @@ namespace pcclient
             {
                 group = newFriends;
                 AllFriendTab.DataContext = group;
+            }
+        }
+        private void UpdateFollowMeList(UserCollection newUsers)
+        {
+            if (0 != newUsers.Count)
+            {
+                followMeGroup = newUsers;
+                FollowMeTab.DataContext = followMeGroup;
+            }
+        }
+        private void UpdateMyFollowList(UserCollection newUsers)
+        {
+            if (0 != newUsers.Count)
+            {
+                myFollowGroup = newUsers;
+                MyFollowTab.DataContext = myFollowGroup;
             }
         }
 
@@ -836,6 +864,9 @@ namespace pcclient
         }
 
         
+        #endregion
+
+        #region FollowMe
         #endregion
     }
 

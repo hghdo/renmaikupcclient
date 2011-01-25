@@ -1149,7 +1149,7 @@ namespace RenmeiLib
                     foreach (XmlNode node in nodes)
                     {
                         FriendGroup fg = CreateFriendGroup(node);
-                        fg.MemberList = GetFriendsbyGroupID(fg.GroupId, "", 20);
+                        fg.MemberList = GetFriendsbyGroupID(fg.GroupId, "", fg.Count);
                         groups.Add(fg);
                     }
                 }
@@ -1168,6 +1168,97 @@ namespace RenmeiLib
             return groups;
         }
 
+        public UserCollection getFollowMeFriendsList()
+        {
+            UserCollection list = new UserCollection();
+            string groupUrl = TwitterServerUrl + "service/twitter/friendList.do";
+
+            groupUrl += "?listType=beConcern&limit=50&" + getAuthUrl();
+            // Create the web request
+            HttpWebRequest request = CreateTwitterRequest(groupUrl);
+
+            // moved this out of the try catch to use it later on in the XMLException
+            // trying to fix a bug someone report
+            XmlDocument doc = new XmlDocument();
+            try
+            {
+                // Get the Web Response  
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                {
+                    // Get the response stream  
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+
+                    // Load the response data into a XmlDocument  
+                    doc.Load(reader);
+                    // Get statuses with XPath  
+                    XmlNodeList nodes = doc.SelectNodes("/result/friendList/user");
+
+                    foreach (XmlNode node in nodes)
+                    {
+                        User fg = CreateUser(node);
+                        list.Add(fg);
+                    }
+                }
+            }
+            catch (XmlException exXML)
+            {
+                // adding the XML document data to the exception so it will get logged
+                // so we can debug the issue
+                exXML.Data.Add("XMLDoc", doc);
+                throw;
+            }
+            catch (WebException webExcp)
+            {
+                ParseWebException(webExcp);
+            }
+            return list;
+        }
+
+        public UserCollection getMyFollowFriendsList()
+        {
+            UserCollection list = new UserCollection();
+            string groupUrl = TwitterServerUrl + "service/twitter/friendList.do";
+
+            groupUrl += "?listType=concern&limit=50&" + getAuthUrl();
+            // Create the web request
+            HttpWebRequest request = CreateTwitterRequest(groupUrl);
+
+            // moved this out of the try catch to use it later on in the XMLException
+            // trying to fix a bug someone report
+            XmlDocument doc = new XmlDocument();
+            try
+            {
+                // Get the Web Response  
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                {
+                    // Get the response stream  
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+
+                    // Load the response data into a XmlDocument  
+                    doc.Load(reader);
+                    // Get statuses with XPath  
+                    XmlNodeList nodes = doc.SelectNodes("/result/friendList/user");
+
+                    foreach (XmlNode node in nodes)
+                    {
+                        User fg = CreateUser(node);
+                        list.Add(fg);
+                    }
+                }
+            }
+            catch (XmlException exXML)
+            {
+                // adding the XML document data to the exception so it will get logged
+                // so we can debug the issue
+                exXML.Data.Add("XMLDoc", doc);
+                throw;
+            }
+            catch (WebException webExcp)
+            {
+                ParseWebException(webExcp);
+            }
+            return list;
+        }
         /// <summary>
         /// Returns the authenticated user's friends who have most recently updated, each with current status inline.
         /// </summary>
