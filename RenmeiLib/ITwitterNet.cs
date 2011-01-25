@@ -4,6 +4,7 @@
     {
         Tweet AddTweet(string text);
         Tweet AddTweet(string text, double replyid);
+        Comment AddComment(string text, Tweet tweet);
 
         void AddFavTweet(double tid);
 
@@ -50,6 +51,8 @@
         TweetCollection GetUserTimeline(string userId);
         DirectMessageCollection RetrieveMessages();
         DirectMessageCollection RetrieveMessages(string since);
+        CommentCollection RetriveComments(Tweet tweet);
+        TweetCollection RetriveCommentedTweets();
 
         System.Security.SecureString Password { get; set; }
         System.Net.IWebProxy WebProxy { get; set; }

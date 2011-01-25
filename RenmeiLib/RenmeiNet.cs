@@ -874,6 +874,120 @@ namespace RenmeiLib
             return tweet;
         }
 
+        public Comment AddComment(string text, Tweet tweet)
+        {
+            Comment co;
+            string upUrl = TwitterServerUrl + "service/twitter/commentManage.do?";
+            upUrl+=string.Format("userId={0}&authCode={1}", email, authToken);
+            upUrl += string.Format("&operType=add&tweetId={0}", tweet.Id);//&commentSource=1
+            text = HttpUtility.UrlEncode(text);
+            HttpWebRequest request = CreateTwitterRequest(upUrl);
+            request.ServicePoint.Expect100Continue = false;
+            request.Method = "POST";
+
+            // Set values for the request back
+            request.ContentType = "application/x-www-form-urlencoded";
+            string param = "content=" + text;
+            request.ContentLength = param.Length;// +sourceParam.Length;
+
+            // Write the request paramater
+            StreamWriter stOut = new StreamWriter(request.GetRequestStream(), System.Text.Encoding.ASCII);
+            stOut.Write(param);
+            stOut.Close();
+            // Do the request to get the response
+            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+            {
+                // Get the response stream  
+                StreamReader reader = new StreamReader(response.GetResponseStream());
+
+                // Load the response data into a XmlDocument  
+                XmlDocument doc = new XmlDocument();
+                doc.Load(reader);
+
+                XmlNode node = doc.SelectSingleNode("result/comment");
+                if (node == null) return null;
+                co = CreateComment(node);
+                
+            }
+            return co;
+        }
+
+        public CommentCollection RetriveComments(Tweet tweet)
+        {
+            CommentCollection comments = new CommentCollection();
+            string commentsUrl = TwitterServerUrl + "service/twitter/commentList.do?";
+            commentsUrl += string.Format("userId={0}&authCode={1}&tweetId={2}", email, authToken, tweet.Id);
+            // Create the web request
+            HttpWebRequest request = CreateTwitterRequest(commentsUrl);
+
+            // moved this out of the try catch to use it later on in the XMLException
+            // trying to fix a bug someone report
+            XmlDocument doc = new XmlDocument();
+            try
+            {
+                // Get the Web Response  
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                {
+                    // Get the response stream  
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+
+                    // Load the response data into a XmlDocument  
+                    doc.Load(reader);
+                    // Get statuses with XPath  
+                    XmlNodeList nodes = doc.SelectNodes("/result/cList/comment");
+
+                    foreach (XmlNode node in nodes)
+                    {
+                        Comment co = CreateComment(node);
+                        comments.Add(co);
+                    }
+                }
+            }
+            catch (XmlException exXML)
+            {
+                // adding the XML document data to the exception so it will get logged
+                // so we can debug the issue
+                exXML.Data.Add("XMLDoc", doc);
+                throw;
+            }
+            catch (WebException webExcp)
+            {
+                ParseWebException(webExcp);
+            }
+            return comments;
+        }
+
+        public TweetCollection RetriveCommentedTweets()
+        {
+            return RetrieveTimeline(Timeline.Comments);
+        }
+
+        private Comment CreateComment(XmlNode node)
+        {
+            Comment co = new Comment();
+            co.Id = long.Parse(node.SelectSingleNode("cId").InnerText);
+            co.Text = HttpUtility.HtmlDecode(node.SelectSingleNode("content").InnerText);
+            co.ClientType = HttpUtility.HtmlDecode(node.SelectSingleNode("clientType").InnerText);
+            string dateString = node.SelectSingleNode("time").InnerText;
+            if (!string.IsNullOrEmpty(dateString))
+            {
+                co.PublishedTime = DateTime.ParseExact(
+                    dateString,
+                    renmaikuPublishDateFormat,//twitterCreatedAtDateFormat,
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.AllowWhiteSpaces);
+                //CultureInfo.GetCultureInfoByIetfLanguageTag("en-us"), DateTimeStyles.AllowWhiteSpaces);
+            }
+            else
+            {
+                co.PublishedTime = DateTime.Now;
+            }
+            XmlNode userNode = node.SelectSingleNode("user");
+            User user = CreateUser(userNode);
+            co.User = user;
+            return co;
+        }
+
         public void AddFavTweet(double tid)
         {
             string favUrl = FavTweetUrl + string.Format("userId={0}&authCode={1}&tweetId={2}", email, authToken,tid.ToString());
@@ -985,8 +1099,6 @@ namespace RenmeiLib
 
             return user;
         }
-
-
 
         private FriendGroup CreateFriendGroup(XmlNode groupNode)
         {
@@ -1507,6 +1619,9 @@ namespace RenmeiLib
                 case Timeline.Favorite:
                     timelineUrl += "&userType=fa";
                     break;
+                case Timeline.Comments:
+                    timelineUrl += "&userType=comm";
+                    break;
                 default:
                     timelineUrl = PublicTimelineUrl;
                     break;
@@ -1756,6 +1871,7 @@ namespace RenmeiLib
         User,
         Replies,
         DirectMessages,
-        Favorite
+        Favorite,
+        Comments
     }
 }

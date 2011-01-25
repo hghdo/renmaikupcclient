@@ -231,7 +231,7 @@
                         </StackPanel>
                         <StackPanel x:Name="rightBottomButtons" Visibility="Hidden" Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                             <Image Source="assets/reply.png" Style="{StaticResource ImageButtonStyle}" MouseDown="ReplyTweet_MouseDown"/>
-                            <Image Source="assets/15.png" Style="{StaticResource ImageButtonStyle}"/>
+                            <Image Source="assets/15.png" Style="{StaticResource ImageButtonStyle}" MouseDown="CommentTweet_MouseDown"/>
                             <Image Source="assets/17.png" Style="{StaticResource ImageButtonStyle}" MouseDown="FavTweet_MouseDown"/>
                         </StackPanel>
                     </Grid>

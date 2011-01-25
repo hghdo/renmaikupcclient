@@ -5,6 +5,8 @@
     StartupUri="MainWindow.xaml">
     <Application.Resources>
 
-
+        <Style x:Key="TipFontStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="#AAAAAA" />
+        </Style>
     </Application.Resources>
 </Application>

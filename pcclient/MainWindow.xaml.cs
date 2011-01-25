@@ -783,6 +783,15 @@ namespace pcclient
         {
         }
 
+        private void CommentTweet_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Tweet curItem = ((ListBoxItem)AllTweetsListBox.ContainerFromElement((Image)sender)).Content as Tweet;
+            CommentsWindow cw = new CommentsWindow(twitter, curItem);
+            //cw.tweet = curItem;
+            //cw.twitterApi = twitter;
+            cw.ShowDialog();
+        }
+
         private void FavTweet_MouseDown(object sender, MouseButtonEventArgs e)
         {
 
