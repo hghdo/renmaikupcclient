@@ -107,7 +107,7 @@ namespace pcclient
             TweetsRefersMeTab.DataContext = tweetsRefersMe;
             TweetsCommentedByMeTab.DataContext = tweetsCommentByMe;
             TweetsFavTab.DataContext = favTweets;
-            FriendsGroupTab.DataContext = group;
+            AllFriendTab.DataContext = group;
             //LayoutRoot.DataContext = tweets;
 
         }
@@ -333,7 +333,11 @@ namespace pcclient
         }
         private void UpdateFriendsList(FriendGroupCollection newFriends)
         {
-            group = newFriends;
+            if (0 != newFriends.Count)
+            {
+                group = newFriends;
+                AllFriendTab.DataContext = group;
+            }
         }
 
         private void DispatchFriendsList()
@@ -354,11 +358,6 @@ namespace pcclient
         void friendsRefreshTimer_Tick(object sender, EventArgs e)
         {
             friendsRefreshTimer.Interval = friendsRefreshInterval;
-            DispatchFriendsList();
-        }
-
-        private void AllFirendTab_Loaded(object sender, RoutedEventArgs e)
-        {
             DispatchFriendsList();
         }
         #endregion
@@ -666,14 +665,14 @@ namespace pcclient
         {
             TweetsPad.Visibility = Visibility.Collapsed;
             FriendsPad.Visibility = Visibility.Visible;
-            DispatchFriendsList();
+            //DispatchFriendsList();
         }
 
         private void OpenTweetsPad(object sender, MouseButtonEventArgs e)
         {
             TweetsPad.Visibility = Visibility.Visible;
             FriendsPad.Visibility = Visibility.Collapsed;
-            DelegateRecentFetch();
+            //DelegateRecentFetch();
         }
 
 
@@ -684,6 +683,7 @@ namespace pcclient
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             DelegateRecentFetch();
+            DispatchFriendsList();
         }
         #endregion
 

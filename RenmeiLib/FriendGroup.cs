@@ -40,7 +40,7 @@ namespace RenmeiLib
         private string title;
         public string Title
         {
-            get { return title; }
+            get { return title + "(" + Count.ToString() + ")";  }
             set
             {
                 if (value != title)
