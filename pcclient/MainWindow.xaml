@@ -274,7 +274,7 @@
                   KeyboardNavigation.TabIndex="2"
                   KeyboardNavigation.TabNavigation="Local">
                     <ContentPresenter Name="PART_SelectedContentHost"
-                     Margin="{TemplateBinding Control.Padding}"
+                     Margin="-1"
                      Content="{TemplateBinding TabControl.SelectedContent}"
                      ContentSource="SelectedContent"
                      ContentStringFormat="{TemplateBinding TabControl.SelectedContentStringFormat}"
@@ -312,7 +312,7 @@
                   KeyboardNavigation.TabIndex="2"
                   KeyboardNavigation.TabNavigation="Local">
                     <ContentPresenter Name="PART_SelectedContentHost"
-                     Margin="{TemplateBinding Control.Padding}"
+                     Margin="-1"
                      Content="{TemplateBinding TabControl.SelectedContent}"
                      ContentSource="SelectedContent"
                      ContentStringFormat="{TemplateBinding TabControl.SelectedContentStringFormat}"
