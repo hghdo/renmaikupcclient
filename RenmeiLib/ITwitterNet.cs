@@ -5,10 +5,13 @@
         Tweet AddTweet(string text);
         Tweet AddTweet(string text, double replyid);
 
+        void AddFavTweet(double tid);
+
         string ClientName { get; set; }
         string CreateFriendshipUrl { get; set; }
         string SendMessageUrl { get; set; }
         string UpdateUrl { get; set; }
+        string FavTweetUrl { get; set; }
         string UserName { get; }
         string UserShowUrl { get; set; }
         string UserTimelineUrl { get; set; }
@@ -43,6 +46,7 @@
         TweetCollection GetPublicTimeline();
         TweetCollection GetReplies();
         TweetCollection GetReplies(string since);
+        TweetCollection GetFavoriteTweets();
         TweetCollection GetUserTimeline(string userId);
         DirectMessageCollection RetrieveMessages();
         DirectMessageCollection RetrieveMessages(string since);

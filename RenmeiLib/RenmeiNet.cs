@@ -29,6 +29,7 @@ namespace RenmeiLib
         private string repliesTimelineUrl;
         private string directMessagesUrl;
         private string updateUrl;
+        private string favTweetUrl;
         private string friendsUrl;
         private string followersUrl;
         private string userShowUrl;
@@ -236,6 +237,19 @@ namespace RenmeiLib
                     return updateUrl;
             }
             set { updateUrl = value; }
+        }
+
+        public string FavTweetUrl
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(favTweetUrl))
+                    return TwitterServerUrl + "service/twitter/tweetFavourite.do?";
+                    //return TwitterServerUrl + "statuses/update";
+                else
+                    return favTweetUrl;
+            }
+            set { favTweetUrl = value; }
         }
 
         /// <summary>
@@ -597,6 +611,11 @@ namespace RenmeiLib
             return RetrieveTimeline(Timeline.Replies, since);
         }
 
+        public TweetCollection GetFavoriteTweets()
+        {
+            return RetrieveTimeline(Timeline.Favorite);
+        }
+
         public TweetCollection GetConversation(double id)
         {
             TweetCollection tweets = new TweetCollection();
@@ -681,7 +700,6 @@ namespace RenmeiLib
         {
             User user = new User();
 
-            // Twitter expects http://twitter.com/users/show/12345.xml
             string requestURL = UserShowUrl  + userId + Format;
 
             HttpWebRequest request = CreateTwitterRequest(requestURL);
@@ -854,6 +872,27 @@ namespace RenmeiLib
             }
 
             return tweet;
+        }
+
+        public void AddFavTweet(double tid)
+        {
+            string favUrl = FavTweetUrl + string.Format("userId={0}&authCode={1}&tweetId", email, authToken,tid.ToString());
+            HttpWebRequest request = CreateTwitterRequest(favUrl);
+            request.ServicePoint.Expect100Continue = false;
+            request.Method = "POST";
+
+            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+            {
+                // Get the response stream  
+                StreamReader reader = new StreamReader(response.GetResponseStream());
+
+                // Load the response data into a XmlDocument  
+                XmlDocument doc = new XmlDocument();
+                doc.Load(reader);
+
+                XmlNode node = doc.SelectSingleNode("result/status");
+                if (node == null) return ;
+            }
         }
 
         protected string GetPropertyFromXml(XmlNode twitterNode, string propertyName)
@@ -1463,6 +1502,9 @@ namespace RenmeiLib
                 case Timeline.Replies:
                     timelineUrl += "&userType=re";
                     break;
+                case Timeline.Favorite:
+                    timelineUrl += "&userType=fa";
+                    break;
                 default:
                     timelineUrl = PublicTimelineUrl;
                     break;
@@ -1711,6 +1753,7 @@ namespace RenmeiLib
         Friends,
         User,
         Replies,
-        DirectMessages
+        DirectMessages,
+        Favorite
     }
 }

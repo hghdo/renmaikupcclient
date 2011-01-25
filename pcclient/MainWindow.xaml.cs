@@ -248,9 +248,13 @@ namespace pcclient
                 {
                     newTweets = twitter.GetFriendsTimeline();
                 }
-                else if (j == 1)
+                else if (j == 2)
                 {
-                    newTweets = twitter.GetFriendsTimeline();
+                    newTweets = twitter.GetReplies();
+                }
+                else if (j == 4)
+                {
+                    newTweets = twitter.GetFavoriteTweets();
                 }
                 else
                 {
