@@ -17,15 +17,16 @@ namespace pcclient
     public partial class App : Application
     {
         public static User LoggedInUser = new User();
-        public static readonly ILog Logger = LogManager.GetLogger("Renmei.log");
+        public static log4net.ILog Logger = LogManager.GetLogger("pcclient.Logging");
         protected override void OnStartup(StartupEventArgs e)
         {
-            DOMConfigurator.Configure();
+            object o = ConfigurationSettings.GetConfig("log4net");
+            log4net.Config.DOMConfigurator.Configure(o as System.IO.FileInfo);
+            //DOMConfigurator.Configure();
+
             Logger.Info("Renmei client is starting.");
 
             base.OnStartup(e);
-
-
         }
     }
 }
