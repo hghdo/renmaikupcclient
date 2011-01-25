@@ -193,6 +193,7 @@ namespace RenmeiLib
             get
             {
                 if (string.IsNullOrEmpty(repliesTimelineUrl))
+                    //return TwitterServerUrl + "service/twitter/list.do?userType=re";
                     return TwitterServerUrl + "statuses/replies";
                 else
                     return repliesTimelineUrl;
@@ -1445,7 +1446,8 @@ namespace RenmeiLib
         {
             TweetCollection tweets = new TweetCollection();
 
-            string timelineUrl;
+            string timelineUrl = FriendsTimelineUrl;
+            timelineUrl += "?authCode=" + authToken + "&userId=" + email;
 
             switch (timeline)
             {
@@ -1453,24 +1455,22 @@ namespace RenmeiLib
                     timelineUrl = PublicTimelineUrl;
                     break;
                 case Timeline.Friends:
-                    timelineUrl = FriendsTimelineUrl;
+                    //timelineUrl = FriendsTimelineUrl;
                     break;
                 case Timeline.User:
                     timelineUrl = UserTimelineUrl;
                     break;
                 case Timeline.Replies:
-                    timelineUrl = RepliesTimelineUrl;
+                    timelineUrl += "&userType=re";
                     break;
                 default:
                     timelineUrl = PublicTimelineUrl;
                     break;
             }
 
-            timelineUrl += "?authCode=" + authToken + "&userId=" + email;
-
             if (!string.IsNullOrEmpty(userId))
             {
-                timelineUrl += "/" + userId + Format;
+                //timelineUrl += "/" + userId + Format;
                 //timelineUrl += "?anthCode=" + authToken + "&userId=" + userId;
             }
             else

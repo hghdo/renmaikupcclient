@@ -46,6 +46,8 @@ namespace pcclient
         private TweetCollection tweetsCommentByMe = new TweetCollection();
         private TweetCollection favTweets = new TweetCollection();
 
+        private TweetCollection[] allTweetsCollection ;
+
         // For Friend Group
         private FriendGroupCollection group = new FriendGroupCollection();
         private DispatcherTimer friendsRefreshTimer = new DispatcherTimer();
@@ -80,7 +82,10 @@ namespace pcclient
 
         public MainWindow()
         {
+
             InitializeComponent();
+
+            allTweetsCollection = new TweetCollection[] { tweets, tweetsSentByMe, tweetsRefersMe, tweetsCommentByMe, favTweets };
 
             ShowLogin();
 
@@ -166,7 +171,7 @@ namespace pcclient
                 // Schedule the update functions in the UI thread.
                 TweetsTab.Dispatcher.BeginInvoke(
                     DispatcherPriority.Normal,
-                    new OneArgDelegate(UpdateUserInterface), twitter.GetFriendsTimeline());
+                    new NoArgDelegate(UpdateUserInterface));
 
                 // TODO Comments two tasks(GetReplies and RetrieveMessages) below.
                 // Direct message and replies < 70 hours old will be displayed on the recent tab.
@@ -221,7 +226,7 @@ namespace pcclient
             StatusTextBlock.Text = status;
         }
 
-        private void UpdateUserInterface(TweetCollection newTweets)
+        private void UpdateUserInterface()
         {
             DateTime lastUpdated = DateTime.Now;
             //StatusTextBlock.Text = "Last Updated: " + lastUpdated.ToLongTimeString();
@@ -231,24 +236,43 @@ namespace pcclient
 
             //FilterTweets(newTweets, true);
             //HighlightTweets(newTweets);
-            UpdateExistingTweets();
+            //UpdateExistingTweets();
 
-            TweetCollection addedTweets = new TweetCollection();
-
-            //prevents huge number of notifications appearing on startup
-            bool displayPopups = !(tweets.Count == 0);
-
-            // Add the new tweets
-            for (int i = newTweets.Count - 1; i >= 0; i--)
+            TweetCollection newTweets;
+            //TweetCollection addedTweets = new TweetCollection();
+            for (int j = 0; j < allTweetsCollection.Length; j++)
             {
-                Tweet tweet = newTweets[i];
-                
-                if (tweets.Contains(tweet)) continue;
+                UpdateExistingTweets(allTweetsCollection[j]);
 
-                tweets.Add(tweet);
-                tweet.Index = tweets.Count;
-                tweet.IsNew = true;
-                addedTweets.Add(tweet);
+                if (j == 0)
+                {
+                    newTweets = twitter.GetFriendsTimeline();
+                }
+                else if (j == 1)
+                {
+                    newTweets = twitter.GetFriendsTimeline();
+                }
+                else
+                {
+                    newTweets = twitter.GetFriendsTimeline();
+                }
+
+                //prevents huge number of notifications appearing on startup
+                //bool displayPopups = !(tweets.Count == 0);
+
+                // Add the new tweets
+                for (int i = newTweets.Count - 1; i >= 0; i--)
+                {
+                    Tweet tweet = newTweets[i];
+
+                    if (allTweetsCollection[j].Contains(tweet)) continue;
+
+                    allTweetsCollection[j].Add(tweet);
+                    tweet.Index = allTweetsCollection[j].Count;
+                    tweet.IsNew = true;
+                    //addedTweets.Add(tweet);
+                }
+
             }
             //delete many lines for demo
 
@@ -364,8 +388,9 @@ namespace pcclient
         private void DebugAutoLogin()
         {
 
-            twitter = new RenmeiNet("hbcjob@126.com", RenmeiNet.ToSecureString("hbcjob"));
+            //twitter = new RenmeiNet("hbcjob@126.com", RenmeiNet.ToSecureString("hbcjob"));
             //twitter = new RenmeiNet("binzhi_web@126.com", RenmeiNet.ToSecureString("111111"));
+            twitter = new RenmeiNet("renmaikuadmin@126.com", RenmeiNet.ToSecureString("woaini737727"));
             twitter.TwitterServerUrl = AppSettings.RenmeiHost;
             TryLogin(twitter);
         }
@@ -678,12 +703,12 @@ namespace pcclient
             if (NewTweetBox.Text.Length > 0)
             {
 
-
-                TweetCollection tweets = new TweetCollection();
-                tweets.Add(twitter.AddTweet(NewTweetBox.Text));
+                twitter.AddTweet(NewTweetBox.Text);
+                //TweetCollection tweets = new TweetCollection();
+                //tweets.Add(twitter.AddTweet(NewTweetBox.Text));
                 LayoutRoot.Dispatcher.BeginInvoke(
                     DispatcherPriority.Normal,
-                    new OneArgDelegate(UpdateUserInterface), tweets);
+                    new NoArgDelegate(UpdateUserInterface));
                 //twitter.AddTweet(NewTweetBox.Text);
                 //UpdateUserInterface(tweets);
             }
