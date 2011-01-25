@@ -962,6 +962,11 @@ namespace RenmeiLib
             return RetrieveTimeline(Timeline.Comments);
         }
 
+        public TweetCollection RetriveMySelfTweets()
+        {
+            return RetrieveTimeline(Timeline.Myself);
+        }
+
         private Comment CreateComment(XmlNode node)
         {
             Comment co = new Comment();
@@ -1713,6 +1718,9 @@ namespace RenmeiLib
                 case Timeline.Comments:
                     timelineUrl += "&userType=comm";
                     break;
+                case Timeline.Myself:
+                    timelineUrl += "&userType=my";
+                    break;
                 default:
                     timelineUrl = PublicTimelineUrl;
                     break;
@@ -1963,6 +1971,7 @@ namespace RenmeiLib
         Replies,
         DirectMessages,
         Favorite,
-        Comments
+        Comments,
+        Myself
     }
 }

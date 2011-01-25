@@ -253,6 +253,10 @@ namespace pcclient
                 {
                     newTweets = twitter.GetFriendsTimeline();
                 }
+                else if (j == 1)
+                {
+                    newTweets = twitter.GetReplies();
+                }
                 else if (j == 2)
                 {
                     newTweets = twitter.GetReplies();
@@ -260,6 +264,10 @@ namespace pcclient
                 else if (j == 4)
                 {
                     newTweets = twitter.GetFavoriteTweets();
+                }
+                else if (j == 3)
+                {
+                    newTweets = twitter.RetriveMySelfTweets();
                 }
                 else
                 {
@@ -835,9 +843,28 @@ namespace pcclient
 
         }
 
+        private ListBox getTweetListBox()
+        {
+            switch (TweetsPad.SelectedIndex)
+            {
+                case 0:
+                    return AllTweetsListBox;
+                case 1:
+                    return MyTweetsListBox;
+                case 2:
+                    return SentToMeTweetsListBox;
+                case 3:
+                    return CommentsTweetsListBox;
+                case 4:
+                    return FavTweetsListBox;
+                default:
+                    return AllTweetsListBox;
+            }
+        }
+        
         private void CommentTweet_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Tweet curItem = ((ListBoxItem)AllTweetsListBox.ContainerFromElement((Image)sender)).Content as Tweet;
+            Tweet curItem = ((ListBoxItem)getTweetListBox().ContainerFromElement((Image)sender)).Content as Tweet;
             CommentsWindow cw = new CommentsWindow(twitter, curItem);
             //cw.tweet = curItem;
             //cw.twitterApi = twitter;
@@ -847,7 +874,7 @@ namespace pcclient
         private void FavTweet_MouseDown(object sender, MouseButtonEventArgs e)
         {
 
-            Tweet curItem = ((ListBoxItem)AllTweetsListBox.ContainerFromElement((Image)sender)).Content as Tweet;
+            Tweet curItem = ((ListBoxItem)getTweetListBox().ContainerFromElement((Image)sender)).Content as Tweet;
 
             twitter.AddFavTweet(curItem.Id);
             //TabItem ti = TweetsPad.SelectedItem as TabItem;
@@ -858,7 +885,7 @@ namespace pcclient
 
         private void ReplyTweet_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Tweet curItem = ((ListBoxItem)AllTweetsListBox.ContainerFromElement((Image)sender)).Content as Tweet;
+            Tweet curItem = ((ListBoxItem)getTweetListBox().ContainerFromElement((Image)sender)).Content as Tweet;
             ExtendTweetsInputBox(true);
             NewTweetBox.Text = "RT @" + curItem.User.ScreenName +" "+ curItem.Text;
         }

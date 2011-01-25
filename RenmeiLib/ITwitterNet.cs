@@ -53,6 +53,7 @@
         DirectMessageCollection RetrieveMessages(string since);
         CommentCollection RetriveComments(Tweet tweet);
         TweetCollection RetriveCommentedTweets();
+        TweetCollection RetriveMySelfTweets();
 
         System.Security.SecureString Password { get; set; }
         System.Net.IWebProxy WebProxy { get; set; }
