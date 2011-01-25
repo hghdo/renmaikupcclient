@@ -393,8 +393,8 @@
             <MenuItem Header="解除好友" Click="removeFriend_onClick" />
             <MenuItem Header="屏蔽微博" Click="shildTweets_onClick" />
         </ContextMenu>       
-        <DataTemplate x:Key="SingleFriendTemplate">
-            <Grid Margin="{Binding Converter={StaticResource indentConverter},RelativeSource={RelativeSource TemplatedParent}}">
+        <DataTemplate x:Key="SingleFriendTemplate" >
+            <Grid Margin="{Binding Converter={StaticResource indentConverter},RelativeSource={RelativeSource TemplatedParent}}"  ContextMenu="{StaticResource SingleFirend_ContextMenu}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="60" />
                     <ColumnDefinition Width="100" />
@@ -416,7 +416,7 @@
                     <Style TargetType="{x:Type TreeViewItem}"
                        BasedOn="{StaticResource AeroTreeStyle}" />
                 </TreeView.Resources>
-                <TreeViewItem Header="{Binding Path=Title}" ItemsSource="{Binding Path=MemberList}" ItemTemplate="{StaticResource SingleFriendTemplate}" ContextMenu="{StaticResource SingleFirend_ContextMenu}">
+                <TreeViewItem Header="{Binding Path=Title}" ItemsSource="{Binding Path=MemberList}" ItemTemplate="{StaticResource SingleFriendTemplate}">
                 </TreeViewItem>
             </TreeView>
         </HierarchicalDataTemplate>

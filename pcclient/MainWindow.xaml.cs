@@ -765,22 +765,46 @@ namespace pcclient
         #region Friend Group right click
         private void taHomePage_onClick(object sender, RoutedEventArgs e)
         {
+            MenuItem curMenu = sender as MenuItem;
+            ContextMenu curContext = curMenu.Parent as ContextMenu;
+
+            Point p = curContext.TranslatePoint(new Point(0, 0), FriendsTreeView);
+
+            // 取父节点的父节点
+            DependencyObject obj = FriendsTreeView.InputHitTest(p) as DependencyObject;
+            obj = VisualTreeHelper.GetParent(obj);
+            obj = VisualTreeHelper.GetParent(obj);
+
+            User curUser = ((ContentPresenter)obj).Content as User;
+
+            //System.Diagnostics.Process.Start(AppSettings.RenmeiHost); 
+            System.Diagnostics.Process.Start(curUser.ImageUrl);
+            
         }
 
         private void sendTweet_onClick(object sender, RoutedEventArgs e)
         {
+
         }
+
         private void sendPrivateMsg_onClick(object sender, RoutedEventArgs e)
         {
+
         }
+
         private void viewTwitter_onClick(object sender, RoutedEventArgs e)
         {
+
         }
+
         private void removeFriend_onClick(object sender, RoutedEventArgs e)
         {
+
         }
+
         private void shildTweets_onClick(object sender, RoutedEventArgs e)
         {
+
         }
 
         private void CommentTweet_MouseDown(object sender, MouseButtonEventArgs e)
