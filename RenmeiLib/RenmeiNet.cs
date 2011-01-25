@@ -876,7 +876,7 @@ namespace RenmeiLib
 
         public void AddFavTweet(double tid)
         {
-            string favUrl = FavTweetUrl + string.Format("userId={0}&authCode={1}&tweetId", email, authToken,tid.ToString());
+            string favUrl = FavTweetUrl + string.Format("userId={0}&authCode={1}&tweetId={2}", email, authToken,tid.ToString());
             HttpWebRequest request = CreateTwitterRequest(favUrl);
             request.ServicePoint.Expect100Continue = false;
             request.Method = "POST";
@@ -918,7 +918,6 @@ namespace RenmeiLib
                 //# int.TryParse(GetPropertyFromXml(userNode, "id"), out temp);
                 int.TryParse(GetPropertyFromXml(userNode, "userId"), out temp);
                 user.Id = temp;
-                email = GetPropertyFromXml(userNode, "email");
                 //# user.Name = GetPropertyFromXml(userNode, "name");
                 user.Name = GetPropertyFromXml(userNode, "nickName");
                 //# user.ScreenName = GetPropertyFromXml(userNode, "screen_name");
@@ -1150,11 +1149,14 @@ namespace RenmeiLib
                     {
                         authToken = authNode.InnerText;
                     }
+                    email = username;
+
                     // Get statuses with XPath  
                     XmlNode userNode = doc.SelectSingleNode("results/user");
 
                     if (userNode != null)
                     {
+                        email = GetPropertyFromXml(userNode, "email");
                         user = CreateUser(userNode);
                     }
                 }

@@ -392,8 +392,8 @@ namespace pcclient
         {
 
             //twitter = new RenmeiNet("hbcjob@126.com", RenmeiNet.ToSecureString("hbcjob"));
-            //twitter = new RenmeiNet("binzhi_web@126.com", RenmeiNet.ToSecureString("111111"));
-            twitter = new RenmeiNet("renmaikuadmin@126.com", RenmeiNet.ToSecureString("woaini737727"));
+            twitter = new RenmeiNet("binzhi_web@126.com", RenmeiNet.ToSecureString("111111"));
+            //twitter = new RenmeiNet("renmaikuadmin@126.com", RenmeiNet.ToSecureString("woaini737727"));
             twitter.TwitterServerUrl = AppSettings.RenmeiHost;
             TryLogin(twitter);
         }
@@ -692,9 +692,24 @@ namespace pcclient
         #endregion
 
         #region Unknown
+        private void ExtendTweetsInputBox(Boolean extend)
+        {
+            if (extend)
+            {
+                NewTweetBox.Height = 85;
+                NewTweetButtons.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                NewTweetBox.Clear();
+                NewTweetBox.Height = 35;
+                NewTweetButtons.Visibility = Visibility.Collapsed;
+            }
+        }
+        
         private void NewTweetBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            NewTweetBox.Height = 85;
+            ExtendTweetsInputBox(true);
         }
 
         private void NewTweetBox_LostFocus(object sender, RoutedEventArgs e)
@@ -715,12 +730,13 @@ namespace pcclient
                     new NoArgDelegate(UpdateUserInterface));
                 //twitter.AddTweet(NewTweetBox.Text);
                 //UpdateUserInterface(tweets);
+                ExtendTweetsInputBox(false);                
             }
         }
 
         private void CancelTweet_Click(object sender, RoutedEventArgs e)
         {
-            NewTweetBox.Height = 35;
+            ExtendTweetsInputBox(false);
         }
 
         protected override Decorator GetWindowButtonsPlaceholder()
@@ -764,6 +780,27 @@ namespace pcclient
         private void shildTweets_onClick(object sender, RoutedEventArgs e)
         {
         }
+
+        private void FavTweet_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+            Tweet curItem = ((ListBoxItem)AllTweetsListBox.ContainerFromElement((Image)sender)).Content as Tweet;
+
+            twitter.AddFavTweet(curItem.Id);
+            //TabItem ti = TweetsPad.SelectedItem as TabItem;
+            //TweetCollection cl=ti.DataContext as TweetCollection;
+            //Tweet tw = AllTweetsListBox.SelectedItem as Tweet;
+            //MessageBox.Show("This is " + tw.Text + " tab");
+        }
+
+        private void ReplyTweet_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Tweet curItem = ((ListBoxItem)AllTweetsListBox.ContainerFromElement((Image)sender)).Content as Tweet;
+            ExtendTweetsInputBox(true);
+            NewTweetBox.Text = "RT @" + curItem.User.ScreenName +" "+ curItem.Text;
+        }
+
+        
         #endregion
     }
 
