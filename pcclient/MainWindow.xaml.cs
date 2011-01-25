@@ -667,15 +667,17 @@ namespace pcclient
 
         private void OpenFriendsPad(object sender, MouseButtonEventArgs e)
         {
-            TweetsPad.Visibility = Visibility.Collapsed;
-            FriendsPad.Visibility = Visibility.Visible;
+            OuterTab.SelectedIndex = 1;
+            //TweetsPad.Visibility = Visibility.Collapsed;
+            //FriendsPad.Visibility = Visibility.Visible;
             //DispatchFriendsList();
         }
 
         private void OpenTweetsPad(object sender, MouseButtonEventArgs e)
         {
-            TweetsPad.Visibility = Visibility.Visible;
-            FriendsPad.Visibility = Visibility.Collapsed;
+            OuterTab.SelectedIndex = 0;
+            //TweetsPad.Visibility = Visibility.Visible;
+            //FriendsPad.Visibility = Visibility.Collapsed;
             //DelegateRecentFetch();
         }
 

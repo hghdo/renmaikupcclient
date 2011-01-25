@@ -245,35 +245,121 @@
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
-        <!--pcclient:TabSizeConverter x:Key="tabSizeConverter" /-->
-        <!-- 
-        <Style TargetType="{x:Type TabControl}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TabControl}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <TabPanel 
-                                 Grid.Row="0"
-                                 Panel.ZIndex="1" 
-                                 Margin="0,0,4,-1" 
-                                 IsItemsHost="True"
-                                 Background="Transparent" />
-                            <Border 
-                                 Grid.Row="1"
-                                 BorderBrush="#CCCCCC" 
-                                 BorderThickness="0,0,0,0">
-                                <ContentPresenter ContentSource="SelectedContent" />
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        -->
+        <ControlTemplate x:Key="OuterTabControlTemplate" TargetType="{x:Type TabControl}">
+            <Grid ClipToBounds="True" KeyboardNavigation.TabNavigation="Local" SnapsToDevicePixels="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Name="ColumnDefinition0" Width="*"/>
+                    <ColumnDefinition Name="ColumnDefinition2" Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Name="RowDefinition0" Height="0"/>
+                    <RowDefinition Name="RowDefinition1" Height="*"/>
+                </Grid.RowDefinitions>
+                <UniformGrid Name="HeaderPanel" 
+                  Grid.Column="0"
+                  Grid.Row="0"
+                  Columns="2"
+                  Rows="1"
+                  Margin="0"
+                  Panel.ZIndex="1"
+                  IsItemsHost="True"
+                  KeyboardNavigation.TabIndex="1"/>
+                <Border Name="ContentPanel" Margin="0" Padding="0"
+                  Grid.Column="0"
+                  Grid.Row="1"
+                  Background="{TemplateBinding Panel.Background}"
+                  BorderBrush="{TemplateBinding Border.BorderBrush}"
+                  BorderThickness="0"
+                  KeyboardNavigation.DirectionalNavigation="Contained"
+                  KeyboardNavigation.TabIndex="2"
+                  KeyboardNavigation.TabNavigation="Local">
+                    <ContentPresenter Name="PART_SelectedContentHost"
+                     Margin="{TemplateBinding Control.Padding}"
+                     Content="{TemplateBinding TabControl.SelectedContent}"
+                     ContentSource="SelectedContent"
+                     ContentStringFormat="{TemplateBinding TabControl.SelectedContentStringFormat}"
+                     ContentTemplate="{TemplateBinding TabControl.SelectedContentTemplate}"
+                     SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
+                </Border>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="TweetsTabControlTemplate" TargetType="{x:Type TabControl}">
+            <Grid ClipToBounds="True" KeyboardNavigation.TabNavigation="Local" SnapsToDevicePixels="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Name="ColumnDefinition0" Width="*"/>
+                    <ColumnDefinition Name="ColumnDefinition2" Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Name="RowDefinition0" Height="Auto"/>
+                    <RowDefinition Name="RowDefinition1" Height="*"/>
+                </Grid.RowDefinitions>
+                <UniformGrid Name="HeaderPanel" 
+                  Grid.Column="0"
+                  Grid.Row="0"
+                  Columns="5"
+                  Rows="1"
+                  Margin="0"
+                  Panel.ZIndex="1"
+                  IsItemsHost="True"
+                  KeyboardNavigation.TabIndex="1"/>
+                <Border Name="ContentPanel" Margin="0" Padding="0"
+                  Grid.Column="0"
+                  Grid.Row="1"
+                  Background="{TemplateBinding Panel.Background}"
+                  BorderBrush="{TemplateBinding Border.BorderBrush}"
+                  BorderThickness="0"
+                  KeyboardNavigation.DirectionalNavigation="Contained"
+                  KeyboardNavigation.TabIndex="2"
+                  KeyboardNavigation.TabNavigation="Local">
+                    <ContentPresenter Name="PART_SelectedContentHost"
+                     Margin="{TemplateBinding Control.Padding}"
+                     Content="{TemplateBinding TabControl.SelectedContent}"
+                     ContentSource="SelectedContent"
+                     ContentStringFormat="{TemplateBinding TabControl.SelectedContentStringFormat}"
+                     ContentTemplate="{TemplateBinding TabControl.SelectedContentTemplate}"
+                     SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
+                </Border>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="FriendsTabControlTemplate" TargetType="{x:Type TabControl}">
+            <Grid ClipToBounds="True" KeyboardNavigation.TabNavigation="Local" SnapsToDevicePixels="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Name="ColumnDefinition0" Width="*"/>
+                    <ColumnDefinition Name="ColumnDefinition2" Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Name="RowDefinition0" Height="Auto"/>
+                    <RowDefinition Name="RowDefinition1" Height="*"/>
+                </Grid.RowDefinitions>
+                <UniformGrid Name="HeaderPanel" 
+                  Grid.Column="0"
+                  Grid.Row="0"
+                  Columns="4"
+                  Rows="1"
+                  Margin="0"
+                  Panel.ZIndex="1"
+                  IsItemsHost="True"
+                  KeyboardNavigation.TabIndex="1"/>
+                <Border Name="ContentPanel" Margin="0" Padding="0"
+                  Grid.Column="0"
+                  Grid.Row="1"
+                  Background="{TemplateBinding Panel.Background}"
+                  BorderBrush="{TemplateBinding Border.BorderBrush}"
+                  BorderThickness="0"
+                  KeyboardNavigation.DirectionalNavigation="Contained"
+                  KeyboardNavigation.TabIndex="2"
+                  KeyboardNavigation.TabNavigation="Local">
+                    <ContentPresenter Name="PART_SelectedContentHost"
+                     Margin="{TemplateBinding Control.Padding}"
+                     Content="{TemplateBinding TabControl.SelectedContent}"
+                     ContentSource="SelectedContent"
+                     ContentStringFormat="{TemplateBinding TabControl.SelectedContentStringFormat}"
+                     ContentTemplate="{TemplateBinding TabControl.SelectedContentTemplate}"
+                     SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
+                </Border>
+            </Grid>
+        </ControlTemplate>
+
         <Style TargetType="{x:Type TabItem}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -464,117 +550,125 @@
                         </DockPanel>
                     </Grid>
                 </Border>
-                <!-- Tweets TabControl -->
-                <TabControl x:Name="TweetsPad" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <TabItem x:Name="TweetsTab" BorderThickness="0" >
-                        <TabItem.Header>
-                            <StackPanel Width="52" HorizontalAlignment="Stretch">
-                            <Image Stretch="None" Source="assets/13.png"/>
-                            </StackPanel>
-                        </TabItem.Header>
-                        <TabItem.Content>
-                            <ListBox x:Name="AllTweetsListBox" ItemTemplate="{StaticResource TweetsTemplate}" 
+                <TabControl x:Name="OuterTab" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Template="{StaticResource OuterTabControlTemplate}" >
+                    <TabItem Header="Tweets">
+                        <!-- Tweets TabControl -->
+                        <TabControl x:Name="TweetsPad" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Template="{StaticResource TweetsTabControlTemplate}">
+                            <TabItem x:Name="TweetsTab" >
+                                <TabItem.Header>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <Image Width="16" Source="assets/13.png"/>
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <ListBox x:Name="AllTweetsListBox" ItemTemplate="{StaticResource TweetsTemplate}" 
                                      ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
                                      BorderThickness="0" HorizontalContentAlignment="Stretch" 
                                      ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" 
                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                                      ContextMenu="{StaticResource SingleFirend_ContextMenu}"/>
-                        </TabItem.Content>
+                                </TabItem.Content>
+                            </TabItem>
+                            <TabItem x:Name="TweetsSendByMeTab" BorderThickness="0">
+                                <TabItem.Header>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <Image Width="16" Source="assets/14.png"/>
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <!--ListBox x:Name="TweetsListBox" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"-->
+                                    <ListBox ItemTemplate="{StaticResource TweetsTemplate}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListBox>
+                                </TabItem.Content>
+                            </TabItem>
+                            <TabItem x:Name="TweetsRefersMeTab" BorderThickness="0">
+                                <TabItem.Header>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <Image Width="16" Source="assets/16.png"/>
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <!--ListBox x:Name="TweetsListBox" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"-->
+                                    <ListBox ItemTemplate="{StaticResource TweetsTemplate}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListBox>
+                                </TabItem.Content>
+                            </TabItem>
+                            <TabItem x:Name="TweetsCommentedByMeTab" BorderThickness="0">
+                                <TabItem.Header>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <Image Width="16" Source="assets/15.png"/>
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <!--ListBox x:Name="TweetsListBox" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"-->
+                                    <ListBox ItemTemplate="{StaticResource TweetsTemplate}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListBox>
+                                </TabItem.Content>
+                            </TabItem>
+                            <TabItem x:Name="TweetsFavTab" BorderThickness="0">
+                                <TabItem.Header>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <Image Width="16" Source="assets/17.png"/>
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <!--ListBox x:Name="TweetsListBox" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"-->
+                                    <ListBox ItemTemplate="{StaticResource TweetsTemplate}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListBox>
+                                </TabItem.Content>
+                            </TabItem>
+                        </TabControl>
+
                     </TabItem>
-                    <TabItem x:Name="TweetsSendByMeTab" BorderThickness="0">
-                        <TabItem.Header>
-                            <StackPanel Width="52" HorizontalAlignment="Stretch">
-                            <Image  Stretch="None"  Source="assets/14.png"/>
-                            </StackPanel>
-                        </TabItem.Header>
-                        <TabItem.Content>
-                            <!--ListBox x:Name="TweetsListBox" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"-->
-                            <ListBox ItemTemplate="{StaticResource TweetsTemplate}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListBox>
-                        </TabItem.Content>
-                    </TabItem>
-                    <TabItem x:Name="TweetsRefersMeTab" BorderThickness="0">
-                        <TabItem.Header>
-                            <StackPanel Width="52" HorizontalAlignment="Stretch">
-                            <Image Stretch="None" Source="assets/16.png"/>
-                            </StackPanel>
-                        </TabItem.Header>
-                        <TabItem.Content>
-                            <!--ListBox x:Name="TweetsListBox" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"-->
-                            <ListBox ItemTemplate="{StaticResource TweetsTemplate}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListBox>
-                        </TabItem.Content>
-                    </TabItem>
-                    <TabItem x:Name="TweetsCommentedByMeTab" BorderThickness="0">
-                        <TabItem.Header>
-                            <StackPanel Width="52" HorizontalAlignment="Stretch">
-                            <Image Stretch="None" Source="assets/15.png"/>
-                            </StackPanel>
-                        </TabItem.Header>
-                        <TabItem.Content>
-                            <!--ListBox x:Name="TweetsListBox" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"-->
-                            <ListBox ItemTemplate="{StaticResource TweetsTemplate}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListBox>
-                        </TabItem.Content>
-                    </TabItem>
-                    <TabItem x:Name="TweetsFavTab" BorderThickness="0">
-                        <TabItem.Header>
-                            <StackPanel Width="52" HorizontalAlignment="Stretch">
-                            <Image Stretch="None" Source="assets/17.png"/>
-                            </StackPanel>
-                        </TabItem.Header>
-                        <TabItem.Content>
-                            <!--ListBox x:Name="TweetsListBox" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"-->
-                            <ListBox ItemTemplate="{StaticResource TweetsTemplate}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListBox>
-                        </TabItem.Content>
-                    </TabItem>
-                </TabControl>
-                <!-- Friends TabControl -->
-                <TabControl x:Name="FriendsPad" TabStripPlacement="Top" Visibility="Collapsed">
-                    <TabItem x:Name="FriendsGroupTab">
-                        <TabItem.Header>
-                            <StackPanel Width="65" HorizontalAlignment="Stretch">
-                                <TextBlock HorizontalAlignment="Center">我的好友</TextBlock>
-                            </StackPanel>
-                        </TabItem.Header>
-                        <TabItem.Content>
-                            <Grid x:Name="AllFriendTab" Background="White" PresentationTraceSources.TraceLevel="High">
-                                <TreeView x:Name="FriendsTreeView" ItemsSource="{Binding Mode=OneWay}" ItemTemplate="{StaticResource GroupNameTemplate}"
+                    <TabItem Header="Firends">
+                        <!-- Friends TabControl -->
+                        <TabControl x:Name="FriendsPad" TabStripPlacement="Top"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Template="{StaticResource FriendsTabControlTemplate}"  >
+                            <TabItem x:Name="FriendsGroupTab">
+                                <TabItem.Header>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock HorizontalAlignment="Center">我的好友</TextBlock>
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <Grid x:Name="AllFriendTab" Background="White" PresentationTraceSources.TraceLevel="High">
+                                        <TreeView x:Name="FriendsTreeView" ItemsSource="{Binding Mode=OneWay}" ItemTemplate="{StaticResource GroupNameTemplate}"
                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                                      HorizontalContentAlignment="Stretch"></TreeView>
-                            </Grid>
-                        </TabItem.Content>
-                    </TabItem>
+                                    </Grid>
+                                </TabItem.Content>
+                            </TabItem>
 
-                    <TabItem x:Name="FollowMeTab">
-                        <TabItem.Header>
-                            <StackPanel Width="65" HorizontalAlignment="Stretch">
-                                <TextBlock HorizontalAlignment="Center">关注我的</TextBlock>
-                            </StackPanel>
-                        </TabItem.Header>
-                    </TabItem>
+                            <TabItem x:Name="FollowMeTab">
+                                <TabItem.Header>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock HorizontalAlignment="Center">关注我的</TextBlock>
+                                    </StackPanel>
+                                </TabItem.Header>
+                            </TabItem>
 
-                    <TabItem x:Name="MyFollowTab">
-                        <TabItem.Header>
-                            <StackPanel Width="65" HorizontalAlignment="Stretch">
-                                <TextBlock HorizontalAlignment="Center">我关注的</TextBlock>
-                            </StackPanel>
-                        </TabItem.Header>
-                        <TabItem.Content>
-                            <TextBlock HorizontalAlignment="Center">好友</TextBlock>
-                        </TabItem.Content>
+                            <TabItem x:Name="MyFollowTab">
+                                <TabItem.Header>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock HorizontalAlignment="Center">我关注的</TextBlock>
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <TextBlock HorizontalAlignment="Center">好友</TextBlock>
+                                </TabItem.Content>
+                            </TabItem>
+                            <TabItem x:Name="WaitingConfirmTab">
+                                <TabItem.Header>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock HorizontalAlignment="Center">等待确认的</TextBlock>
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <TextBlock>好友</TextBlock>
+                                </TabItem.Content>
+                            </TabItem>
+                        </TabControl>
+
                     </TabItem>
-                    <TabItem x:Name="WaitingConfirmTab">
-                        <TabItem.Header>
-                                <StackPanel Width="65" HorizontalAlignment="Stretch">
-                                    <TextBlock HorizontalAlignment="Center">等待确认的</TextBlock>
-                                </StackPanel>
-                        </TabItem.Header>
-                        <TabItem.Content>
-                            <TextBlock>好友</TextBlock>
-                        </TabItem.Content>
-                    </TabItem>
+                    <!-- Message TabControl -->
                 </TabControl>
-                <!-- Message TabControl -->
             </DockPanel>
         </DockPanel>
         <!--/Border-->
