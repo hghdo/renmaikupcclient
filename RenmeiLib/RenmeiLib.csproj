@@ -87,7 +87,6 @@
     <Compile Include="Utilities\UserBehaviorManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
     <None Include="TwitterLib.cd" />
     <None Include="TwitterLib.snk" />
   </ItemGroup>
