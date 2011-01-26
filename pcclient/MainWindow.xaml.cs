@@ -325,7 +325,7 @@ namespace pcclient
                     new OneArgDelegateFriend(UpdateFriendsList), twitter.getFriendGroups());
                 FollowMeTab.Dispatcher.BeginInvoke(
                     DispatcherPriority.Normal,
-                    new OneArgDelegateFollow(UpdateFollowMeList), twitter.getFollowMeFriendsList());
+                    new NoArgDelegate(UpdateFollowMeList));
                 MyFollowTab.Dispatcher.BeginInvoke(
                     DispatcherPriority.Normal,
                     new OneArgDelegateFollow(UpdateMyFollowList), twitter.getMyFollowFriendsList());
@@ -367,25 +367,26 @@ namespace pcclient
                 }
             }
         }
-        private void UpdateFollowMeList(UserCollection newUsers)
+        private void UpdateFollowMeList()
         {
-            if (0 != newUsers.Count)
-            {
-                followMeGroup.Clear();
+            UserCollection newUsers = twitter.getFollowMeFriendsList();
                 for (int i = newUsers.Count - 1; i >= 0; i--)
                 {
+                    if (followMeGroup.Contains(newUsers[i]))
+                        continue;
                     User guy = newUsers[i];
                     followMeGroup.Add(guy);
                 }
-            }
         }
         private void UpdateMyFollowList(UserCollection newUsers)
         {
             if (0 != newUsers.Count)
             {
-                myFollowGroup.Clear();
+                
                 for (int i = newUsers.Count - 1; i >= 0; i--)
                 {
+                    if (myFollowGroup.Contains(newUsers[i]))
+                        continue;
                     User nu = newUsers[i];
                     myFollowGroup.Add(nu);
                 }
@@ -842,7 +843,20 @@ namespace pcclient
 
         private void viewTwitter_onClick(object sender, RoutedEventArgs e)
         {
+            MenuItem curMenu = sender as MenuItem;
+            ContextMenu curContext = curMenu.Parent as ContextMenu;
 
+            Point p = curContext.TranslatePoint(new Point(0, 0), FriendsTreeView);
+
+            // 取父节点的父节点
+            DependencyObject obj = FriendsTreeView.InputHitTest(p) as DependencyObject;
+            obj = VisualTreeHelper.GetParent(obj);
+            obj = VisualTreeHelper.GetParent(obj);
+
+            User curUser = ((ContentPresenter)obj).Content as User;
+
+            SingleOneAllTweets soa = new SingleOneAllTweets(twitter, curUser);
+            soa.Show();
         }
 
         private void removeFriend_onClick(object sender, RoutedEventArgs e)

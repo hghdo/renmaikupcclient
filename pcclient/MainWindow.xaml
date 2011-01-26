@@ -394,7 +394,8 @@
             <MenuItem Header="屏蔽微博" Click="shildTweets_onClick" />
         </ContextMenu>       
         <DataTemplate x:Key="SingleFriendTemplate" >
-            <Grid Margin="{Binding Converter={StaticResource indentConverter},RelativeSource={RelativeSource TemplatedParent}}"  ContextMenu="{StaticResource SingleFirend_ContextMenu}">
+            <Grid Margin="{Binding Converter={StaticResource indentConverter},RelativeSource={RelativeSource TemplatedParent}}"  ContextMenu="{StaticResource SingleFirend_ContextMenu}"
+                  HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="60" />
                     <ColumnDefinition Width="100" />
@@ -416,7 +417,7 @@
                     <Style TargetType="{x:Type TreeViewItem}"
                        BasedOn="{StaticResource AeroTreeStyle}" />
                 </TreeView.Resources>
-                <TreeViewItem Header="{Binding Path=Title}" ItemsSource="{Binding Path=MemberList}" ItemTemplate="{StaticResource SingleFriendTemplate}">
+                <TreeViewItem Header="{Binding Path=Title}" ItemsSource="{Binding Path=MemberList}" ItemTemplate="{StaticResource SingleFriendTemplate}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
                 </TreeViewItem>
             </TreeView>
         </HierarchicalDataTemplate>
