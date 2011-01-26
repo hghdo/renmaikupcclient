@@ -261,13 +261,13 @@ namespace pcclient
                 {
                     newTweets = twitter.GetReplies();
                 }
-                else if (j == 4)
-                {
-                    newTweets = twitter.GetFavoriteTweets();
-                }
                 else if (j == 3)
                 {
                     newTweets = twitter.RetriveCommentedTweets();
+                }
+                else if (j == 4)
+                {
+                    newTweets = twitter.GetFavoriteTweets();
                 }
                 else
                 {
@@ -291,6 +291,7 @@ namespace pcclient
                 }
 
             }
+            string aaa = "aaa";
             //delete many lines for demo
 
             //StopStoryboard("Fetching");
