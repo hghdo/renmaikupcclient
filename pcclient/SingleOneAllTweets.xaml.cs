@@ -34,6 +34,8 @@ namespace pcclient
             InitializeComponent();
             this.saNet = net;
             this.saUser = relatedUser;
+
+            UserTitleBar.DataContext = saUser;
             singleAllTweets = new TweetCollection();
             AllTweetsListBox.DataContext = singleAllTweets;
 
@@ -53,7 +55,7 @@ namespace pcclient
             {
                 AllTweetsListBox.Dispatcher.BeginInvoke(
                     DispatcherPriority.Normal,
-                    new OneArgDelegate(UpdateAllTweetsList), saNet.GetUserTimeline(saUser.Id.ToString()));
+                    new NoArgeDelegate(UpdateAllTweetsList));
             }
             catch (Exception ex)
             {
@@ -64,18 +66,31 @@ namespace pcclient
 
         }
 
-        public void UpdateAllTweetsList(TweetCollection newTweets)
+        public void UpdateAllTweetsList()
         {
-            for (int i = newTweets.Count - 1; i >= 0; i--)
+            TweetCollection newTweets = saNet.GetUserTimeline(saUser.Id.ToString());
+            if( 0 != newTweets.Count )
             {
-                Tweet tweet = newTweets[i];
+                for (int i = newTweets.Count - 1; i >= 0; i--)
+                {
+                    Tweet tweet = newTweets[i];
 
-                if (singleAllTweets.Contains(tweet)) continue;
+                    if (singleAllTweets.Contains(tweet)) continue;
 
-                singleAllTweets.Add(tweet);
-                tweet.Index = singleAllTweets.Count;
-                tweet.IsNew = true;
+                    singleAllTweets.Add(tweet);
+                    tweet.Index = singleAllTweets.Count;
+                    tweet.IsNew = true;
+                }
             }
+        }
+
+        private void ShowAddCommentWin(object sender, RoutedEventArgs e)
+        {
+            Tweet curItem = ((ListBoxItem)AllTweetsListBox.ContainerFromElement((Image)sender)).Content as Tweet;
+            CommentsWindow cw = new CommentsWindow(saNet, curItem);
+            //cw.tweet = curItem;
+            //cw.twitterApi = twitter;
+            cw.ShowDialog();
         }
 
         protected override Decorator GetWindowButtonsPlaceholder()

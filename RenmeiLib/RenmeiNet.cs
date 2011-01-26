@@ -1708,7 +1708,7 @@ namespace RenmeiLib
                     //timelineUrl = FriendsTimelineUrl;
                     break;
                 case Timeline.User:
-                    timelineUrl = UserTimelineUrl;
+                    timelineUrl += "&userType=other&otherId=" + userId;
                     break;
                 case Timeline.Replies:
                     timelineUrl += "&userType=re";
