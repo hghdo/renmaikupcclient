@@ -71,7 +71,7 @@
                         <Border Name="WindowButtonsPlaceholder" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-1,10,0" />
                     </UniformGrid>
                 </Border>
-                <TextBlock x:Name="TweetText" Text="{Binding Path=Text}" Focusable="True" FontSize="13" Margin="10" HorizontalAlignment="Stretch" DockPanel.Dock="Top"></TextBlock>
+                <TextBlock x:Name="TweetText" Text="{Binding Path=Text}" TextWrapping="Wrap" Focusable="True" FontSize="13" Margin="10" HorizontalAlignment="Stretch" DockPanel.Dock="Top"></TextBlock>
                 <Thumb DragDelta="Thumb_DragDelta" HorizontalAlignment="Right" DockPanel.Dock="Bottom" Cursor="SizeNWSE" />
     
                 <StackPanel Orientation="Vertical" Margin="10" HorizontalAlignment="Stretch" DockPanel.Dock="Bottom">
