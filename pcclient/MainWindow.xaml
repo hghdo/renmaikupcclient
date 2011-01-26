@@ -563,8 +563,8 @@
                                 </ContextMenu>
                             </Image.ContextMenu>
                         </Image>
-                        <StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainMenuTweet"><Image Width="26" Margin="5" Source="assets/2.png" MouseDown="OpenTweetsPad"/></StackPanel>
-                        <StackPanel Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainMenuFriend"><Image Width="26" Margin="5" Source="assets/3.png" MouseDown="OpenFriendsPad"/></StackPanel>
+                        <StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainMenuTweet" MouseDown="OpenTweetsPad"><Image Width="26" Margin="5" Source="assets/2.png"/></StackPanel>
+                        <StackPanel Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainMenuFriend" MouseDown="OpenFriendsPad"><Image Width="26" Margin="5" Source="assets/3.png"/></StackPanel>
                         <StackPanel Grid.Column="3" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainMenuMsg"><Image Width="26" Margin="5" Source="assets/4.png"/></StackPanel>
                         <DockPanel Grid.Column="4" Grid.Row="0" Margin="0" VerticalAlignment="Bottom">
                             <Thumb DragDelta="Thumb_DragDelta" Cursor="SizeNWSE" Height="5" Opacity="1.0" HorizontalAlignment="Right" DockPanel.Dock="Bottom" Visibility="Visible"/>
