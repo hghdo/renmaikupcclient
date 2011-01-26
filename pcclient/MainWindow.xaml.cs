@@ -581,7 +581,7 @@ namespace pcclient
             _notifyIcon.BalloonTipText = "Right-click for more options";
             _notifyIcon.BalloonTipTitle = "人脉";
             _notifyIcon.Text = "人脉";
-            _notifyIcon.Icon = pcclient.Properties.Resources.Renmei_icon;
+            _notifyIcon.Icon = pcclient.Properties.Resources.user_coat_green_01;
             _notifyIcon.DoubleClick += new EventHandler(m_notifyIcon_Click);
             _notifyIcon.Visible = true;
 
@@ -956,7 +956,8 @@ namespace pcclient
         
         #endregion
 
-        #region FollowMe
+        #region System Menu
+
         #endregion
     }
 

@@ -60,19 +60,19 @@ namespace pcclient.Properties {
             }
         }
         
-        internal static System.Drawing.Icon Renmei_icon {
-            get {
-                object obj = ResourceManager.GetObject("Renmei_icon", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
         /// <summary>
         ///   Looks up a localized string similar to 重新登录....
         /// </summary>
         internal static string TryLogin {
             get {
                 return ResourceManager.GetString("TryLogin", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Icon user_coat_green_01 {
+            get {
+                object obj = ResourceManager.GetObject("user_coat_green_01", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }

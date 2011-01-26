@@ -510,28 +510,21 @@
                         <Image Name="SystemLogo" Grid.Column="0" Grid.Row="0" Width="26" Source="assets/tx.png" MouseDown="SystemLogo_Click">
                             <Image.ContextMenu>
                                 <ContextMenu Name="SystemLogoMenu">
-                                    <MenuItem>
-                                        <MenuItem.Header>
-                                            <TextBlock>我的人脉库</TextBlock>
-                                        </MenuItem.Header>
-                                        <MenuItem.Icon>
-                                            <Image Source="assets/Homepage.ico"></Image>
+                                     <MenuItem Header="我的人脉库">
+                                         <MenuItem.Icon>
+                                            <Image Source="assets/9.png"></Image>
                                         </MenuItem.Icon>
-                                    </MenuItem>
-                                    <MenuItem>
-                                        <MenuItem.Header>
-                                            <TextBlock>我的公司</TextBlock>
-                                        </MenuItem.Header>
-                                        <MenuItem.Icon>
-                                            <Image Source="assets/Homepage.ico"></Image>
-                                        </MenuItem.Icon>
+                                        <MenuItem Header="我的首页"/>
+                                        <MenuItem Header="我的主页"/>
+                                        <MenuItem Header="我的活动"/>
+                                        <MenuItem Header="我的文件"/>
                                     </MenuItem>
                                     <MenuItem>
                                         <MenuItem.Header>
                                             <TextBlock>身份认证</TextBlock>
                                         </MenuItem.Header>
                                         <MenuItem.Icon>
-                                            <Image Source="assets/Homepage.ico"></Image>
+                                            <Image Source="assets/9.png"></Image>
                                         </MenuItem.Icon>
                                     </MenuItem>
                                     <Separator/>
@@ -540,7 +533,7 @@
                                             <TextBlock>系统设置</TextBlock>
                                         </MenuItem.Header>
                                         <MenuItem.Icon>
-                                            <Image Source="assets/Homepage.ico"></Image>
+                                            <Image Source="assets/9.png"></Image>
                                         </MenuItem.Icon>
                                     </MenuItem>
                                     <MenuItem>
@@ -548,16 +541,16 @@
                                             <TextBlock>帮助</TextBlock>
                                         </MenuItem.Header>
                                         <MenuItem.Icon>
-                                            <Image Source="assets/Homepage.ico"></Image>
+                                            <Image Source="assets/9.png"></Image>
                                         </MenuItem.Icon>
                                     </MenuItem>
                                     <Separator/>
                                     <MenuItem>
                                         <MenuItem.Header>
-                                            <TextBlock>退出</TextBlock>
+                                            <TextBlock MouseDown="exitMenuItem_Click">退出</TextBlock>
                                         </MenuItem.Header>
                                         <MenuItem.Icon>
-                                            <Image Source="assets/Homepage.ico"></Image>
+                                            <Image Source="assets/9.png"></Image>
                                         </MenuItem.Icon>
                                     </MenuItem>
                                 </ContextMenu>
