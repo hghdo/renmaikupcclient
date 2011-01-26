@@ -19,16 +19,16 @@
                 </Grid.Resources>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="80" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="20"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Path=User.ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
-                <StackPanel x:Name="rightTopButtons" Grid.Column="1" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                     <TextBlock Text="{Binding Path=RelativeTime}" Style="{StaticResource TipFontStyle}"></TextBlock>
-                    <Image Source="assets/reply.png" Stretch="None" MouseDown="ShowAddCommentWin"/>
+                    <Image Source="assets/reply.png" Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDown="ShowAddCommentWin"/>
                 </StackPanel>
                 <TextBlock Grid.ColumnSpan="2" Grid.Row="1" FontSize="12" Margin="0,8,0,8" Text="{Binding Path=Text}" TextWrapping="Wrap"></TextBlock>
             </Grid>
@@ -53,7 +53,6 @@
                         <Border Name="WindowButtonsPlaceholder" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-1,10,0" />
                     </UniformGrid>
                 </Border>
-                <TextBlock x:Name="TweetText" Text="{Binding Path=Text}" Focusable="True" FontSize="13" Margin="10" HorizontalAlignment="Stretch" DockPanel.Dock="Top"></TextBlock>
                 <Thumb DragDelta="Thumb_DragDelta" HorizontalAlignment="Right" DockPanel.Dock="Bottom" Cursor="SizeNWSE" />
                 <ListBox x:Name="AllTweetsListBox" ItemTemplate="{StaticResource OneAllTweetsTemplate}" 
                          Margin="10" Background="Transparent"
