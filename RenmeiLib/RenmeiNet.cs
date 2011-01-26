@@ -1666,7 +1666,6 @@ namespace RenmeiLib
             string followUrl = CreateFriendshipUrl + userName + Format;
             MakeTwitterApiCall(followUrl, "POST");
         }
-
         #endregion
 
         #region Private Methods
