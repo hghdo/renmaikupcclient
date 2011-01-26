@@ -337,7 +337,7 @@ namespace RenmeiLib
             get
             {
                 if (string.IsNullOrEmpty(destroyUrl))
-                    return TwitterServerUrl + "statuses/destroy/";
+                    return TwitterServerUrl + "service/twitter/tweetDelete.do";//"statuses/destroy/";
                 else
                     return destroyUrl;
             }
@@ -751,7 +751,9 @@ namespace RenmeiLib
         /// <param name="id">id of the Tweet to delete</param>
         public void DestroyTweet(double id)
         {
-            string urlToCall = string.Format("{0}{1:g}{2}", DestroyUrl, id, Format);
+            string urlToCall = DestroyUrl + "?" + getAuthUrl();
+            urlToCall += "&tweetId=" + id.ToString();
+            //string urlToCall = string.Format("{0}{1:g}{2}", DestroyUrl, id, Format);
             MakeDestroyRequestCall(urlToCall);
         }
 

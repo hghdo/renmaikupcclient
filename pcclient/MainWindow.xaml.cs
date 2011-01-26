@@ -255,7 +255,7 @@ namespace pcclient
                 }
                 else if (j == 1)
                 {
-                    newTweets = twitter.GetReplies();
+                    newTweets = twitter.RetriveMySelfTweets();
                 }
                 else if (j == 2)
                 {
@@ -267,7 +267,7 @@ namespace pcclient
                 }
                 else if (j == 3)
                 {
-                    newTweets = twitter.RetriveMySelfTweets();
+                    newTweets = twitter.RetriveCommentedTweets();
                 }
                 else
                 {
@@ -893,6 +893,12 @@ namespace pcclient
             //TweetCollection cl=ti.DataContext as TweetCollection;
             //Tweet tw = AllTweetsListBox.SelectedItem as Tweet;
             //MessageBox.Show("This is " + tw.Text + " tab");
+        }
+        private void DeleteTweet_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Tweet curItem = ((ListBoxItem)getTweetListBox().ContainerFromElement((Image)sender)).Content as Tweet;
+            twitter.DestroyTweet(curItem.Id);
+            for (int j = 0; j < allTweetsCollection.Length; j++)  allTweetsCollection[j].Remove(curItem);
         }
 
         private void ReplyTweet_MouseDown(object sender, MouseButtonEventArgs e)
