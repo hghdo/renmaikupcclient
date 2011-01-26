@@ -359,24 +359,36 @@ namespace pcclient
         {
             if (0 != newFriends.Count)
             {
-                group = newFriends;
-                AllFriendTab.DataContext = group;
+                group.Clear();
+                for (int i = newFriends.Count - 1; i >= 0; i--)
+                {
+                    FriendGroup fg = newFriends[i];
+                    group.Add(fg);
+                }
             }
         }
         private void UpdateFollowMeList(UserCollection newUsers)
         {
             if (0 != newUsers.Count)
             {
-                followMeGroup = newUsers;
-                FollowMeTab.DataContext = followMeGroup;
+                followMeGroup.Clear();
+                for (int i = newUsers.Count - 1; i >= 0; i--)
+                {
+                    User guy = newUsers[i];
+                    followMeGroup.Add(guy);
+                }
             }
         }
         private void UpdateMyFollowList(UserCollection newUsers)
         {
             if (0 != newUsers.Count)
             {
-                myFollowGroup = newUsers;
-                MyFollowTab.DataContext = myFollowGroup;
+                myFollowGroup.Clear();
+                for (int i = newUsers.Count - 1; i >= 0; i--)
+                {
+                    User nu = newUsers[i];
+                    myFollowGroup.Add(nu);
+                }
             }
         }
 
