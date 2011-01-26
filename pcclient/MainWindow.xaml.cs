@@ -89,6 +89,8 @@ namespace pcclient
 
             InitializeComponent();
 
+            this.Title = "人脉库";
+
             allTweetsCollection = new TweetCollection[] { tweets, tweetsSentByMe, tweetsRefersMe, tweetsCommentByMe, favTweets };
 
             ShowLogin();
@@ -100,9 +102,31 @@ namespace pcclient
             //Handle login DebugAutoLogin() used to login auto use hbcjob@126.com/hbcjob and it is for dev only.
             DebugAutoLogin();
             //DisplayLoginIfUserNotLoggedIn();
- 
+            this.Title += "-" + twitter.CurrentlyLoggedInUser.ScreenName;
+            SetButtonMenuBarBackground();
+
         }
         #endregion
+
+        private void SetButtonMenuBarBackground()
+        {
+
+            BrushConverter bc = new BrushConverter();
+            Brush selectedBrush,commonBrush;
+            commonBrush = (Brush)bc.ConvertFrom("#1D9CDF");
+            selectedBrush = (Brush)bc.ConvertFrom("#1783B4");
+            switch (OuterTab.SelectedIndex)
+            {
+                case 0:
+                    MainMenuTweet.Background = selectedBrush;
+                    MainMenuFriend.Background = commonBrush;
+                    break;
+                case 1:
+                    MainMenuTweet.Background = commonBrush;
+                    MainMenuFriend.Background = selectedBrush;
+                    break;
+            }
+        }
 
         private void SetDataContextForAllOfTabs()
         {
@@ -791,6 +815,11 @@ namespace pcclient
             ExtendTweetsInputBox(false);
         }
 
+        private void OuterTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SetButtonMenuBarBackground();
+        }
+
         protected override Decorator GetWindowButtonsPlaceholder()
         {
             return WindowButtonsPlaceholder;
@@ -809,6 +838,7 @@ namespace pcclient
             if (this.Height + e.VerticalChange > 10)
                 this.Height += e.VerticalChange;
         }
+
 
         #endregion
 

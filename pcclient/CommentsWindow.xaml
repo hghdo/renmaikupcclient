@@ -5,7 +5,7 @@
     xmlns:CustomWindow="clr-namespace:CustomWindow;assembly=CustomWindow"
     AllowsTransparency="True" Background="Transparent"
     MinimizeButtonState="None" MaximizeButtonState="None"
-    Title="MainWindows" Height="600" Width="500"
+    Title="人脉库评论" Height="600" Width="500"
     xmlns:pcclient="clr-namespace:pcclient"
     >
 

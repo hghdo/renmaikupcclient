@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:CustomWindow="clr-namespace:CustomWindow;assembly=CustomWindow"
     AllowsTransparency="True" Background="Transparent"
-    Title="MainWindows" Height="700" Width="300"
+    Title="MainWindows" Height="700" Width="300" MinHeight="500" MinWidth="300"
     xmlns:pcclient="clr-namespace:pcclient"
     >
     
@@ -219,7 +219,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Path=User.ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Margin="0,5,0,0" Text="{Binding Path=User.ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
                         <StackPanel x:Name="rightTopButtons" Visibility="Hidden" Grid.Column="1" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                             <Image Style="{StaticResource ImageButtonStyle}" Source="assets/menu_dropdown.png" Opacity="30"/>
                             <Image Style="{StaticResource ImageButtonStyle}" Source="assets/delete.png" MouseDown="DeleteTweet_MouseDown"/>
@@ -359,24 +359,26 @@
                 </Border>
             </Grid>
         </ControlTemplate>
-
+        <!-- Style for Tab Header -->
         <Style TargetType="{x:Type TabItem}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TabItem}">
                         <Grid>
                             <Border Name="Border" Background="#F1F5FF" BorderBrush="#cccccc" BorderThickness="0,0,1,1" CornerRadius="0,6,0,0" >
-                                <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="2" />
+                                <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="4" />
                             </Border>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter TargetName="Border" Property="Background" Value="#ffffff" />
-                                <Setter TargetName="Border" Property="BorderBrush" Value="#ffffff" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#cccccc" />
+                                <Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0" />
                             </Trigger>
                             <Trigger Property="IsSelected" Value="False">
                                 <Setter TargetName="Border" Property="Background" Value="#F1F5FF" />
                                 <Setter TargetName="Border" Property="BorderBrush" Value="#cccccc" />
+                                <Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,1" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -475,10 +477,10 @@
                                 <Image Width="50" x:Name="CurrentUserHeadImage"></Image>
                             </Border>
                             <Border Margin="15,0,0,0">
-                                <StackPanel >
+                                <StackPanel Orientation="Horizontal">
                                     <TextBlock Foreground="White" FontSize="12" x:Name="StatusTextBlock">我的人脉库</TextBlock>
-                                    <Button x:Name="RefreshButton" Content="refresh" IsDefault="True" Click="RefreshButton_Click"/>
-                                    <Image Width="16" Source="assets/refresh_16.png" ></Image>
+                                    <Image Width="16" VerticalAlignment="Top" Source="assets/refresh_16.png" MouseDown="RefreshButton_Click"></Image>
+                                    <Button x:Name="RefreshButton" Visibility="Collapsed" Content="refresh" IsDefault="True" Click="RefreshButton_Click"/>
                                 </StackPanel>
                             </Border>
                         </DockPanel>
@@ -493,7 +495,7 @@
                     </StackPanel>
                 </Border>
                 <!-- Bottom Menu Bar -->
-                <Border Name="BottmNavigation" DockPanel.Dock="Bottom" Height="35" Background="#1D9CDF" BorderThickness="0">
+                <Border Name="BottmNavigation" DockPanel.Dock="Bottom" Background="#1D9CDF" BorderThickness="0" Padding="0" Margin="0">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -561,15 +563,16 @@
                                 </ContextMenu>
                             </Image.ContextMenu>
                         </Image>
-                        <Image Grid.Column="1" Grid.Row="0" Width="26" Source="assets/2.png" MouseDown="OpenTweetsPad"/>
-                        <Image Grid.Column="2" Grid.Row="0" Width="26" Source="assets/3.png" MouseDown="OpenFriendsPad"/>
-                        <Image Grid.Column="3" Grid.Row="0" Width="26" Source="assets/4.png"/>
-                        <DockPanel Grid.Column="4" Grid.Row="0" VerticalAlignment="Bottom">
+                        <StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainMenuTweet"><Image Width="26" Margin="5" Source="assets/2.png" MouseDown="OpenTweetsPad"/></StackPanel>
+                        <StackPanel Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainMenuFriend"><Image Width="26" Margin="5" Source="assets/3.png" MouseDown="OpenFriendsPad"/></StackPanel>
+                        <StackPanel Grid.Column="3" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainMenuMsg"><Image Width="26" Margin="5" Source="assets/4.png"/></StackPanel>
+                        <DockPanel Grid.Column="4" Grid.Row="0" Margin="0" VerticalAlignment="Bottom">
                             <Thumb DragDelta="Thumb_DragDelta" Cursor="SizeNWSE" Height="5" Opacity="1.0" HorizontalAlignment="Right" DockPanel.Dock="Bottom" Visibility="Visible"/>
                         </DockPanel>
                     </Grid>
                 </Border>
-                <TabControl x:Name="OuterTab" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Template="{StaticResource OuterTabControlTemplate}" >
+                <TabControl x:Name="OuterTab" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                            Template="{StaticResource OuterTabControlTemplate}" SelectionChanged="OuterTab_SelectionChanged" >
                     <TabItem Header="Tweets">
                         <!-- Tweets TabControl -->
                         <TabControl x:Name="TweetsPad" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Template="{StaticResource TweetsTabControlTemplate}">
