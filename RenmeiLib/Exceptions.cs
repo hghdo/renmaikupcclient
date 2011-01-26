@@ -147,4 +147,16 @@ namespace RenmeiLib
 
         protected BadGatewayException(SerializationInfo info, StreamingContext context) : base(info, context) { }
     }
+
+    [Serializable]
+    public class NoPermissionException : Exception
+    {
+        public NoPermissionException() {}
+
+        public NoPermissionException(string message) : base(message) { }
+
+        public NoPermissionException(string message, Exception inner) : base(message, inner) { }
+
+        protected NoPermissionException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    }
 }

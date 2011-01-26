@@ -1879,8 +1879,30 @@ namespace RenmeiLib
 
             try
             {
-                // perform the destroy web request
-                request.GetResponse();
+
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                {
+                    // Get the response stream  
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+
+                    // Load the response data into a XmlDocument  
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(reader);
+
+                    XmlNode node = doc.SelectSingleNode("result/status");
+                    if (node == null)
+                    {
+                    }
+                    else
+                    {
+                        string status=node.InnerText;
+                        if (status.Equals("false"))
+                        {
+                            string msg=doc.SelectSingleNode("result/errorMsg").InnerText;
+                            throw new NoPermissionException(msg);
+                        }
+                    }
+                }
             }
             catch (WebException webExcp)
             {
