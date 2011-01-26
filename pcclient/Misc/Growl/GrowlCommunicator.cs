@@ -101,7 +101,7 @@ namespace Growl
                 growl.EncryptionAlgorithm = Cryptography.SymmetricAlgorithmType.PlainText;
 
                 application = new Application("pcclient");
-                application.Icon = global::pcclient.Properties.Resources.Renmei_icon.ToBitmap();
+                application.Icon = global::pcclient.Properties.Resources.user_coat_green_01.ToBitmap();
 
                 NewTweet = new NotificationType("New Tweet");
                 NewTweetsSummary = new NotificationType("New Tweets Summary");
