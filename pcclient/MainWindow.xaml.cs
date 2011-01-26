@@ -797,16 +797,26 @@ namespace pcclient
         {
             if (NewTweetBox.Text.Length > 0)
             {
-
-                twitter.AddTweet(NewTweetBox.Text);
-                //TweetCollection tweets = new TweetCollection();
-                //tweets.Add(twitter.AddTweet(NewTweetBox.Text));
-                LayoutRoot.Dispatcher.BeginInvoke(
-                    DispatcherPriority.Normal,
-                    new NoArgDelegate(UpdateUserInterface));
-                //twitter.AddTweet(NewTweetBox.Text);
-                //UpdateUserInterface(tweets);
-                ExtendTweetsInputBox(false);                
+                try
+                {
+                    twitter.AddTweet(NewTweetBox.Text);
+                    //TweetCollection tweets = new TweetCollection();
+                    //tweets.Add(twitter.AddTweet(NewTweetBox.Text));
+                    LayoutRoot.Dispatcher.BeginInvoke(
+                        DispatcherPriority.Normal,
+                        new NoArgDelegate(UpdateUserInterface));
+                    //twitter.AddTweet(NewTweetBox.Text);
+                    //UpdateUserInterface(tweets);
+                }
+                catch (Exception ee)
+                {
+                    MessageBox.Show(ee.Message);
+                }
+                ExtendTweetsInputBox(false);
+            }
+            else
+            {
+                MessageBox.Show("至少写点东西吧！");
             }
         }
 
@@ -941,9 +951,16 @@ namespace pcclient
         }
         private void DeleteTweet_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Tweet curItem = ((ListBoxItem)getTweetListBox().ContainerFromElement((Image)sender)).Content as Tweet;
-            twitter.DestroyTweet(curItem.Id);
-            for (int j = 0; j < allTweetsCollection.Length; j++)  allTweetsCollection[j].Remove(curItem);
+            try
+            {
+                Tweet curItem = ((ListBoxItem)getTweetListBox().ContainerFromElement((Image)sender)).Content as Tweet;
+                twitter.DestroyTweet(curItem.Id);
+                for (int j = 0; j < allTweetsCollection.Length; j++) allTweetsCollection[j].Remove(curItem);
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message);
+            }
         }
 
         private void ReplyTweet_MouseDown(object sender, MouseButtonEventArgs e)
