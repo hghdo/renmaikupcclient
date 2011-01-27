@@ -982,6 +982,7 @@ namespace pcclient
                 if (curItemRelated2ContextMenu == null) return;
                 Image image = sender as Image;
                 ContextMenu cm=PrepareTweetContextMenuTemplate();
+
                 cm.PlacementTarget = image;
                 cm.IsOpen = true;
 
@@ -994,6 +995,8 @@ namespace pcclient
             {
                 tweetContextMenuTemplate = new ContextMenu();
                 tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("TA主页", "homepage"));
+                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("关注", "follow"));
+                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("取消关注", "unfollow"));
                 tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("发微博", "sendTweet"));
                 tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("发私信", "sendMsg"));
                 tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("查看微博", "viewTweet"));
@@ -1018,6 +1021,12 @@ namespace pcclient
             {
                 SingleOneAllTweets soa = new SingleOneAllTweets(twitter, curItemRelated2ContextMenu.User);
                 soa.Show();
+            }
+            else if (m.Name.Equals("follow"))
+            {
+            }
+            else if (m.Name.Equals("unfollow"))
+            {
             }
         }
 
