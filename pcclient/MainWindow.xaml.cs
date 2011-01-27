@@ -53,8 +53,8 @@ namespace pcclient
         private DispatcherTimer friendsRefreshTimer = new DispatcherTimer();
         private DateTime lastFriendsUpdate = DateTime.MinValue;
 
-        private UserCollection followMeGroup = new UserCollection();
-        private UserCollection myFollowGroup = new UserCollection();
+        public static UserCollection followMeGroup = new UserCollection();
+        public static UserCollection myFollowGroup = new UserCollection();
 
         // Main TwitterNet object used to make Twitter API calls
         private IServiceApi twitter;
