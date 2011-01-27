@@ -1674,6 +1674,14 @@ namespace RenmeiLib
             followUrl += string.Format("&operType={0}&userId={1}", action, userId);
             MakeTwitterApiCall(followUrl, "POST");
         }
+
+        public bool isFollowed(User us, UserCollection uscoll)
+        {
+            if (uscoll.Contains(us))
+                return true;
+            return false;
+        }
+
         #endregion
 
         #region Private Methods
