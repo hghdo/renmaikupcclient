@@ -973,6 +973,29 @@ namespace pcclient
         
         #endregion
 
+        private void Menu_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                Image image = sender as Image;
+                ContextMenu contextMenu = image.ContextMenu;
+                contextMenu.PlacementTarget = image;
+                contextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Top;
+                contextMenu.IsOpen = true;
+                //ContextMenu cm = new ContextMenu();
+                //MenuItem mi = new MenuItem();
+                //mi.Width = 50;
+                //mi.Header = "aaaaaaaa";
+                //cm.Items.Add(mi);
+                ////ContextMenuTemplate
+                //                         //ContextMenu="{StaticResource SingleFirend_ContextMenu}"
+                //cm.PlacementTarget = (UIElement)sender;
+                //cm.IsOpen = true;
+
+            }            
+
+        }
+
         #region System Menu
 
         #endregion

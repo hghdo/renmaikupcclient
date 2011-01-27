@@ -221,7 +221,18 @@
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0" Grid.Row="0" Margin="0,5,0,0" Text="{Binding Path=User.ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
                         <StackPanel x:Name="rightTopButtons" Visibility="Hidden" Grid.Column="1" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                            <Image Style="{StaticResource ImageButtonStyle}" Source="assets/menu_dropdown.png" Opacity="30"/>
+                            <Image Style="{StaticResource ImageButtonStyle}" Source="assets/menu_dropdown.png" Opacity="30" MouseDown="Menu_MouseDown">
+                                <Image.ContextMenu>
+                                    <ContextMenu>
+                                    <MenuItem Header="TA主页"  />
+                                    <MenuItem Header="发微博"  />
+                                    <MenuItem Header="发私信"  />
+                                    <MenuItem Header="查看微博"  />
+                                    <MenuItem Header="解除好友" />
+                                    <MenuItem Header="屏蔽微博"  />
+                                    </ContextMenu>
+                                </Image.ContextMenu>
+                            </Image>
                             <Image Style="{StaticResource ImageButtonStyle}" Source="assets/delete.png" MouseDown="DeleteTweet_MouseDown"/>
                         </StackPanel>
                         <TextBlock Grid.ColumnSpan="2" Grid.Row="1" FontSize="12" Margin="0,8,0,8" Text="{Binding Path=Text}" TextWrapping="Wrap"></TextBlock>
@@ -387,7 +398,7 @@
         </Style>
  
         <!-- DateTemplate for FriendsGroup -->
-         <ContextMenu x:Key="SingleFirend_ContextMenu">
+         <ContextMenu x:Key="SingleFirend_ContextMenu" x:Name="ContextMenuTemplate">
             <MenuItem Header="TA主页" Click="taHomePage_onClick" />
             <MenuItem Header="发微博" Click="sendTweet_onClick" />
             <MenuItem Header="发私信" Click="sendPrivateMsg_onClick" />
@@ -581,8 +592,7 @@
                                      BorderThickness="0" HorizontalContentAlignment="Stretch" 
                                      ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" 
                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                     ContextMenu="{StaticResource SingleFirend_ContextMenu}"/>
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto"/>
                                 </TabItem.Content>
                             </TabItem>
                             <TabItem x:Name="TweetsSendByMeTab" BorderThickness="0">
