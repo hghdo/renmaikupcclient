@@ -995,10 +995,10 @@ namespace pcclient
                 tweetContextMenuTemplate = new ContextMenu();
                 bool ttt = myFollowGroup.Contains(curItemRelated2ContextMenu.User);
                 tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("TA主页", "homepage"));
-                if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id && !myFollowGroup.Contains(curItemRelated2ContextMenu.User))
-                    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("关注", "follow"));
-                if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id && myFollowGroup.Contains(curItemRelated2ContextMenu.User))
-                    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("取消关注", "unfollow"));
+                //if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id && !myFollowGroup.Contains(curItemRelated2ContextMenu.User))
+                //    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("关注", "follow"));
+                //if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id && myFollowGroup.Contains(curItemRelated2ContextMenu.User))
+                //    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("取消关注", "unfollow"));
                 if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id )
                     tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("发微博", "sendTweet"));
                 if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id)
