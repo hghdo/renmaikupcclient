@@ -971,7 +971,14 @@ namespace pcclient
             NewTweetBox.Text = "RT @" + curItem.User.ScreenName +" "+ curItem.Text;
         }
 
-        
+        private void AddFollowAction_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("服务器端异常");
+            //User curUser = ((ListBoxItem)FollowMeListBox.ContainerFromElement((Image)sender)).Content as User;
+            //twitter.ChangeFollowStatus( curUser.Id, "add" );
+            //myFollowGroup.Add(curUser);
+        }
+
         #endregion
 
         private void Menu_MouseDown(object sender, MouseButtonEventArgs e)

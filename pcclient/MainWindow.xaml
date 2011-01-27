@@ -425,7 +425,7 @@
             </TreeView>
         </HierarchicalDataTemplate>
         <!-- Follow me and My follow friends list -->
-        <DataTemplate x:Key="FollowMeTemplate">
+        <DataTemplate x:Key="MyFollowTemplate">
             <Border x:Name="listBorder" Background="#ffffff" BorderBrush="#61738B" Margin="0" Padding="0,8,5,8" BorderThickness="0 0 0 1" VerticalAlignment="Stretch">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -439,6 +439,27 @@
                         <Image Width="40" Height="40" Source="{Binding Path=ImageUrl}"/>
                     </Border>
                     <TextBlock HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0" Text="{Binding Path=ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="FollowMeTemplate">
+            <Border x:Name="listBorder" Background="#ffffff" BorderBrush="#61738B" Margin="0" Padding="0,8,5,8" BorderThickness="0 0 0 1" VerticalAlignment="Stretch">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="16" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="50" BorderBrush="White" BorderThickness="0">
+                        <Image Width="40" Height="40" Source="{Binding Path=ImageUrl}"/>
+                    </Border>
+                    <TextBlock HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0" Text="{Binding Path=ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
+                    <Border Grid.Row="0" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="50" BorderBrush="White" BorderThickness="0">
+                        <Image Width="16" Height="16" Source="assets/friend.png" MouseDown="AddFollowAction_MouseDown"/>
+                    </Border>
                 </Grid>
             </Border>
         </DataTemplate>
@@ -658,7 +679,7 @@
                                     </StackPanel>
                                 </TabItem.Header>
                                 <TabItem.Content>
-                                    <ListBox ItemTemplate="{StaticResource FollowMeTemplate}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListBox>
+                                    <ListBox x:Name="FollowMeListBox" ItemTemplate="{StaticResource FollowMeTemplate}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListBox>
                                 </TabItem.Content>
                             </TabItem>
 
@@ -669,7 +690,7 @@
                                     </StackPanel>
                                 </TabItem.Header>
                                 <TabItem.Content>
-                                    <ListBox ItemTemplate="{StaticResource FollowMeTemplate}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListBox>
+                                    <ListBox ItemTemplate="{StaticResource MyFollowTemplate}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListBox>
                                 </TabItem.Content>
                             </TabItem>
                             <TabItem x:Name="WaitingConfirmTab">
