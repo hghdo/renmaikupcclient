@@ -29,6 +29,7 @@
         void DestroyDirectMessage(double id);
         void DestroyTweet(double id);
         void FollowUser(string userName);
+        void ChangeFollowStatus(int userId,string action);
         void SendMessage(string user, string text);
 
 

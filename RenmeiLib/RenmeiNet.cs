@@ -369,7 +369,7 @@ namespace RenmeiLib
             get {
                 if (string.IsNullOrEmpty(createFriendshipUrl))
                 {
-                    return TwitterServerUrl + "friendships/create/";
+                    return TwitterServerUrl + "service/twitter/concernManage.do";//"friendships/create/";
                 }
                 else
                 {
@@ -1663,7 +1663,15 @@ namespace RenmeiLib
             if (String.Compare(userName, CurrentlyLoggedInUser.ScreenName, true) == 0)
                 return;
 
-            string followUrl = CreateFriendshipUrl + userName + Format;
+            string followUrl = CreateFriendshipUrl;// +userName + Format;
+            MakeTwitterApiCall(followUrl, "POST");
+        }
+
+        public void ChangeFollowStatus(int userId, string action)
+        {
+            string followUrl = CreateFriendshipUrl;// +userName + Format;
+            followUrl += "?" + getAuthUrl();
+            followUrl += string.Format("&operType={0}&userId={1}", action, userId);
             MakeTwitterApiCall(followUrl, "POST");
         }
         #endregion
