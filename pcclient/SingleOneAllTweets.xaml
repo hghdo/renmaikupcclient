@@ -5,7 +5,7 @@
     xmlns:CustomWindow="clr-namespace:CustomWindow;assembly=CustomWindow"
     AllowsTransparency="True" Background="Transparent"
     MinimizeButtonState="None" MaximizeButtonState="None"
-    Title="AllCommets" Height="600" Width="500"
+    Title="微博" Height="600" Width="500"
     xmlns:pcclient="clr-namespace:pcclient">
     <CustomWindow:EssentialWindow.Resources>
         <!-- DateTemplate for one of user all Tweets -->

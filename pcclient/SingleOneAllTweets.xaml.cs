@@ -34,7 +34,7 @@ namespace pcclient
             InitializeComponent();
             this.saNet = net;
             this.saUser = relatedUser;
-
+            this.Title = saUser.ScreenName + "的微博";
             UserTitleBar.DataContext = saUser;
             singleAllTweets = new TweetCollection();
             AllTweetsListBox.DataContext = singleAllTweets;

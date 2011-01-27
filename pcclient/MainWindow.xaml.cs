@@ -78,8 +78,9 @@ namespace pcclient
 
         // Settings used by the application
         private Properties.Settings AppSettings = Properties.Settings.Default;
-        
 
+        private ContextMenu tweetContextMenuTemplate;
+        private Tweet curItemRelated2ContextMenu;
         #endregion
 
         #region Constructor
@@ -578,9 +579,9 @@ namespace pcclient
         private void SetupNotifyIcon()
         {
             _notifyIcon = new System.Windows.Forms.NotifyIcon();
-            _notifyIcon.BalloonTipText = "Right-click for more options";
-            _notifyIcon.BalloonTipTitle = "人脉";
-            _notifyIcon.Text = "人脉";
+            _notifyIcon.BalloonTipText = "右键打开菜单";
+            _notifyIcon.BalloonTipTitle = "人脉库客户端";
+            _notifyIcon.Text = "人脉库客户端";
             _notifyIcon.Icon = pcclient.Properties.Resources.user_coat_green_01;
             _notifyIcon.DoubleClick += new EventHandler(m_notifyIcon_Click);
             _notifyIcon.Visible = true;
@@ -591,10 +592,10 @@ namespace pcclient
 
             notifyMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] { openMenuItem, exitMenuItem });
             openMenuItem.Index = 0;
-            openMenuItem.Text = "Open";
+            openMenuItem.Text = "打开人脉库客户端";
             openMenuItem.Click += new EventHandler(openMenuItem_Click);
             exitMenuItem.Index = 1;
-            exitMenuItem.Text = "Exit";
+            exitMenuItem.Text = "退出";
             exitMenuItem.Click += new EventHandler(exitMenuItem_Click);
 
             _notifyIcon.ContextMenu = notifyMenu;
@@ -977,23 +978,47 @@ namespace pcclient
         {
             if (e.ChangedButton == MouseButton.Left)
             {
+                curItemRelated2ContextMenu = ((ListBoxItem)getTweetListBox().ContainerFromElement((Image)sender)).Content as Tweet;
+                if (curItemRelated2ContextMenu == null) return;
                 Image image = sender as Image;
-                ContextMenu contextMenu = image.ContextMenu;
-                contextMenu.PlacementTarget = image;
-                contextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Top;
-                contextMenu.IsOpen = true;
-                //ContextMenu cm = new ContextMenu();
-                //MenuItem mi = new MenuItem();
-                //mi.Width = 50;
-                //mi.Header = "aaaaaaaa";
-                //cm.Items.Add(mi);
-                ////ContextMenuTemplate
-                //                         //ContextMenu="{StaticResource SingleFirend_ContextMenu}"
-                //cm.PlacementTarget = (UIElement)sender;
-                //cm.IsOpen = true;
+                ContextMenu cm=PrepareTweetContextMenuTemplate();
+                cm.PlacementTarget = image;
+                cm.IsOpen = true;
 
             }            
+        }
 
+        private ContextMenu PrepareTweetContextMenuTemplate()
+        {
+            if (tweetContextMenuTemplate == null)
+            {
+                tweetContextMenuTemplate = new ContextMenu();
+                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("TA主页", "homepage"));
+                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("发微博", "sendTweet"));
+                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("发私信", "sendMsg"));
+                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("查看微博", "viewTweet"));
+                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("屏蔽微博", "block"));
+            }
+            return tweetContextMenuTemplate;
+        }
+
+        private MenuItem creatTweetMenuItem(string header, string name)
+        {
+            MenuItem mi = new MenuItem();
+            mi.Name = name;
+            mi.Header = header;
+            mi.Click += new RoutedEventHandler(mi_Click);
+            return mi;
+        }
+
+        void mi_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem m = sender as MenuItem;
+            if (m.Name.Equals("viewTweet"))
+            {
+                SingleOneAllTweets soa = new SingleOneAllTweets(twitter, curItemRelated2ContextMenu.User);
+                soa.Show();
+            }
         }
 
         #region System Menu
