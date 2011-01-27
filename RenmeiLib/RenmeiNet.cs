@@ -1671,7 +1671,7 @@ namespace RenmeiLib
         {
             string followUrl = CreateFriendshipUrl;// +userName + Format;
             followUrl += "?" + getAuthUrl();
-            followUrl += string.Format("&operType={0}&userId={1}", action, userId);
+            followUrl += string.Format("&operType={0}&concernIds={1}", action, userId);
             MakeTwitterApiCall(followUrl, "POST");
         }
 

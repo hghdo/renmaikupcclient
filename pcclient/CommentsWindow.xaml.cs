@@ -112,17 +112,24 @@ namespace pcclient
 
         private ContextMenu PrepareTweetContextMenuTemplate()
         {
-            if (tweetContextMenuTemplate == null)
-            {
-                tweetContextMenuTemplate = new ContextMenu();
-                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("TA主页", "homepage"));
-                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("关注", "follow"));
-                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("取消关注", "unfollow"));
+            //if (tweetContextMenuTemplate == null)
+            //{
+            
+            tweetContextMenuTemplate = new ContextMenu();
+            tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("TA主页", "homepage"));
+            //if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id && !MainWindow.myFollowGroup.Contains(curItemRelated2ContextMenu.User))
+            //    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("关注", "follow"));
+            //if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id && MainWindow.myFollowGroup.Contains(curItemRelated2ContextMenu.User))
+            //    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("取消关注", "unfollow"));
+            if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id)
                 tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("发微博", "sendTweet"));
+            if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id)
                 tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("发私信", "sendMsg"));
+            if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id)
                 tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("查看微博", "viewTweet"));
-                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("屏蔽微博", "block"));
-            }
+            //if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id)
+            //    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("屏蔽微博", "block"));
+            //}
             return tweetContextMenuTemplate;
         }
 
@@ -138,16 +145,27 @@ namespace pcclient
         void mi_Click(object sender, RoutedEventArgs e)
         {
             MenuItem m = sender as MenuItem;
-            if (m.Name.Equals("viewTweet"))
+            try
             {
-                SingleOneAllTweets soa = new SingleOneAllTweets(twitterApi, curItemRelated2ContextMenu.User);
-                soa.Show();
+                if (m.Name.Equals("viewTweet"))
+                {
+                    SingleOneAllTweets soa = new SingleOneAllTweets(twitterApi, curItemRelated2ContextMenu.User);
+                    soa.Show();
+                }
+                else if (m.Name.Equals("follow"))
+                {
+                    twitterApi.ChangeFollowStatus(curItemRelated2ContextMenu.User.Id, "add");
+                    MainWindow.myFollowGroup.Add(curItemRelated2ContextMenu.User);
+                }
+                else if (m.Name.Equals("unfollow"))
+                {
+                    twitterApi.ChangeFollowStatus(curItemRelated2ContextMenu.User.Id, "delete");
+                    MainWindow.myFollowGroup.Remove(curItemRelated2ContextMenu.User);
+                }
             }
-            else if (m.Name.Equals("follow"))
+            catch (Exception ee)
             {
-            }
-            else if (m.Name.Equals("unfollow"))
-            {
+                MessageBox.Show(ee.Message);
             }
         }
 

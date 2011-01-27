@@ -982,7 +982,6 @@ namespace pcclient
                 if (curItemRelated2ContextMenu == null) return;
                 Image image = sender as Image;
                 ContextMenu cm=PrepareTweetContextMenuTemplate();
-
                 cm.PlacementTarget = image;
                 cm.IsOpen = true;
 
@@ -991,17 +990,24 @@ namespace pcclient
 
         private ContextMenu PrepareTweetContextMenuTemplate()
         {
-            if (tweetContextMenuTemplate == null)
-            {
+            //if (tweetContextMenuTemplate == null)
+            //{
                 tweetContextMenuTemplate = new ContextMenu();
+                bool ttt = myFollowGroup.Contains(curItemRelated2ContextMenu.User);
                 tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("TA主页", "homepage"));
-                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("关注", "follow"));
-                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("取消关注", "unfollow"));
-                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("发微博", "sendTweet"));
-                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("发私信", "sendMsg"));
-                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("查看微博", "viewTweet"));
-                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("屏蔽微博", "block"));
-            }
+                if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id && !myFollowGroup.Contains(curItemRelated2ContextMenu.User))
+                    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("关注", "follow"));
+                if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id && myFollowGroup.Contains(curItemRelated2ContextMenu.User))
+                    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("取消关注", "unfollow"));
+                if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id )
+                    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("发微博", "sendTweet"));
+                if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id)
+                    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("发私信", "sendMsg"));
+                if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id)
+                    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("查看微博", "viewTweet"));
+                //if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id)
+                //    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("屏蔽微博", "block"));
+            //}
             return tweetContextMenuTemplate;
         }
 
@@ -1016,17 +1022,30 @@ namespace pcclient
 
         void mi_Click(object sender, RoutedEventArgs e)
         {
+            //public static UserCollection followMeGroup = new UserCollection();
+            //public static UserCollection myFollowGroup = new UserCollection();
             MenuItem m = sender as MenuItem;
-            if (m.Name.Equals("viewTweet"))
+            try
             {
-                SingleOneAllTweets soa = new SingleOneAllTweets(twitter, curItemRelated2ContextMenu.User);
-                soa.Show();
+                if (m.Name.Equals("viewTweet"))
+                {
+                    SingleOneAllTweets soa = new SingleOneAllTweets(twitter, curItemRelated2ContextMenu.User);
+                    soa.Show();
+                }
+                else if (m.Name.Equals("follow"))
+                {
+                    twitter.ChangeFollowStatus(curItemRelated2ContextMenu.User.Id, "add");
+                    myFollowGroup.Add(curItemRelated2ContextMenu.User);
+                }
+                else if (m.Name.Equals("unfollow"))
+                {
+                    twitter.ChangeFollowStatus(curItemRelated2ContextMenu.User.Id, "delete");
+                    myFollowGroup.Remove(curItemRelated2ContextMenu.User);
+                }
             }
-            else if (m.Name.Equals("follow"))
+            catch (Exception ee)
             {
-            }
-            else if (m.Name.Equals("unfollow"))
-            {
+                MessageBox.Show(ee.Message);
             }
         }
 
