@@ -82,12 +82,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3DB09A642F4BF572C1AE784DF44F9A33"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_F41F7A3D9992420DB0F9A9ED9250B007"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -127,6 +121,12 @@
         "OwnerKey" = "8:_5784D6AF34C3F26640621CBA15D12DB0"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_3DB09A642F4BF572C1AE784DF44F9A33"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -145,6 +145,27 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5"
+                    {
+                    "Name" = "8:.NET Framework 3.5"
+                    "ProductCode" = "8:Microsoft.Net.Framework.3.5"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -161,6 +182,27 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5"
+                    {
+                    "Name" = "8:.NET Framework 3.5"
+                    "ProductCode" = "8:Microsoft.Net.Framework.3.5"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -206,7 +248,7 @@
             "SourcePath" = "8:CustomWindow.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_8DA8ECA8A3814BA384B92E3BA4C1EF9F"
+            "Folder" = "8:_54E1824CB335484EA14763086441C682"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -237,7 +279,7 @@
             "SourcePath" = "8:log4net.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_8DA8ECA8A3814BA384B92E3BA4C1EF9F"
+            "Folder" = "8:_54E1824CB335484EA14763086441C682"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -268,7 +310,7 @@
             "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_8DA8ECA8A3814BA384B92E3BA4C1EF9F"
+            "Folder" = "8:_54E1824CB335484EA14763086441C682"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -299,7 +341,7 @@
             "SourcePath" = "8:Growl.CoreLibrary.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_8DA8ECA8A3814BA384B92E3BA4C1EF9F"
+            "Folder" = "8:_54E1824CB335484EA14763086441C682"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -330,7 +372,7 @@
             "SourcePath" = "8:Dimebrain.TweetSharp.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_8DA8ECA8A3814BA384B92E3BA4C1EF9F"
+            "Folder" = "8:_54E1824CB335484EA14763086441C682"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -361,7 +403,7 @@
             "SourcePath" = "8:Growl.Connector.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_8DA8ECA8A3814BA384B92E3BA4C1EF9F"
+            "Folder" = "8:_54E1824CB335484EA14763086441C682"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -392,7 +434,7 @@
             "SourcePath" = "8:RenmeiLib.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_8DA8ECA8A3814BA384B92E3BA4C1EF9F"
+            "Folder" = "8:_54E1824CB335484EA14763086441C682"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -413,6 +455,28 @@
         }
         "Folder"
         {
+            "{1525181F-901A-416C-8A58-119130FE478E}:_37C867227BF74BC39DFA14D0DE159786"
+            {
+            "Name" = "8:#1912"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:ProgramFilesFolder"
+                "Folders"
+                {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_54E1824CB335484EA14763086441C682"
+                    {
+                    "Name" = "8:Renmeiku"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_6D86308DBB69435E9DEC0D6AF28194A4"
+                        "Folders"
+                        {
+                        }
+                    }
+                }
+            }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_8DA8ECA8A3814BA384B92E3BA4C1EF9F"
             {
             "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
@@ -464,7 +528,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SetupPro"
         "ProductCode" = "8:{B65719DB-7CA4-4211-B44C-6C4C39271B4F}"
-        "PackageCode" = "8:{FD7AAA74-FE12-44D0-91EC-0FBE1DD53337}"
+        "PackageCode" = "8:{F50221F8-4A04-472D-B97F-A8035CDF92BE}"
         "UpgradeCode" = "8:{7FA695FF-797D-410D-9734-A61556586291}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
@@ -583,6 +647,34 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_55AEE31762CC4F648349EA2818153588"
+            {
+            "Name" = "8:Renmeiku"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_F41F7A3D9992420DB0F9A9ED9250B007"
+            "Folder" = "8:_C7A2403D66FA4AF0BA319542C6524055"
+            "WorkingFolder" = "8:_54E1824CB335484EA14763086441C682"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_FFF0877AB1AB4D2DADDD0B69A3F0A9AC"
+            {
+            "Name" = "8:Renmeiku"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_F41F7A3D9992420DB0F9A9ED9250B007"
+            "Folder" = "8:_AEC0AFC31A7444879A269E838D16793F"
+            "WorkingFolder" = "8:_54E1824CB335484EA14763086441C682"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
@@ -987,7 +1079,7 @@
             "SourcePath" = "8:..\\pcclient\\obj\\Release\\pcclient.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_8DA8ECA8A3814BA384B92E3BA4C1EF9F"
+            "Folder" = "8:_54E1824CB335484EA14763086441C682"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
