@@ -17,7 +17,10 @@ namespace pcclient
             var item = value as TreeViewItem;
             if (null == item)
                 return new Thickness(0);
-            return new Thickness(Indent * item.GetDepth(), 0, 0, 0);
+            double ind = Indent * item.GetDepth();
+            App.Logger.Debug(string.Format("indent {0}", ind));
+
+            return new Thickness(ind, 0, 0, 0);
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {

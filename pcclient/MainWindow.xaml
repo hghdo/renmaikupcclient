@@ -7,10 +7,10 @@
     Title="MainWindows" Height="700" Width="300" MinHeight="500" MinWidth="300"
     xmlns:pcclient="clr-namespace:pcclient"
     >
-    
+
     <CustomWindow:EssentialWindow.Resources>
         <pcclient:ImageConverter x:Key="ImageConverter"/>
-        <pcclient:IndentConverter Indent="10" x:Key="indentConverter"/>
+
         <Style x:Key="SimpleListBoxItem" TargetType="ListBoxItem">
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
             <Setter Property="Template">
@@ -28,150 +28,153 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="TreeViewItemFocusVisual">
-            <Setter Property="Control.Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Rectangle/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <StreamGeometry x:Key="TreeArrow" >M0.5,0L0.5,7 4.5,3.5z</StreamGeometry>
-        <Style x:Key="ExpandCollapseToggleStyle" TargetType="{x:Type ToggleButton}">
+
+        <!-- TreeView style -->
+        <SolidColorBrush x:Key="GlyphBrush" Color="#444" />
+        <Style x:Key="ExpandCollapseToggleStyle" TargetType="ToggleButton">
             <Setter Property="Focusable" Value="False"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Border Background="Transparent">
-                            <Path x:Name="ExpandPath" Data="{StaticResource TreeArrow}" Fill="Transparent" Stroke="#FF989898" Margin="0,2,5,0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        </Border>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid
+          Width="15"
+          Height="13"
+          Background="Transparent">
+                            <Path x:Name="ExpandPath"
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Center" 
+            Margin="1,1,1,1"
+            Fill="{StaticResource GlyphBrush}"
+            Data="M 4 0 L 8 4 L 4 8 Z"/>
+                        </Grid>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter Property="RenderTransform" TargetName="ExpandPath">
-                                    <Setter.Value>
-                                        <RotateTransform Angle="45" CenterX="0" CenterY="2.5"/>
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter Property="Fill" TargetName="ExpandPath" Value="#FF595959"/>
-                                <Setter Property="Stroke" TargetName="ExpandPath" Value="#FF262626"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Stroke" TargetName="ExpandPath" Value="#FF1BBBFA"/>
-                                <Setter Property="Fill" TargetName="ExpandPath" Value="Transparent"/>
+                            <Trigger Property="IsChecked"
+               Value="True">
+                                <Setter Property="Data"
+                TargetName="ExpandPath"
+                Value="M 0 4 L 8 4 L 4 8 Z"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Effect">
-                        <Setter.Value>
-                            <DropShadowEffect ShadowDepth="0" Color="#FF2CC8F8" BlurRadius="5"/>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
+        </Style>
+        <Style x:Key="TreeViewItemFocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border>
+                            <Rectangle Margin="0,0,0,0"
+                 StrokeThickness="5"
+                 Stroke="Black"
+                 StrokeDashArray="1 2"
+                 Opacity="0"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         <Style TargetType="{x:Type TreeViewItem}" x:Key="AeroTreeStyle">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Padding" Value="1,0,0,0"/>
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
             <Setter Property="FocusVisualStyle" Value="{StaticResource TreeViewItemFocusVisual}"/>
-            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TreeViewItem}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition MinWidth="19" Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <ToggleButton x:Name="Expander" ClickMode="Press" IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource ExpandCollapseToggleStyle}"/>
-                            <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="1" Padding="{TemplateBinding Padding}" CornerRadius="2">
-                                <Border x:Name="InnerBd" BorderThickness="1" CornerRadius="1">
-                                    <ContentPresenter x:Name="PART_Header" ContentSource="Header" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="0,-1,0,0"/>
-                                </Border>
+                        <ControlTemplate.Resources>
+                            <pcclient:IndentConverter Indent="19" x:Key="indentConverter"/>
+                        </ControlTemplate.Resources>
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <Border Name="Bd" Background="{TemplateBinding Transparent}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="true">
+                                <Grid   Margin="{Binding Converter={StaticResource indentConverter},RelativeSource={RelativeSource TemplatedParent}}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="19"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <ToggleButton x:Name="Expander"
+                                Style="{StaticResource ExpandCollapseToggleStyle}"
+                                IsChecked="{Binding Path=IsExpanded,
+                                RelativeSource={RelativeSource TemplatedParent}}"
+                                ClickMode="Press"/>
+
+                                    <ContentPresenter x:Name="PART_Header"
+                                Grid.Column="1"
+                                ContentSource="Header"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                                </Grid>
                             </Border>
-                            <ItemsPresenter x:Name="ItemsHost" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1"/>
-                        </Grid>
+                            <ItemsPresenter x:Name="ItemsHost" />
+                        </StackPanel>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsExpanded" Value="false">
-                                <Setter Property="Visibility" TargetName="ItemsHost" Value="Collapsed"/>
+                            <Trigger Property="IsExpanded"
+               Value="false">
+                                <Setter TargetName="ItemsHost"
+                Property="Visibility"
+                Value="Collapsed"/>
                             </Trigger>
-                            <Trigger Property="HasItems" Value="false">
-                                <Setter Property="Visibility" TargetName="Expander" Value="Hidden"/>
-                            </Trigger>
-                            <Trigger SourceName="Bd" Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" TargetName="Bd">
-                                    <Setter.Value>
-                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="#FFFAFBFD" Offset="0"/>
-                                            <GradientStop Color="#FFEBF3FD" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter Property="BorderBrush" Value="#FFB8D6FB"/>
-                                <Setter Property="BorderBrush" TargetName="InnerBd">
-                                    <Setter.Value>
-                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="#FFFCFDFE" Offset="0"/>
-                                            <GradientStop Color="#FFF2F7FE" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="true">
-                                <Setter Property="Background" TargetName="Bd">
-                                    <Setter.Value>
-                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="#FFECF5FF" Offset="0"/>
-                                            <GradientStop Color="#FFD0E5FF" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter Property="BorderBrush" Value="#FF84ACDD"/>
-                                <Setter Property="BorderBrush" TargetName="InnerBd">
-                                    <Setter.Value>
-                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="#FFF2F8FF" Offset="0"/>
-                                            <GradientStop Color="#FFDFEEFF" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Setter.Value>
-                                </Setter>
+                            <Trigger Property="HasItems"
+               Value="false">
+                                <Setter TargetName="Expander"
+                Property="Visibility"
+                Value="Hidden"/>
                             </Trigger>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
-                                    <Condition Property="IsSelected" Value="true"/>
-                                    <Condition Property="IsSelectionActive" Value="false"/>
+                                    <Condition Property="HasHeader"
+                     Value="false"/>
+                                    <Condition Property="Width"
+                     Value="Auto"/>
                                 </MultiTrigger.Conditions>
-                                <Setter Property="Background" TargetName="Bd">
-                                    <Setter.Value>
-                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="#FFF9F9F9" Offset="0"/>
-                                            <GradientStop Color="#FFE6E6E6" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter Property="BorderBrush" Value="#FFDADADA"/>
-                                <Setter Property="BorderBrush" TargetName="InnerBd">
-                                    <Setter.Value>
-                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="#FFFBFBFC" Offset="0"/>
-                                            <GradientStop Color="#FFF1F1F1" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Setter.Value>
-                                </Setter>
+                                <Setter TargetName="PART_Header"
+                Property="MinWidth"
+                Value="75"/>
                             </MultiTrigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="HasHeader"
+                     Value="false"/>
+                                    <Condition Property="Height"
+                     Value="Auto"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="PART_Header"
+                Property="MinHeight"
+                Value="19"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsSelected"
+               Value="true">
+                                <Setter TargetName="Bd"
+                Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                                <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected"
+                     Value="true"/>
+                                    <Condition Property="IsSelectionActive"
+                     Value="false"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd"
+                Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                                <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled"
+               Value="false">
+                                <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -189,6 +192,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
         <!-- DateTemplate for Tweets -->
         <DataTemplate x:Key="TweetsTemplate">
             <Border x:Name="listBorder" Background="#ffffff" BorderBrush="#61738B" Margin="0" Padding="0,8,5,8" BorderThickness="0 0 0 1" VerticalAlignment="Stretch">
@@ -386,18 +390,18 @@
                 </Setter.Value>
             </Setter>
         </Style>
- 
+
         <!-- DateTemplate for FriendsGroup -->
-         <ContextMenu x:Key="SingleFirend_ContextMenu" x:Name="ContextMenuTemplate">
+        <ContextMenu x:Key="SingleFirend_ContextMenu" x:Name="ContextMenuTemplate">
             <MenuItem Header="TA主页" Click="taHomePage_onClick" />
             <MenuItem Header="发微博" Click="sendTweet_onClick" />
             <MenuItem Header="发私信" Click="sendPrivateMsg_onClick" />
             <MenuItem Header="查看微博" Click="viewTwitter_onClick" />
             <MenuItem Header="解除好友" Click="removeFriend_onClick" />
             <MenuItem Header="屏蔽微博" Click="shildTweets_onClick" />
-        </ContextMenu>       
+        </ContextMenu>
         <DataTemplate x:Key="SingleFriendTemplate" >
-            <Grid Margin="{Binding Converter={StaticResource indentConverter},RelativeSource={RelativeSource TemplatedParent}}"  ContextMenu="{StaticResource SingleFirend_ContextMenu}"
+            <Grid ContextMenu="{StaticResource SingleFirend_ContextMenu}"
                   HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="60" />
@@ -464,10 +468,11 @@
             </Border>
         </DataTemplate>
     </CustomWindow:EssentialWindow.Resources>
-    
+
     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="#3BB2EA" x:Name="LayoutRoot" SnapsToDevicePixels="True">
         <!--Border BorderBrush="#55FFFF" BorderThickness="1" CornerRadius="5"-->
-        <DockPanel Background="#EFF7FA"><!--  LastChildFill="True" -->
+        <DockPanel Background="#EFF7FA">
+            <!--  LastChildFill="True" -->
             <!-- Title Bar -->
             <Border Height="20" MouseMove="Header_MouseMove" DockPanel.Dock="Top" Background="#169DE1" >
                 <DockPanel>
@@ -532,8 +537,8 @@
                         <Image Name="SystemLogo" Grid.Column="0" Grid.Row="0" Width="26" Source="assets/tx.png" MouseDown="SystemLogo_Click">
                             <Image.ContextMenu>
                                 <ContextMenu Name="SystemLogoMenu">
-                                     <MenuItem Header="我的人脉库">
-                                         <MenuItem.Icon>
+                                    <MenuItem Header="我的人脉库">
+                                        <MenuItem.Icon>
                                             <Image Source="assets/9.png"></Image>
                                         </MenuItem.Icon>
                                         <MenuItem Header="我的首页"/>
@@ -578,9 +583,15 @@
                                 </ContextMenu>
                             </Image.ContextMenu>
                         </Image>
-                        <StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainMenuTweet" MouseDown="OpenTweetsPad"><Image Width="26" Margin="5" Source="assets/2.png"/></StackPanel>
-                        <StackPanel Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainMenuFriend" MouseDown="OpenFriendsPad"><Image Width="26" Margin="5" Source="assets/3.png"/></StackPanel>
-                        <StackPanel Grid.Column="3" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainMenuMsg"><Image Width="26" Margin="5" Source="assets/4.png"/></StackPanel>
+                        <StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainMenuTweet" MouseDown="OpenTweetsPad">
+                            <Image Width="26" Margin="5" Source="assets/2.png"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainMenuFriend" MouseDown="OpenFriendsPad">
+                            <Image Width="26" Margin="5" Source="assets/3.png"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="3" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainMenuMsg">
+                            <Image Width="26" Margin="5" Source="assets/4.png"/>
+                        </StackPanel>
                         <DockPanel Grid.Column="4" Grid.Row="0" Margin="0" VerticalAlignment="Bottom">
                             <Thumb DragDelta="Thumb_DragDelta" Cursor="SizeNWSE" Height="5" Opacity="1.0" HorizontalAlignment="Right" DockPanel.Dock="Bottom" Visibility="Visible"/>
                         </DockPanel>
