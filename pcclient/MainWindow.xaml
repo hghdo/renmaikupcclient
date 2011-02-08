@@ -75,7 +75,8 @@
             </Setter>
         </Style>
         <Style TargetType="{x:Type TreeViewItem}" x:Key="AeroTreeStyle">
-            <Setter Property="Background" Value="Transparent"/>
+            <!-- <Setter Property="Background" Value="Transparent"/> -->
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
             <Setter Property="Padding" Value="1,0,0,0"/>
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
             <Setter Property="FocusVisualStyle" Value="{StaticResource TreeViewItemFocusVisual}"/>
@@ -88,7 +89,7 @@
                             <pcclient:IndentConverter Indent="19" x:Key="indentConverter"/>
                         </ControlTemplate.Resources>
                         <StackPanel HorizontalAlignment="Stretch">
-                            <Border Name="Bd" Background="{TemplateBinding Transparent}" 
+                            <Border Name="Bd" Background="{TemplateBinding Background}" 
                                 BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="{TemplateBinding BorderThickness}" 
                                 Padding="{TemplateBinding Padding}"
@@ -113,7 +114,7 @@
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
                                 </Grid>
                             </Border>
-                            <ItemsPresenter x:Name="ItemsHost" />
+                            <ItemsPresenter x:Name="ItemsHost"/>
                         </StackPanel>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsExpanded"
@@ -150,13 +151,29 @@
                 Property="MinHeight"
                 Value="19"/>
                             </MultiTrigger>
+                            <Trigger SourceName="Bd" Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="Bd">
+                                    <Setter.Value>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FFFAFBFD" Offset="0"/>
+                                            <GradientStop Color="#FFEBF3FD" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="BorderBrush" Value="#FFB8D6FB"/>
+                            </Trigger>
+                            
                             <Trigger Property="IsSelected"
                Value="true">
-                                <Setter TargetName="Bd"
-                Property="Background"
-                Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                                <Setter Property="Foreground"
-                Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                                <Setter Property="Background" TargetName="Bd">
+                                    <Setter.Value>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FFFAFBFD" Offset="0"/>
+                                            <GradientStop Color="#FFEBF3FD" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="BorderBrush" Value="#F4F9FF"/>
                             </Trigger>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
@@ -171,11 +188,11 @@
                                 <Setter Property="Foreground"
                 Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
                             </MultiTrigger>
-                            <Trigger Property="IsEnabled"
+                            <!-- <Trigger Property="IsEnabled"
                Value="false">
                                 <Setter Property="Foreground"
                 Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                            </Trigger>
+                            </Trigger> -->
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -419,14 +436,14 @@
              </Grid>
         </DataTemplate>
         <HierarchicalDataTemplate x:Key="GroupNameTemplate">
-            <TreeView BorderThickness="0">
-                <TreeView.Resources>
-                    <Style TargetType="{x:Type TreeViewItem}"
+                <TreeView BorderThickness="0">
+                    <TreeView.Resources>
+                        <Style TargetType="{x:Type TreeViewItem}"
                        BasedOn="{StaticResource AeroTreeStyle}" />
-                </TreeView.Resources>
-                <TreeViewItem Header="{Binding Path=Title}" ItemsSource="{Binding Path=MemberList}" ItemTemplate="{StaticResource SingleFriendTemplate}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
-                </TreeViewItem>
-            </TreeView>
+                    </TreeView.Resources>
+                    <TreeViewItem Header="{Binding Path=Title}" ItemsSource="{Binding Path=MemberList}" ItemTemplate="{StaticResource SingleFriendTemplate}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                    </TreeViewItem>
+                </TreeView>
         </HierarchicalDataTemplate>
         <!-- Follow me and My follow friends list -->
         <DataTemplate x:Key="MyFollowTemplate">
@@ -674,7 +691,7 @@
                                     </StackPanel>
                                 </TabItem.Header>
                                 <TabItem.Content>
-                                    <Grid x:Name="AllFriendTab" Background="White" PresentationTraceSources.TraceLevel="High">
+                                    <Grid x:Name="AllFriendTab" Background="White" PresentationTraceSources.TraceLevel="High" HorizontalAlignment="Stretch">
                                         <TreeView x:Name="FriendsTreeView" ItemsSource="{Binding Mode=OneWay}" ItemTemplate="{StaticResource GroupNameTemplate}"
                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
