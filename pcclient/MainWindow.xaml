@@ -82,19 +82,21 @@
             <Setter Property="FocusVisualStyle" Value="{StaticResource TreeViewItemFocusVisual}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TreeViewItem}">
                         <ControlTemplate.Resources>
-                            <pcclient:IndentConverter Indent="19" x:Key="indentConverter"/>
+                            <pcclient:IndentConverter Indent="-19" x:Key="indentConverter"/>
                         </ControlTemplate.Resources>
-                        <StackPanel HorizontalAlignment="Stretch">
+                        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <Border Name="Bd" Background="{TemplateBinding Background}" 
                                 BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="{TemplateBinding BorderThickness}" 
                                 Padding="{TemplateBinding Padding}"
-                                SnapsToDevicePixels="true">
-                                <Grid   Margin="{Binding Converter={StaticResource indentConverter},RelativeSource={RelativeSource TemplatedParent}}">
+                                SnapsToDevicePixels="true"
+                                     ClipToBounds="True">
+                                <Grid Margin="{Binding Converter={StaticResource indentConverter},RelativeSource={RelativeSource TemplatedParent}}"  ClipToBounds="True">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="19"/>
                                         <ColumnDefinition/>
@@ -162,7 +164,7 @@
                                 </Setter>
                                 <Setter Property="BorderBrush" Value="#FFB8D6FB"/>
                             </Trigger>
-                            
+
                             <Trigger Property="IsSelected"
                Value="true">
                                 <Setter Property="Background" TargetName="Bd">
@@ -209,7 +211,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
+
         <!-- DateTemplate for Tweets -->
         <DataTemplate x:Key="TweetsTemplate">
             <Border x:Name="listBorder" Background="#ffffff" BorderBrush="#61738B" Margin="0" Padding="0,8,5,8" BorderThickness="0 0 0 1" VerticalAlignment="Stretch">
@@ -381,6 +383,7 @@
                 </Border>
             </Grid>
         </ControlTemplate>
+        
         <!-- Style for Tab Header -->
         <Style TargetType="{x:Type TabItem}">
             <Setter Property="Template">
@@ -417,7 +420,7 @@
             <MenuItem Header="解除好友" Click="removeFriend_onClick" />
             <MenuItem Header="屏蔽微博" Click="shildTweets_onClick" />
         </ContextMenu>
-        <DataTemplate x:Key="SingleFriendTemplate" >
+        <DataTemplate x:Key="SingleFriendTemplate">
             <Grid ContextMenu="{StaticResource SingleFirend_ContextMenu}"
                   HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
@@ -436,12 +439,12 @@
              </Grid>
         </DataTemplate>
         <HierarchicalDataTemplate x:Key="GroupNameTemplate">
-                <TreeView BorderThickness="0">
+                <TreeView BorderThickness="0" Margin="0">
                     <TreeView.Resources>
                         <Style TargetType="{x:Type TreeViewItem}"
-                       BasedOn="{StaticResource AeroTreeStyle}" />
+                       BasedOn="{StaticResource AeroTreeStyle}" /> 
                     </TreeView.Resources>
-                    <TreeViewItem Header="{Binding Path=Title}" ItemsSource="{Binding Path=MemberList}" ItemTemplate="{StaticResource SingleFriendTemplate}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                    <TreeViewItem Header="{Binding Path=Title}" ItemsSource="{Binding Path=MemberList}" ItemTemplate="{StaticResource SingleFriendTemplate}">
                     </TreeViewItem>
                 </TreeView>
         </HierarchicalDataTemplate>
@@ -675,7 +678,10 @@
                                 </TabItem.Header>
                                 <TabItem.Content>
                                     <!--ListBox x:Name="TweetsListBox" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"-->
-                                    <ListBox x:Name="FavTweetsListBox" ItemTemplate="{StaticResource TweetsTemplate}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListBox>
+                                    <ListBox x:Name="FavTweetsListBox" ItemTemplate="{StaticResource TweetsTemplate}" 
+                                             ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch"
+                                             ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" 
+                                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListBox>
                                 </TabItem.Content>
                             </TabItem>
                         </TabControl>
@@ -691,12 +697,10 @@
                                     </StackPanel>
                                 </TabItem.Header>
                                 <TabItem.Content>
-                                    <Grid x:Name="AllFriendTab" Background="White" PresentationTraceSources.TraceLevel="High" HorizontalAlignment="Stretch">
-                                        <TreeView x:Name="FriendsTreeView" ItemsSource="{Binding Mode=OneWay}" ItemTemplate="{StaticResource GroupNameTemplate}"
+                                    <TreeView x:Name="FriendsTreeView" ItemsSource="{Binding Mode=OneWay}" ItemTemplate="{StaticResource GroupNameTemplate}"
                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                                      HorizontalContentAlignment="Stretch"></TreeView>
-                                    </Grid>
                                 </TabItem.Content>
                             </TabItem>
 
