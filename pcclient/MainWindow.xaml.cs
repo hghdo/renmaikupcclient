@@ -135,7 +135,7 @@ namespace pcclient
             TweetsRefersMeTab.DataContext = tweetsRefersMe;
             TweetsCommentedByMeTab.DataContext = tweetsCommentByMe;
             TweetsFavTab.DataContext = favTweets;
-            AllFriendTab.DataContext = group;
+            FriendsTreeView.DataContext = group;
             FollowMeTab.DataContext = followMeGroup;
             MyFollowTab.DataContext = myFollowGroup;
 
@@ -345,7 +345,7 @@ namespace pcclient
             try
             {
                 // Schedule the update functions in the UI thread.
-                AllFriendTab.Dispatcher.BeginInvoke(
+                FriendsTreeView.Dispatcher.BeginInvoke(
                     DispatcherPriority.Normal,
                     new OneArgDelegateFriend(UpdateFriendsList), twitter.getFriendGroups());
                 FollowMeTab.Dispatcher.BeginInvoke(
@@ -360,7 +360,7 @@ namespace pcclient
             catch (RateLimitException ex)
             {
                 //App.Logger.Debug(String.Format("There was a problem fetching new tweets from Twitter.com: {0}", ex.ToString()));
-                AllFriendTab.Dispatcher.BeginInvoke(
+                FriendsTreeView.Dispatcher.BeginInvoke(
                     DispatcherPriority.ApplicationIdle,
                     new OneStringArgDelegate(ShowStatus), ex.Message);
             }
