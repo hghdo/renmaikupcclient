@@ -384,9 +384,9 @@
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0" Grid.Row="0" Margin="0,5,0,0" Text="{Binding Path=User.ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
                         <StackPanel x:Name="rightTopButtons" Visibility="Hidden" Grid.Column="1" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                            <Image Style="{StaticResource ImageButtonStyle}" Source="assets/menu_dropdown.png" Opacity="30" PreviewMouseDown="Menu_MouseDown">
+                            <Image Style="{StaticResource ImageButtonStyle}" Source="assets/menu_dropdown.png" Opacity="30" PreviewMouseDown="Menu_MouseDown" ToolTip="其他操作">
                             </Image>
-                            <Image Style="{StaticResource ImageButtonStyle}" Source="assets/delete.png" MouseDown="DeleteTweet_MouseDown"/>
+                            <Image Style="{StaticResource ImageButtonStyle}" Source="assets/delete.png" MouseDown="DeleteTweet_MouseDown" ToolTip="删除"/>
                         </StackPanel>
                         <TextBlock Grid.ColumnSpan="2" Grid.Row="1" FontSize="12" Margin="0,8,0,8" Text="{Binding Path=Text}" TextWrapping="Wrap"></TextBlock>
                         <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" Margin="0">
@@ -394,9 +394,9 @@
                             <TextBlock FontSize="12" TextWrapping="Wrap" Text="{Binding Path=Source}" Foreground="#AAAAAA"></TextBlock>
                         </StackPanel>
                         <StackPanel x:Name="rightBottomButtons" Visibility="Hidden" Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                            <Image Source="assets/reply.png" Style="{StaticResource ImageButtonStyle}" MouseDown="ReplyTweet_MouseDown"/>
-                            <Image Source="assets/15.png" Style="{StaticResource ImageButtonStyle}" MouseDown="CommentTweet_MouseDown"/>
-                            <Image Source="assets/17.png" Style="{StaticResource ImageButtonStyle}" MouseDown="FavTweet_MouseDown"/>
+                            <Image Source="assets/reply.png" Style="{StaticResource ImageButtonStyle}" MouseDown="ReplyTweet_MouseDown" ToolTip="转发"/>
+                            <Image Source="assets/15.png" Style="{StaticResource ImageButtonStyle}" MouseDown="CommentTweet_MouseDown" ToolTip="评论"/>
+                            <Image Source="assets/17.png" Style="{StaticResource ImageButtonStyle}" MouseDown="FavTweet_MouseDown" ToolTip="收藏"/>
                         </StackPanel>
                     </Grid>
                 </Grid>
@@ -768,9 +768,9 @@
                     <TabItem Header="Tweets">
                         <!-- Tweets TabControl -->
                         <TabControl x:Name="TweetsPad" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Template="{StaticResource TweetsTabControlTemplate}">
-                            <TabItem x:Name="TweetsTab" >
+                            <TabItem x:Name="TweetsTab">
                                 <TabItem.Header>
-                                    <StackPanel HorizontalAlignment="Center">
+                                    <StackPanel HorizontalAlignment="Center" ToolTip="所有微博">
                                         <Image Width="16" Source="assets/13.png"/>
                                     </StackPanel>
                                 </TabItem.Header>
@@ -785,7 +785,7 @@
                             </TabItem>
                             <TabItem x:Name="TweetsSendByMeTab" BorderThickness="0">
                                 <TabItem.Header>
-                                    <StackPanel HorizontalAlignment="Center">
+                                    <StackPanel HorizontalAlignment="Center" ToolTip="我发送的微博">
                                         <Image Width="16" Source="assets/14.png"/>
                                     </StackPanel>
                                 </TabItem.Header>
@@ -796,7 +796,7 @@
                             </TabItem>
                             <TabItem x:Name="TweetsRefersMeTab" BorderThickness="0">
                                 <TabItem.Header>
-                                    <StackPanel HorizontalAlignment="Center">
+                                    <StackPanel HorizontalAlignment="Center" ToolTip="提到我的微博">
                                         <Image Width="16" Source="assets/16.png"/>
                                     </StackPanel>
                                 </TabItem.Header>
@@ -807,7 +807,7 @@
                             </TabItem>
                             <TabItem x:Name="TweetsCommentedByMeTab" BorderThickness="0">
                                 <TabItem.Header>
-                                    <StackPanel HorizontalAlignment="Center">
+                                    <StackPanel HorizontalAlignment="Center" ToolTip="我评论过的微博">
                                         <Image Width="16" Source="assets/15.png"/>
                                     </StackPanel>
                                 </TabItem.Header>
@@ -818,7 +818,7 @@
                             </TabItem>
                             <TabItem x:Name="TweetsFavTab" BorderThickness="0">
                                 <TabItem.Header>
-                                    <StackPanel HorizontalAlignment="Center">
+                                    <StackPanel HorizontalAlignment="Center" ToolTip="我收藏的微博">
                                         <Image Width="16" Source="assets/17.png"/>
                                     </StackPanel>
                                 </TabItem.Header>
