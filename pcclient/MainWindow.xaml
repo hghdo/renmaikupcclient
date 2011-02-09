@@ -29,6 +29,144 @@
             </Setter>
         </Style>
 
+        <!-- Another TreeView(Item) style-->
+        <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TreeViewItem">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <!--
+                             Note that the following do not work, but I believe the top 2 should?!
+                             <ToggleButton IsChecked="{TemplateBinding IsExpanded}" ClickMode="Press" Name="Expander">
+                             <ToggleButton IsChecked="{TemplateBinding Property=IsExpanded}" ClickMode="Press" Name="Expander">
+                             <ToggleButton IsChecked="{TemplateBinding Path=IsExpanded}" ClickMode="Press" Name="Expander">
+                        -->
+                                <ToggleButton IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                          ClickMode="Press" Name="Expander">
+                                    <ToggleButton.Style>
+                                        <Style TargetType="ToggleButton">
+                                            <Setter Property="UIElement.Focusable" Value="false" />
+                                            <Setter Property="FrameworkElement.Width" Value="16" />
+                                            <Setter Property="FrameworkElement.Height" Value="16" />
+                                            <Setter Property="Control.Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ToggleButton">
+                                                        <Border Padding="5,5,5,5" Background="#00FFFFFF" Width="16" Height="16">
+                                                            <Path Fill="#00FFFFFF" Stroke="#FF989898" Name="ExpandPath">
+                                                                <Path.Data>
+                                                                    <PathGeometry Figures="M0,0L0,6L6,0z" />
+                                                                </Path.Data>
+                                                                <Path.RenderTransform>
+                                                                    <RotateTransform Angle="135"
+                                               CenterX="3" CenterY="3" />
+                                                                </Path.RenderTransform>
+                                                            </Path>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                                                <Setter TargetName="ExpandPath" Property="Shape.Stroke" Value="#FF1BBBFA" />
+                                                                <Setter TargetName="ExpandPath" Property="Shape.Fill" Value="#00FFFFFF" />
+                                                            </Trigger>
+                                                            <Trigger Property="ToggleButton.IsChecked" Value="True">
+                                                                <Setter TargetName="ExpandPath" Property="UIElement.RenderTransform">
+                                                                    <Setter.Value>
+                                                                        <RotateTransform Angle="180"
+                                                 CenterX="3" CenterY="3" />
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Setter TargetName="ExpandPath"
+                                    Property="Shape.Fill"
+                                    Value="#FF595959" />
+                                                                <Setter TargetName="ExpandPath"
+                                    Property="Shape.Stroke"
+                                    Value="#FF262626" />
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ToggleButton.Style>
+                                </ToggleButton>
+                                <Border x:Name="Bd"
+                                    HorizontalAlignment="Stretch"
+                                    BorderThickness="{TemplateBinding Border.BorderThickness}"
+                                    BorderBrush="{TemplateBinding Border.BorderBrush}"
+                                    Padding="{TemplateBinding Control.Padding}"
+                                    Background="{TemplateBinding Panel.Background}"
+                                    SnapsToDevicePixels="True"
+                                    Grid.Column="1">
+                                    <ContentPresenter x:Name="PART_Header"
+                                        Content="{TemplateBinding HeaderedContentControl.Header}"
+                                        ContentTemplate="{TemplateBinding HeaderedContentControl.HeaderTemplate}"
+                                        ContentStringFormat="{TemplateBinding HeaderedItemsControl.HeaderStringFormat}"
+                                        ContentTemplateSelector="{TemplateBinding HeaderedItemsControl.HeaderTemplateSelector}"
+                                        ContentSource="Header"
+                                        HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
+                                        SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                                </Border>
+                                <ItemsPresenter x:Name="ItemsHost" Grid.Column="1" Grid.Row="1" />
+                            </Grid>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="TreeViewItem.IsExpanded"
+                   Value="False">
+                                <Setter TargetName="ItemsHost"
+                    Property="UIElement.Visibility"
+                    Value="Collapsed" />
+                            </Trigger>
+                            <Trigger Property="ItemsControl.HasItems"
+                   Value="False">
+                                <Setter TargetName="Expander"
+                    Property="UIElement.Visibility"
+                    Value="Hidden" />
+                            </Trigger>
+                            <Trigger Property="TreeViewItem.IsSelected"
+                   Value="True">
+                                <Setter TargetName="Bd"
+                    Property="Panel.Background"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                                <Setter Property="TextElement.Foreground"
+                    Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="TreeViewItem.IsSelected"
+                         Value="True" />
+                                    <Condition Property="Selector.IsSelectionActive"
+                         Value="False" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd"
+                    Property="Panel.Background"
+                    Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                                <Setter Property="TextElement.Foreground"
+                    Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                            </MultiTrigger>
+                            <Trigger Property="UIElement.IsEnabled"
+                   Value="False">
+                                <Setter Property="TextElement.Foreground"
+                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
         <!-- TreeView style -->
         <SolidColorBrush x:Key="GlyphBrush" Color="#444" />
         <Style x:Key="ExpandCollapseToggleStyle" TargetType="ToggleButton">
@@ -82,12 +220,12 @@
             <Setter Property="FocusVisualStyle" Value="{StaticResource TreeViewItemFocusVisual}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TreeViewItem}">
                         <ControlTemplate.Resources>
-                            <pcclient:IndentConverter Indent="-19" x:Key="indentConverter"/>
+                            <pcclient:IndentConverter Indent="19" x:Key="indentConverter"/>
                         </ControlTemplate.Resources>
                         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <Border Name="Bd" Background="{TemplateBinding Background}" 
@@ -98,8 +236,8 @@
                                      ClipToBounds="True">
                                 <Grid Margin="{Binding Converter={StaticResource indentConverter},RelativeSource={RelativeSource TemplatedParent}}"  ClipToBounds="True">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="19"/>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
@@ -421,12 +559,11 @@
             <MenuItem Header="屏蔽微博" Click="shildTweets_onClick" />
         </ContextMenu>
         <DataTemplate x:Key="SingleFriendTemplate">
-            <Grid ContextMenu="{StaticResource SingleFirend_ContextMenu}"
-                  HorizontalAlignment="Stretch">
+            <Grid ContextMenu="{StaticResource SingleFirend_ContextMenu}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="60" />
-                    <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="20" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -434,16 +571,16 @@
                 <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="50" BorderBrush="White" BorderThickness="0">
                     <Image Width="40" Height="40" Source="{Binding Path=ImageUrl}"/>
                 </Border>
-                <TextBlock Grid.Row="0"  Grid.Column="1" VerticalAlignment="Center" Text="{Binding Path=ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0" />
+                <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Path=ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0" HorizontalAlignment="Stretch" />
                 <Image Grid.Row="0"  Grid.Column="2" Source="assets/10.png" Stretch="UniformToFill" Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center"/>
              </Grid>
         </DataTemplate>
         <HierarchicalDataTemplate x:Key="GroupNameTemplate">
-                <TreeView BorderThickness="0" Margin="0">
+                <TreeView BorderThickness="0" Margin="0" Padding="0">
                     <TreeView.Resources>
-                        <Style TargetType="{x:Type TreeViewItem}"
-                       BasedOn="{StaticResource AeroTreeStyle}" /> 
-                    </TreeView.Resources>
+                    <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource AeroTreeStyle}">                  
+                    </Style>
+                </TreeView.Resources>
                     <TreeViewItem Header="{Binding Path=Title}" ItemsSource="{Binding Path=MemberList}" ItemTemplate="{StaticResource SingleFriendTemplate}">
                     </TreeViewItem>
                 </TreeView>
@@ -704,9 +841,12 @@
                                     </StackPanel>
                                 </TabItem.Header>
                                 <TabItem.Content>
-                                    <TreeView x:Name="FriendsTreeView" ItemsSource="{Binding Mode=OneWay}" ItemTemplate="{StaticResource GroupNameTemplate}" Width="288" HorizontalAlignment="Left"
-                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                                     ScrollViewer.VerticalScrollBarVisibility="Auto"></TreeView>
+                                    <TreeView x:Name="FriendsTreeView" ItemsSource="{Binding Mode=OneWay}" 
+                                        ItemTemplate="{StaticResource GroupNameTemplate}" BorderThickness="0" 
+                                        Margin="0" Padding="0"
+                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                                        ScrollViewer.VerticalScrollBarVisibility="Auto"></TreeView>
                                 </TabItem.Content>
                             </TabItem>
 

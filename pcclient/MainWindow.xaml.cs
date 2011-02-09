@@ -101,8 +101,8 @@ namespace pcclient
             SetDataContextForAllOfTabs();
 
             //Handle login DebugAutoLogin() used to login auto use hbcjob@126.com/hbcjob and it is for dev only.
-            //DebugAutoLogin();
-            DisplayLoginIfUserNotLoggedIn();
+            DebugAutoLogin();
+            //DisplayLoginIfUserNotLoggedIn();
             SetButtonMenuBarBackground();
 
             SendTweetBox.Visibility = Visibility.Visible;
