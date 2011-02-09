@@ -502,7 +502,7 @@
             </Border>
 
             <!-- This is used for Login -->
-            <Border x:Name="LoginLayoutRoot" CornerRadius="5,5,5,5" BorderBrush="{DynamicResource PrimaryBorderBrush}" BorderThickness="1,1,1,1" Background="{DynamicResource LoginBackgroundBrush}" Width="280" VerticalAlignment="Top">
+            <Border x:Name="LoginLayoutRoot" CornerRadius="5,5,5,5" BorderBrush="{DynamicResource PrimaryBorderBrush}" BorderThickness="1,1,1,1" Background="{DynamicResource LoginBackgroundBrush}" Width="300" VerticalAlignment="Top">
                 <StackPanel Width="280" VerticalAlignment="Top">
                     <StackPanel Width="280" VerticalAlignment="Top" Margin="0,80,0,60">
                         <Image HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" Source="assets/title.png"/>
