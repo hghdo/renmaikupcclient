@@ -106,6 +106,9 @@ namespace pcclient
             this.Title += "-" + twitter.CurrentlyLoggedInUser.ScreenName;
             SetButtonMenuBarBackground();
 
+            SendTweetBox.Visibility = Visibility.Visible;
+            SearchFriendBox.Visibility = Visibility.Collapsed;
+
         }
         #endregion
 
@@ -140,6 +143,7 @@ namespace pcclient
             FollowMeTab.DataContext = followMeGroup;
             MyFollowTab.DataContext = myFollowGroup;
 
+            
         }
 
         #region Get Tweets
@@ -979,6 +983,37 @@ namespace pcclient
             //myFollowGroup.Add(curUser);
         }
 
+        private void ShowSearchTextBox(object sender, RoutedEventArgs e)
+        {
+            SendTweetBox.Visibility = Visibility.Collapsed;
+            SearchFriendBox.Visibility = Visibility.Visible;
+        }
+
+        private void HideSearchTextBox(object sender, RoutedEventArgs e)
+        {
+            SendTweetBox.Visibility = Visibility.Visible;
+            SearchFriendBox.Visibility = Visibility.Collapsed;
+        }
+
+        private void SearchTextBox_Clear(object sender, RoutedEventArgs e)
+        {
+            SearchTextBox.Clear();
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            string username = SearchTextBox.Text;
+            //    if (group.Count != 0 && username.Length !=0 )
+            //    {
+            //        foreach( TreeViewItem it in FriendsTreeView.Items)
+            //           if( it.Header.ToString() == username)
+            //           {
+            //               it.IsSelected =true;
+            //               break;
+            //           }
+            //    }
+        }
+
         #endregion
 
         private void Menu_MouseDown(object sender, MouseButtonEventArgs e)
@@ -1056,9 +1091,6 @@ namespace pcclient
             }
         }
 
-        #region System Menu
-
-        #endregion
     }
 
 }

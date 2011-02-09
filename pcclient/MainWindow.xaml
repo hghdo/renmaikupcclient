@@ -531,14 +531,21 @@
                                 </StackPanel>
                             </Border>
                         </DockPanel>
-                        <TextBox x:Name="NewTweetBox" BorderThickness="0" BorderBrush="Black" Margin="0,10,0,10" Height="35" TextWrapping="Wrap" GotFocus="NewTweetBox_GotFocus" LostFocus="NewTweetBox_LostFocus"></TextBox>
-                        <StackPanel x:Name="NewTweetButtons" Orientation="Horizontal" Visibility="Collapsed">
-                            <Button x:Name="AddAttachment" Width="16">
-                                <Image Source="assets/paperclip4_black_16.png"/>
-                            </Button>
-                            <Button x:Name="SendTweet" Content="发送" Click="SendTweet_Click"/>
-                            <Button x:Name="CancelTweet" Content="取消" Click="CancelTweet_Click"/>
+                        <StackPanel x:Name="SendTweetBox" HorizontalAlignment="Stretch">
+                            <TextBox x:Name="NewTweetBox" BorderThickness="0" BorderBrush="Black" Margin="0,10,0,10" Height="35" TextWrapping="Wrap" GotFocus="NewTweetBox_GotFocus" LostFocus="NewTweetBox_LostFocus"></TextBox>
+                            <StackPanel x:Name="NewTweetButtons" Orientation="Horizontal">
+                                <Button x:Name="AddAttachment" Width="16">
+                                    <Image Source="assets/paperclip4_black_16.png"/>
+                                </Button>
+                                <Button x:Name="SendTweet" Content="发送" Click="SendTweet_Click"/>
+                                <Button x:Name="CancelTweet" Content="取消" Click="CancelTweet_Click"/>
+                            </StackPanel>
                         </StackPanel>
+                        <DockPanel x:Name="SearchFriendBox" LastChildFill="True">
+                            <Button Width="32" Height="20" DockPanel.Dock="Right" x:Name="SearchButton" Content="查找" Click="SearchButton_Click"/>
+                            <TextBox DockPanel.Dock="Left" x:Name="SearchTextBox" BorderThickness="0" FontSize="12" BorderBrush="Black" Margin="0,10,0,10" Height="20" Width="auto" GotFocus="SearchTextBox_Clear" Text="查找好友"></TextBox>
+                            
+                        </DockPanel>
                     </StackPanel>
                 </Border>
                 <!-- Bottom Menu Bar -->
@@ -690,17 +697,16 @@
                     <TabItem Header="Firends">
                         <!-- Friends TabControl -->
                         <TabControl x:Name="FriendsPad" TabStripPlacement="Top"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Template="{StaticResource FriendsTabControlTemplate}"  >
-                            <TabItem x:Name="FriendsGroupTab">
+                            <TabItem x:Name="FriendsGroupTab" Selector.Selected="ShowSearchTextBox" Selector.Unselected="HideSearchTextBox">
                                 <TabItem.Header>
                                     <StackPanel HorizontalAlignment="Center">
                                         <TextBlock HorizontalAlignment="Center">我的好友</TextBlock>
                                     </StackPanel>
                                 </TabItem.Header>
                                 <TabItem.Content>
-                                    <TreeView x:Name="FriendsTreeView" ItemsSource="{Binding Mode=OneWay}" ItemTemplate="{StaticResource GroupNameTemplate}"
+                                    <TreeView x:Name="FriendsTreeView" ItemsSource="{Binding Mode=OneWay}" ItemTemplate="{StaticResource GroupNameTemplate}" Width="288" HorizontalAlignment="Left"
                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                     HorizontalContentAlignment="Stretch"></TreeView>
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto"></TreeView>
                                 </TabItem.Content>
                             </TabItem>
 
