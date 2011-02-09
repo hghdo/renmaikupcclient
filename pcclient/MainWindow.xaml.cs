@@ -94,16 +94,15 @@ namespace pcclient
 
             allTweetsCollection = new TweetCollection[] { tweets, tweetsSentByMe, tweetsRefersMe, tweetsCommentByMe, favTweets };
 
-            ShowLogin();
+            //ShowLogin();
 
             SetupNotifyIcon();
 
             SetDataContextForAllOfTabs();
 
             //Handle login DebugAutoLogin() used to login auto use hbcjob@126.com/hbcjob and it is for dev only.
-            DebugAutoLogin();
-            //DisplayLoginIfUserNotLoggedIn();
-            this.Title += "-" + twitter.CurrentlyLoggedInUser.ScreenName;
+            //DebugAutoLogin();
+            DisplayLoginIfUserNotLoggedIn();
             SetButtonMenuBarBackground();
 
         }
@@ -146,7 +145,7 @@ namespace pcclient
         private void DisplayLoginIfUserNotLoggedIn()
         {
             // Does the user need to login?
-            // if (string.IsNullOrEmpty(AppSettings.UserName))
+            //if (string.IsNullOrEmpty(AppSettings.UserName))
             if (App.LoggedInUser.Id == 0)
             {
                 ShowLogin();
@@ -507,6 +506,7 @@ namespace pcclient
 
                 RaiseEvent(new RoutedEventArgs(LoginEvent));
                 HideLogin();
+                this.Title += "-" + twitter.CurrentlyLoggedInUser.ScreenName;
                 // Display current login user Head Image
                 BitmapImage myBitmapImage = new BitmapImage();
                 myBitmapImage.BeginInit();
