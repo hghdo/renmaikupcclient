@@ -1016,12 +1016,24 @@ namespace pcclient
                 //}
 
                 //TreeViewItem sub = (TreeViewItem)FriendsTreeView.FindName(username);
+                ItemContainerGenerator itemContainerGenerator = FriendsTreeView.ItemContainerGenerator;
+
+                for (int i = FriendsTreeView.Items.Count - 1; i >= 0; --i)
+                {
+                    ItemsControl childControl = itemContainerGenerator.ContainerFromIndex(i) as ItemsControl;
+                    if (childControl != null)
+                    {
+                    }
+                }
+
 
                 //foreach (Object it in FriendsTreeView.Items.)
                 for( int i =0; i<FriendsTreeView.Items.Count; i++)
                 {
-                    Object obj = FriendsTreeView.Items.GetItemAt(i);
+                    object obj = FriendsTreeView.Items.GetItemAt(i);
+                   
                     TreeViewItem ret = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(obj) as TreeViewItem;
+                    FriendGroup s = ret.ItemsSource as FriendGroup;
                     ret.IsExpanded = true;
                     ret.IsSelected = true;
 
