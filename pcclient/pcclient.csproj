@@ -109,6 +109,7 @@
       <DependentUpon>CommentsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="IndentConverter.cs" />
+    <Compile Include="TreeViewExtensions.cs" />
     <Compile Include="TreeViewItemExtensions.cs" />
     <Compile Include="ClickOnce\Deployment.cs" />
     <Compile Include="ClickOnce\Utils.cs" />

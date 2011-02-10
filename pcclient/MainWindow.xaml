@@ -34,7 +34,7 @@
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="Margin" Value="0" />
-            <Setter Property="TreeViewItem.IsExpanded" Value="True"/>
+            <!-- <Setter Property="TreeViewItem.IsExpanded" Value="True"/> -->
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TreeViewItem">
@@ -54,7 +54,7 @@
                              <ToggleButton IsChecked="{TemplateBinding Property=IsExpanded}" ClickMode="Press" Name="Expander">
                              <ToggleButton IsChecked="{TemplateBinding Path=IsExpanded}" ClickMode="Press" Name="Expander">
                         -->
-                                <ToggleButton IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                                <ToggleButton IsChecked="{Binding Path=IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                           ClickMode="Press" Name="Expander">
                                     <ToggleButton.Style>
                                         <Style TargetType="ToggleButton">
@@ -247,7 +247,7 @@
                                     </Grid.RowDefinitions>
                                     <ToggleButton x:Name="Expander"
                                 Style="{StaticResource ExpandCollapseToggleStyle}"
-                                IsChecked="{Binding Path=IsExpanded,
+                                IsChecked="{Binding Path=IsExpanded,Mode=TwoWay, 
                                 RelativeSource={RelativeSource TemplatedParent}}"
                                 ClickMode="Press"/>
 
@@ -571,6 +571,18 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded, Mode=TwoWay}" />
+                        <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
+                        <Setter Property="FontWeight" Value="Normal" />
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="FontWeight" Value="Bold" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    </Grid.Resources>
                 <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="50" BorderBrush="White" BorderThickness="0">
                     <Image Width="40" Height="40" Source="{Binding Path=ImageUrl}" Margin="-10,0,0,0"/>
                 </Border>
@@ -580,12 +592,17 @@
         </DataTemplate>
         <HierarchicalDataTemplate x:Key="GroupNameTemplate">
                 <TreeView BorderThickness="0" Margin="0" Padding="0">
-                    <TreeView.Resources>
-                    <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource AeroTreeStyle}">                  
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded, Mode=TwoWay}" />
+                        <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
                     </Style>
+                </TreeView.ItemContainerStyle>
+                <TreeView.Resources>
+                        <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource AeroTreeStyle}"></Style>
                 </TreeView.Resources>
-                    <TreeViewItem Header="{Binding Path=Title}" ItemsSource="{Binding Path=MemberList}" ItemTemplate="{StaticResource SingleFriendTemplate}">
-                    </TreeViewItem>
+                <TreeViewItem Header="{Binding Path=Title}" ItemsSource="{Binding Path=MemberList, Mode=OneWay}" ItemTemplate="{StaticResource SingleFriendTemplate}">
+                </TreeViewItem>
                 </TreeView>
         </HierarchicalDataTemplate>
         <!-- Follow me and My follow friends list -->
@@ -844,14 +861,15 @@
                                     </StackPanel>
                                 </TabItem.Header>
                                 <TabItem.Content>
+                                    
                                     <TreeView x:Name="FriendsTreeView" VirtualizingStackPanel.IsVirtualizing="True"
-                                              ItemsSource="{Binding Mode=OneWay}"
+                                        IsEnabled="True"  IsTextSearchEnabled="True" TextSearch.Text="Name" ItemsSource="{Binding Mode=OneWay}"
                                         ItemTemplate="{StaticResource GroupNameTemplate}" BorderThickness="0"
                                         Margin="-15,0,0,0" Padding="0"
                                         HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-
-                                        </TreeView>
+                                        
+                                    </TreeView>
                                 </TabItem.Content>
                             </TabItem>
 

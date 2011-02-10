@@ -120,7 +120,33 @@ namespace RenmeiLib
 
         }
 
+        public bool selected = false;
+        public bool IsSelected
+        {
+            get { return selected; }
+            set
+            {
+                if (value != selected)
+                {
+                    selected = value;
+                    OnPropertyChanged("Selected");
+                }
+            }
+        }
 
+        public bool expanded = false;
+        public bool IsExpanded
+        {
+            get { return expanded; }
+            set
+            {
+                if (value != expanded)
+                {
+                    expanded = value;
+                    OnPropertyChanged("Expanded");
+                }
+            }
+        }
 
         #region INotifyPropertyChanged Members
 

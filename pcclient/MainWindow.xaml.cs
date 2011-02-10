@@ -1005,75 +1005,113 @@ namespace pcclient
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
+            
             string username = SearchTextBox.Text;
-            if (group.Count != 0 && username.Length != 0)
-            {
-                //for (int i = 0; i < FriendsTreeView.Items.Count; i++)
-                //{
-                //    DependencyObject dep = FriendsTreeView.;
+            
+            object obj = FriendsTreeView.Items.GetItemAt(0);
 
-                //    int count = VisualTreeHelper.GetChildrenCount(dep);
-                //}
-
-                //TreeViewItem sub = (TreeViewItem)FriendsTreeView.FindName(username);
-                ItemContainerGenerator itemContainerGenerator = FriendsTreeView.ItemContainerGenerator;
-
-                for (int i = FriendsTreeView.Items.Count - 1; i >= 0; --i)
-                {
-                    ItemsControl childControl = itemContainerGenerator.ContainerFromIndex(i) as ItemsControl;
-                    if (childControl != null)
-                    {
-                    }
-                }
+            ItemCollection ic = FriendsTreeView.Items;
 
 
-                //foreach (Object it in FriendsTreeView.Items.)
-                for( int i =0; i<FriendsTreeView.Items.Count; i++)
-                {
-                    object obj = FriendsTreeView.Items.GetItemAt(i);
-                   
-                    TreeViewItem ret = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(obj) as TreeViewItem;
-                    FriendGroup s = ret.ItemsSource as FriendGroup;
-                    ret.IsExpanded = true;
-                    ret.IsSelected = true;
+            FriendsTreeView
 
-                    //FriendGroup fg = it as FriendGroup;
-                    //foreach (User curUser in fg.MemberList)
-                    //{
-                    //    if (curUser.ScreenName.Equals(username))
-                    //    {
-                    //        //TreeViewItem ret = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(curUser.ScreenName) as TreeViewItem;
-                    //        TreeViewItem ret = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(it) as TreeViewItem;
 
-                    //        FriendsTreeView.ContainerFromElement(it);
-                    //        ret.IsExpanded = true;
-                    //        ret.IsSelected = true;
-                    //        break;
-                    //    }
-                    //}
-                }
-                //TreeViewItem sub =FriendsTreeView.ItemContainerGenerator.;
-                ////    TreeViewItem sub = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(it) as TreeViewItem;
-                ////    //TreeViewItem sub = FriendsTreeView.ItemContainerGenerator.ContainerFromIndex(i) as TreeViewItem;
-                ////    sub.IsSelected = true;
-                ////    if (sub.HasItems)
-                ////    {
-                ////        foreach (Object node in sub.Items)
-                ////        {
-                ////            User cur = node as User;
-                ////        }
-                ////    }
-                ////        //foreach (Object child in sub.Items)
-                ////        //{
-                ////        //    TreeViewItem node = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(child) as TreeViewItem;
-                //if (it.Header.ToString() == username)
-                //{
-                ////        //        node.IsSelected = true;
-                ////        //        break;
-                ////        //    }
-                //}
-                //}
-            }
+
+            DependencyObject dep = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(obj);
+            TreeViewItem sub = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(obj) as TreeViewItem;
+
+            TreeViewItem objItem = obj as TreeViewItem;
+
+            objItem.IsSelected = true;
+            objItem.IsExpanded = true;
+
+            DependencyObject i = VisualTreeHelper.GetChild(dep, 0);
+            DependencyObject pra = VisualTreeHelper.GetParent(dep);
+            FriendGroup s = obj as FriendGroup;
+
+            s.IsExpanded = true;
+            s.IsSelected = true;
+
+            User curUser = s.MemberList[1];
+            curUser.IsSelected = true;
+            curUser.IsExpanded = true;
+
+            sub.IsEnabled = true;
+            sub.IsExpanded = true;
+            sub.IsSelected = true;
+            sub.BringIntoView();
+            sub.Focus();
+            //if (group.Count != 0 && username.Length != 0)
+            //{
+            //    //for (int i = 0; i < FriendsTreeView.Items.Count; i++)
+            //    //{
+            //    //    DependencyObject dep = FriendsTreeView.;
+
+            //    //    int count = VisualTreeHelper.GetChildrenCount(dep);
+            //    //}
+
+            //    //TreeViewItem sub = (TreeViewItem)FriendsTreeView.FindName(username);
+            //    //ItemContainerGenerator itemContainerGenerator = FriendsTreeView.ItemContainerGenerator;
+
+            //    //for (int i = FriendsTreeView.Items.Count - 1; i >= 0; --i)
+            //    //{
+            //    //    ItemsControl childControl = itemContainerGenerator.ContainerFromIndex(i) as ItemsControl;
+            //    //    if (childControl != null)
+            //    //    {
+            //    //    }
+            //    //}
+
+
+            //    //foreach (Object it in FriendsTreeView.Items.)
+            //    //for( int i =0; i<FriendsTreeView.Items.Count; i++)
+            //    //{
+            //    //    object obj = FriendsTreeView.Items.GetItemAt(i);
+                    
+            //    //    TreeViewItem ret = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(obj) as TreeViewItem;
+            //    //    FriendGroup s = obj as FriendGroup;
+            //    //    s.IsExpanded = true;
+            //    //    s.IsSelected = true;
+
+            //    //    FriendGroup fg = obj as FriendGroup;
+            //    //    foreach (User curUser in fg.MemberList)
+            //    //    {
+            //    //        if (curUser.ScreenName.Equals(username))
+            //    //        {
+            //    //            //TreeViewItem ret = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(curUser.ScreenName) as TreeViewItem;
+            //    //            //TreeViewItem ret = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(it) as TreeViewItem;
+
+            //    //            //FriendsTreeView.ContainerFromElement(it);
+            //    //            //ret.IsExpanded = true;
+            //    //            //ret.IsSelected = true;
+
+            //    //            curUser.IsExpanded = true;
+            //    //            curUser.IsSelected = true;
+            //    //            break;
+            //    //        }
+            //    //    }
+            //    //}
+            //    //TreeViewItem sub =FriendsTreeView.ItemContainerGenerator.;
+            //    ////    TreeViewItem sub = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(it) as TreeViewItem;
+            //    ////    //TreeViewItem sub = FriendsTreeView.ItemContainerGenerator.ContainerFromIndex(i) as TreeViewItem;
+            //    ////    sub.IsSelected = true;
+            //    ////    if (sub.HasItems)
+            //    ////    {
+            //    ////        foreach (Object node in sub.Items)
+            //    ////        {
+            //    ////            User cur = node as User;
+            //    ////        }
+            //    ////    }
+            //    ////        //foreach (Object child in sub.Items)
+            //    ////        //{
+            //    ////        //    TreeViewItem node = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(child) as TreeViewItem;
+            //    //if (it.Header.ToString() == username)
+            //    //{
+            //    ////        //        node.IsSelected = true;
+            //    ////        //        break;
+            //    ////        //    }
+            //    //}
+            //    //}
+            //}
         }
 
         #endregion
