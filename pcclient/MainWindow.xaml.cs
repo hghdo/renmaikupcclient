@@ -1013,10 +1013,6 @@ namespace pcclient
             ItemCollection ic = FriendsTreeView.Items;
 
 
-            FriendsTreeView
-
-
-
             DependencyObject dep = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(obj);
             TreeViewItem sub = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(obj) as TreeViewItem;
 
