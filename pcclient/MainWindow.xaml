@@ -166,8 +166,6 @@
             </Setter>
         </Style>
 
-
-
         <!-- TreeView style -->
         <SolidColorBrush x:Key="GlyphBrush" Color="#444" />
         <Style x:Key="ExpandCollapseToggleStyle" TargetType="ToggleButton">
@@ -571,18 +569,6 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Grid.Resources>
-                    <Style TargetType="{x:Type TreeViewItem}">
-                        <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded, Mode=TwoWay}" />
-                        <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
-                        <Setter Property="FontWeight" Value="Normal" />
-                        <Style.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="FontWeight" Value="Bold" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                    </Grid.Resources>
                 <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="50" BorderBrush="White" BorderThickness="0">
                     <Image Width="40" Height="40" Source="{Binding Path=ImageUrl}" Margin="-10,0,0,0"/>
                 </Border>
@@ -592,12 +578,6 @@
         </DataTemplate>
         <HierarchicalDataTemplate x:Key="GroupNameTemplate">
                 <TreeView BorderThickness="0" Margin="0" Padding="0">
-                <TreeView.ItemContainerStyle>
-                    <Style TargetType="{x:Type TreeViewItem}">
-                        <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded, Mode=TwoWay}" />
-                        <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
-                    </Style>
-                </TreeView.ItemContainerStyle>
                 <TreeView.Resources>
                         <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource AeroTreeStyle}"></Style>
                 </TreeView.Resources>
@@ -641,6 +621,24 @@
                     <Border Grid.Row="0" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="50" BorderBrush="White" BorderThickness="0">
                         <Image Width="16" Height="16" Source="assets/friend.png" MouseDown="AddFollowAction_MouseDown"/>
                     </Border>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <!-- Search my friends -->
+        <DataTemplate x:Key="SearchFriends">
+            <Border x:Name="listBorder" Background="#ffffff" BorderBrush="#61738B" Margin="0" Padding="0,8,5,8" BorderThickness="0 0 0 1" VerticalAlignment="Stretch">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="50" BorderBrush="White" BorderThickness="0">
+                        <Image Width="40" Height="40" Source="{Binding Path=ImageUrl}"/>
+                    </Border>
+                    <TextBlock HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0" Text="{Binding Path=ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
                 </Grid>
             </Border>
         </DataTemplate>
@@ -861,15 +859,23 @@
                                     </StackPanel>
                                 </TabItem.Header>
                                 <TabItem.Content>
-                                    
+                                    <StackPanel Orientation="Vertical" CanVerticallyScroll="True">
                                     <TreeView x:Name="FriendsTreeView" VirtualizingStackPanel.IsVirtualizing="True"
-                                        IsEnabled="True"  IsTextSearchEnabled="True" TextSearch.Text="Name" ItemsSource="{Binding Mode=OneWay}"
+                                        ItemsSource="{Binding Mode=OneWay}"
                                         ItemTemplate="{StaticResource GroupNameTemplate}" BorderThickness="0"
                                         Margin="-15,0,0,0" Padding="0"
                                         HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                                        
-                                    </TreeView>
+                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                              Visibility="Visible">                                        
+                                    </TreeView>                                    
+                                    <TextBlock x:Name="SearchContent" Visibility="Collapsed"></TextBlock>
+                                    <ListBox x:Name="SearchFriendListBox" ItemTemplate="{StaticResource SearchFriends}" 
+                                               ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" 
+                                               HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" 
+                                               ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                                               ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                             Visibility="Collapsed"></ListBox>
+                                     </StackPanel>
                                 </TabItem.Content>
                             </TabItem>
 

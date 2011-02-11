@@ -144,6 +144,7 @@
     <Compile Include="Misc\WindowSettings.cs" />
     <Compile Include="TabSizeConverter.cs" />
     <Compile Include="UIHelper.cs" />
+    <Compile Include="UIUtility.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

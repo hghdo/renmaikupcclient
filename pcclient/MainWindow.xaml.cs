@@ -56,6 +56,8 @@ namespace pcclient
         public static UserCollection followMeGroup = new UserCollection();
         public static UserCollection myFollowGroup = new UserCollection();
 
+        public static UserCollection searchFriends = new UserCollection();
+
         // Main TwitterNet object used to make Twitter API calls
         private IServiceApi twitter;
 
@@ -145,7 +147,7 @@ namespace pcclient
             MyFollowTab.DataContext = myFollowGroup;
             MyFollowTab.UpdateLayout();
 
-            
+            SearchFriendListBox.DataContext = searchFriends;            
         }
 
         #region Get Tweets
@@ -1001,42 +1003,69 @@ namespace pcclient
         private void SearchTextBox_Clear(object sender, RoutedEventArgs e)
         {
             SearchTextBox.Clear();
+            FriendsTreeView.Visibility = Visibility.Visible;
+            SearchContent.Visibility = Visibility.Collapsed;
+            SearchFriendListBox.Visibility = Visibility.Collapsed;
+
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            FriendsTreeView.Visibility = Visibility.Collapsed;
+            SearchContent.Visibility = Visibility.Visible;
+            SearchFriendListBox.Visibility = Visibility.Visible;
+
             string username = SearchTextBox.Text;
+
+            SearchContent.Text = "查找：" + username;
+
+            bool bSearched = false;
+
+            if (group.Count != 0)
+            {
+                foreach (FriendGroup fg in group)
+                {
+                    foreach (User us in fg.MemberList)
+                    {
+                        if (us.ScreenName.Contains(username))
+                        {
+                            searchFriends.Add(us);
+                        }
+                    }
+                }
+            }
+
+
+
+            //object obj = FriendsTreeView.Items.GetItemAt(0);
+
             
-            object obj = FriendsTreeView.Items.GetItemAt(0);
+            //DependencyObject dep = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(obj);
+            //TreeViewItem sub = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(obj) as TreeViewItem;
 
-            ItemCollection ic = FriendsTreeView.Items;
+            //TreeViewItem objItem = obj as TreeViewItem;
 
+            ////objItem.IsSelected = true;
+            ////objItem.IsExpanded = true;
 
-            DependencyObject dep = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(obj);
-            TreeViewItem sub = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(obj) as TreeViewItem;
+            //DependencyObject i = VisualTreeHelper.GetChild(dep, 0);
+            //DependencyObject pra = VisualTreeHelper.GetParent(dep);
+            //FriendGroup s = obj as FriendGroup;
 
-            TreeViewItem objItem = obj as TreeViewItem;
+            //FriendsTreeView.SetSelectedItem("/important(1)/张亚玲", '/');
 
-            objItem.IsSelected = true;
-            objItem.IsExpanded = true;
+            //s.IsExpanded = true;
+            //s.IsSelected = true;
 
-            DependencyObject i = VisualTreeHelper.GetChild(dep, 0);
-            DependencyObject pra = VisualTreeHelper.GetParent(dep);
-            FriendGroup s = obj as FriendGroup;
+            //User curUser = s.MemberList[1];
+            //curUser.IsSelected = true;
+            //curUser.IsExpanded = true;
 
-            s.IsExpanded = true;
-            s.IsSelected = true;
-
-            User curUser = s.MemberList[1];
-            curUser.IsSelected = true;
-            curUser.IsExpanded = true;
-
-            sub.IsEnabled = true;
-            sub.IsExpanded = true;
-            sub.IsSelected = true;
-            sub.BringIntoView();
-            sub.Focus();
+            //sub.IsEnabled = true;
+            //sub.IsExpanded = true;
+            //sub.IsSelected = true;
+            //sub.BringIntoView();
+            //sub.Focus();
             //if (group.Count != 0 && username.Length != 0)
             //{
             //    //for (int i = 0; i < FriendsTreeView.Items.Count; i++)
