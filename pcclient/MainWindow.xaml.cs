@@ -1019,7 +1019,7 @@ namespace pcclient
 
             SearchContent.Text = "查找：" + username;
 
-            bool bSearched = false;
+            searchFriends.Clear();
 
             if (group.Count != 0)
             {
@@ -1033,6 +1033,11 @@ namespace pcclient
                         }
                     }
                 }
+            }
+
+            if (searchFriends.Count == 0)
+            {
+                SearchContent.Text += " 没有找到";
             }
 
 
