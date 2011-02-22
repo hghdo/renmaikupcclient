@@ -213,7 +213,10 @@ namespace RenmeiLib
             get
             {
                 if (string.IsNullOrEmpty(directMessagesUrl))
-                    return TwitterServerUrl + "direct_messages";
+                {
+                    return TwitterServerUrl + "service/twitter/messageList.do?";
+                    //return TwitterServerUrl + "direct_messages";
+                }
                 else
                     return directMessagesUrl;
             }
@@ -1487,7 +1490,9 @@ namespace RenmeiLib
         {
             DirectMessageCollection messages = new DirectMessageCollection();
 
-            string url = DirectMessagesUrl + Format;
+            string url = DirectMessagesUrl;// +Format;
+            url += string.Format("userId={0}&authCode={1}", email, authToken);
+            url += "&msgType=001";
 
             if (!string.IsNullOrEmpty(since))
             {
@@ -1497,7 +1502,7 @@ namespace RenmeiLib
                 // Go back a minute to compensate for latency.
                 sinceDate = sinceDate.AddMinutes(-1);
                 string sinceDateString = sinceDate.ToString(twitterSinceDateFormat);
-                url += "?since=" + sinceDateString;
+                url += "&since=" + sinceDateString;
             }
 
             HttpWebRequest request = CreateTwitterRequest(url);
@@ -1515,30 +1520,30 @@ namespace RenmeiLib
                     doc.Load(reader);
 
                     // Get statuses with XPath  
-                    XmlNodeList nodes = doc.SelectNodes("/direct-messages/direct_message");
+                    XmlNodeList nodes = doc.SelectNodes("/results/messageList/message");
 
                     foreach (XmlNode node in nodes)
                     {
                         DirectMessage message = new DirectMessage();
-                        message.Id = double.Parse(node.SelectSingleNode("id").InnerText);
-                        message.Text = HttpUtility.HtmlDecode(node.SelectSingleNode("text").InnerText);
+                        message.Id = double.Parse(node.SelectSingleNode("msgId").InnerText);
+                        message.Text = HttpUtility.HtmlDecode(node.SelectSingleNode("msgContent").InnerText);
 
-                        string dateString = node.SelectSingleNode("created_at").InnerText;
+                        string dateString = node.SelectSingleNode("msgSendTime").InnerText;
                         if (!string.IsNullOrEmpty(dateString))
                         {
                             message.DateCreated = DateTime.ParseExact(
                                 dateString,
-                                twitterCreatedAtDateFormat,
-                                CultureInfo.GetCultureInfoByIetfLanguageTag("en-us"), DateTimeStyles.AllowWhiteSpaces);
+                                renmaikuPublishDateFormat,//twitterCreatedAtDateFormat,
+                                CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces);
                         }
 
-                        XmlNode senderNode = node.SelectSingleNode("sender");
+                        XmlNode senderNode = node.SelectSingleNode("user");
                         User sender = CreateUser(senderNode);
                         message.Sender = sender;
 
-                        XmlNode recipientNode = node.SelectSingleNode("recipient");
-                        User recipient = CreateUser(recipientNode);
-                        message.Recipient = recipient;
+                        //XmlNode recipientNode = node.SelectSingleNode("recipient");
+                        //User recipient = CreateUser(recipientNode);
+                        //message.Recipient = recipient;
 
                         messages.Add(message);
                     }

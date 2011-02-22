@@ -48,6 +48,9 @@ namespace pcclient
 
         private TweetCollection[] allTweetsCollection ;
 
+        // collection of messages
+        private DirectMessageCollection messages = new DirectMessageCollection();
+
         // For Friend Group
         private FriendGroupCollection group = new FriendGroupCollection();
         private DispatcherTimer friendsRefreshTimer = new DispatcherTimer();
@@ -125,10 +128,17 @@ namespace pcclient
                 case 0:
                     MainMenuTweet.Background = selectedBrush;
                     MainMenuFriend.Background = commonBrush;
+                    MainMenuMsg.Background = commonBrush;
                     break;
                 case 1:
                     MainMenuTweet.Background = commonBrush;
                     MainMenuFriend.Background = selectedBrush;
+                    MainMenuMsg.Background = commonBrush;
+                    break;
+                case 2:
+                    MainMenuTweet.Background = commonBrush;
+                    MainMenuFriend.Background = commonBrush;
+                    MainMenuMsg.Background = selectedBrush;
                     break;
             }
         }
@@ -140,6 +150,8 @@ namespace pcclient
             TweetsRefersMeTab.DataContext = tweetsRefersMe;
             TweetsCommentedByMeTab.DataContext = tweetsCommentByMe;
             TweetsFavTab.DataContext = favTweets;
+            //Message DataContext binding.
+            PrivateMessageTab.DataContext = messages;
             FriendsTreeView.DataContext = group;
             FriendsTreeView.UpdateLayout();
             FollowMeTab.DataContext = followMeGroup;
@@ -324,8 +336,15 @@ namespace pcclient
                 }
 
             }
-            string aaa = "aaa";
-            //delete many lines for demo
+            //Retrieve Messages
+            DirectMessageCollection newMsgs;
+            newMsgs = twitter.RetrieveMessages();
+            for (int i = newMsgs.Count - 1; i >= 0; i--)
+            {
+                DirectMessage msg = newMsgs[i];
+                if(messages.Contains(msg)) continue;
+                messages.Add(msg);
+            }
 
             //StopStoryboard("Fetching");
         }
@@ -452,6 +471,7 @@ namespace pcclient
         #region Login
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            // TODO enable the two below control if login process failed.
             PasswordTextBox.IsEnabled = false;
             UserNameBox.IsEnabled = false;
 
@@ -542,7 +562,7 @@ namespace pcclient
             NoArgDelegate fetcher = new NoArgDelegate(
                 this.GetTweets);
 
-            fetcher.BeginInvoke(null, null);
+            fetcher.BeginInvoke(null, null);         
 
         }
 
@@ -760,6 +780,14 @@ namespace pcclient
         private void OpenTweetsPad(object sender, MouseButtonEventArgs e)
         {
             OuterTab.SelectedIndex = 0;
+            //TweetsPad.Visibility = Visibility.Visible;
+            //FriendsPad.Visibility = Visibility.Collapsed;
+            //DelegateRecentFetch();
+        }
+
+        private void OpenMessagesPad(object sender, MouseButtonEventArgs e)
+        {
+            OuterTab.SelectedIndex = 2;
             //TweetsPad.Visibility = Visibility.Visible;
             //FriendsPad.Visibility = Visibility.Collapsed;
             //DelegateRecentFetch();
