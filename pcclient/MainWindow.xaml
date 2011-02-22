@@ -859,23 +859,24 @@
                                     </StackPanel>
                                 </TabItem.Header>
                                 <TabItem.Content>
-                                    <StackPanel Orientation="Vertical" CanVerticallyScroll="True">
-                                    <TreeView x:Name="FriendsTreeView" VirtualizingStackPanel.IsVirtualizing="True"
+                                    <Grid Margin="0,0,0,0">
+                                        <TreeView x:Name="FriendsTreeView"
                                         ItemsSource="{Binding Mode=OneWay}"
                                         ItemTemplate="{StaticResource GroupNameTemplate}" BorderThickness="0"
                                         Margin="-15,0,0,0" Padding="0"
-                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                              Visibility="Visible">                                        
-                                    </TreeView>                                    
-                                    <TextBlock x:Name="SearchContent" Visibility="Collapsed"></TextBlock>
-                                    <ListBox x:Name="SearchFriendListBox" ItemTemplate="{StaticResource SearchFriends}" 
+                                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                              ScrollViewer.CanContentScroll="True"
+                                                      Visibility="Visible">
+                                        </TreeView>
+                                        <TextBlock x:Name="SearchContent" Visibility="Collapsed"></TextBlock>
+                                        <ListBox x:Name="SearchFriendListBox" ItemTemplate="{StaticResource SearchFriends}" 
                                                ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" 
                                                HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" 
                                                ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                                                ScrollViewer.VerticalScrollBarVisibility="Auto"
                                              Visibility="Collapsed"></ListBox>
-                                     </StackPanel>
+                                    </Grid>
                                 </TabItem.Content>
                             </TabItem>
 

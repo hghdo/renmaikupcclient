@@ -147,7 +147,7 @@ namespace pcclient
             MyFollowTab.DataContext = myFollowGroup;
             MyFollowTab.UpdateLayout();
 
-            SearchFriendListBox.DataContext = searchFriends;            
+           SearchFriendListBox.DataContext = searchFriends;            
         }
 
         #region Get Tweets
@@ -474,8 +474,8 @@ namespace pcclient
         private void DebugAutoLogin()
         {
 
-            //twitter = new RenmeiNet("hbcjob@126.com", RenmeiNet.ToSecureString("hbcjob"));
-            twitter = new RenmeiNet("binzhi_web@126.com", RenmeiNet.ToSecureString("111111"));
+            twitter = new RenmeiNet("hbcjob@126.com", RenmeiNet.ToSecureString("hbcjob"));
+            //twitter = new RenmeiNet("binzhi_web@126.com", RenmeiNet.ToSecureString("111111"));
             //twitter = new RenmeiNet("renmaikuadmin@126.com", RenmeiNet.ToSecureString("woaini737727"));
             twitter.TwitterServerUrl = AppSettings.RenmeiHost;
             TryLogin(twitter);
@@ -982,10 +982,10 @@ namespace pcclient
 
         private void AddFollowAction_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("服务器端异常");
-            //User curUser = ((ListBoxItem)FollowMeListBox.ContainerFromElement((Image)sender)).Content as User;
-            //twitter.ChangeFollowStatus( curUser.Id, "add" );
-            //myFollowGroup.Add(curUser);
+            //MessageBox.Show("服务器端异常");
+            User curUser = ((ListBoxItem)FollowMeListBox.ContainerFromElement((Image)sender)).Content as User;
+            twitter.ChangeFollowStatus( curUser.Id, "add" );
+            myFollowGroup.Add(curUser);
         }
 
         private void ShowSearchTextBox(object sender, RoutedEventArgs e)
@@ -1042,106 +1042,7 @@ namespace pcclient
 
 
 
-            //object obj = FriendsTreeView.Items.GetItemAt(0);
 
-            
-            //DependencyObject dep = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(obj);
-            //TreeViewItem sub = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(obj) as TreeViewItem;
-
-            //TreeViewItem objItem = obj as TreeViewItem;
-
-            ////objItem.IsSelected = true;
-            ////objItem.IsExpanded = true;
-
-            //DependencyObject i = VisualTreeHelper.GetChild(dep, 0);
-            //DependencyObject pra = VisualTreeHelper.GetParent(dep);
-            //FriendGroup s = obj as FriendGroup;
-
-            //FriendsTreeView.SetSelectedItem("/important(1)/张亚玲", '/');
-
-            //s.IsExpanded = true;
-            //s.IsSelected = true;
-
-            //User curUser = s.MemberList[1];
-            //curUser.IsSelected = true;
-            //curUser.IsExpanded = true;
-
-            //sub.IsEnabled = true;
-            //sub.IsExpanded = true;
-            //sub.IsSelected = true;
-            //sub.BringIntoView();
-            //sub.Focus();
-            //if (group.Count != 0 && username.Length != 0)
-            //{
-            //    //for (int i = 0; i < FriendsTreeView.Items.Count; i++)
-            //    //{
-            //    //    DependencyObject dep = FriendsTreeView.;
-
-            //    //    int count = VisualTreeHelper.GetChildrenCount(dep);
-            //    //}
-
-            //    //TreeViewItem sub = (TreeViewItem)FriendsTreeView.FindName(username);
-            //    //ItemContainerGenerator itemContainerGenerator = FriendsTreeView.ItemContainerGenerator;
-
-            //    //for (int i = FriendsTreeView.Items.Count - 1; i >= 0; --i)
-            //    //{
-            //    //    ItemsControl childControl = itemContainerGenerator.ContainerFromIndex(i) as ItemsControl;
-            //    //    if (childControl != null)
-            //    //    {
-            //    //    }
-            //    //}
-
-
-            //    //foreach (Object it in FriendsTreeView.Items.)
-            //    //for( int i =0; i<FriendsTreeView.Items.Count; i++)
-            //    //{
-            //    //    object obj = FriendsTreeView.Items.GetItemAt(i);
-                    
-            //    //    TreeViewItem ret = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(obj) as TreeViewItem;
-            //    //    FriendGroup s = obj as FriendGroup;
-            //    //    s.IsExpanded = true;
-            //    //    s.IsSelected = true;
-
-            //    //    FriendGroup fg = obj as FriendGroup;
-            //    //    foreach (User curUser in fg.MemberList)
-            //    //    {
-            //    //        if (curUser.ScreenName.Equals(username))
-            //    //        {
-            //    //            //TreeViewItem ret = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(curUser.ScreenName) as TreeViewItem;
-            //    //            //TreeViewItem ret = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(it) as TreeViewItem;
-
-            //    //            //FriendsTreeView.ContainerFromElement(it);
-            //    //            //ret.IsExpanded = true;
-            //    //            //ret.IsSelected = true;
-
-            //    //            curUser.IsExpanded = true;
-            //    //            curUser.IsSelected = true;
-            //    //            break;
-            //    //        }
-            //    //    }
-            //    //}
-            //    //TreeViewItem sub =FriendsTreeView.ItemContainerGenerator.;
-            //    ////    TreeViewItem sub = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(it) as TreeViewItem;
-            //    ////    //TreeViewItem sub = FriendsTreeView.ItemContainerGenerator.ContainerFromIndex(i) as TreeViewItem;
-            //    ////    sub.IsSelected = true;
-            //    ////    if (sub.HasItems)
-            //    ////    {
-            //    ////        foreach (Object node in sub.Items)
-            //    ////        {
-            //    ////            User cur = node as User;
-            //    ////        }
-            //    ////    }
-            //    ////        //foreach (Object child in sub.Items)
-            //    ////        //{
-            //    ////        //    TreeViewItem node = FriendsTreeView.ItemContainerGenerator.ContainerFromItem(child) as TreeViewItem;
-            //    //if (it.Header.ToString() == username)
-            //    //{
-            //    ////        //        node.IsSelected = true;
-            //    ////        //        break;
-            //    ////        //    }
-            //    //}
-            //    //}
-            //}
         }
 
         #endregion
