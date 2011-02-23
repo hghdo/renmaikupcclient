@@ -1,0 +1,53 @@
+﻿<CustomWindow:EssentialWindow  
+    x:Class="pcclient.SendPrivateMsg"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:CustomWindow="clr-namespace:CustomWindow;assembly=CustomWindow"
+    AllowsTransparency="True" Background="Transparent"
+    MinimizeButtonState="None" MaximizeButtonState="None"
+    Title="人脉库评论" Height="200" Width="400"
+    xmlns:pcclient="clr-namespace:pcclient"
+    >
+    <CustomWindow:EssentialWindow.Resources>
+        <Style x:Key="ImageButtonStyle" TargetType="{x:Type Image}">
+            <Setter Property="Width" Value="16" />
+            <Setter Property="Margin" Value="0,0,15,0" />
+        </Style>
+ 
+    </CustomWindow:EssentialWindow.Resources>
+    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5,5,0,0" Background="#3BB2EA" SnapsToDevicePixels="True">
+        <Border Background="#EFF7FA" BorderBrush="#55FFFFFF" BorderThickness="1" CornerRadius="5,5,0,0">
+            <DockPanel LastChildFill="True" HorizontalAlignment="Stretch">
+                <Border DockPanel.Dock="Top" x:Name="UserTitleBar" MouseMove="Header_MouseMove">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#3BB2EA" Offset="0" />
+                            <GradientStop Color="#EFF7FA" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <UniformGrid Columns="2" Rows="1">
+                        <WrapPanel Margin="10">
+                            <Image x:Name="HeadImage" Margin="0,0,10,0" Width="40" Height="40" Source="{Binding Path=ImageUrl}"/>
+                            <TextBlock Text="{Binding Path=ScreenName}" FontWeight="Bold" HorizontalAlignment="Left"/>
+                        </WrapPanel>
+                        <Border Name="WindowButtonsPlaceholder" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-1,10,0" />
+                    </UniformGrid>
+                </Border>
+                <StackPanel x:Name="MeTitleBar" Orientation="Vertical" Margin="10" HorizontalAlignment="Stretch" DockPanel.Dock="Bottom">
+                    <DockPanel LastChildFill="True">
+                    <Image x:Name="MeImage" Margin="0,0,10,0" Width="40" Height="40" Source="{Binding Path=ImageUrl}"/>
+                    <TextBox x:Name="NewCommentBox" BorderThickness="1" TextWrapping="Wrap" BorderBrush="Black" Margin="0,10,0,10" Height="50" SnapsToDevicePixels="False"></TextBox>
+                    </DockPanel>
+                        <StackPanel x:Name="NewTweetButtons" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button x:Name="AddAttachment" Width="16">
+                            <Image Source="assets/paperclip4_black_16.png"/>
+                        </Button>
+                        <Button x:Name="SendTweet" Content="发送" Click="PrivateMsgSend_Click"/>
+                        <Button x:Name="CancelTweet" Content="取消" Click="CancelSend_Click"/>
+                    </StackPanel>
+                </StackPanel>
+
+            </DockPanel>
+        </Border>
+    </Border>
+</CustomWindow:EssentialWindow>

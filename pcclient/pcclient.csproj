@@ -122,6 +122,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SendPrivateMsg.xaml.cs">
+      <DependentUpon>SendPrivateMsg.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SingleOneAllTweets.xaml.cs">
       <DependentUpon>SingleOneAllTweets.xaml</DependentUpon>
     </Compile>
@@ -182,6 +185,10 @@
     <Resource Include="assets\zzz.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="SendPrivateMsg.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SingleOneAllTweets.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
