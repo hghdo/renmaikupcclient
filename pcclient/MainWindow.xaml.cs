@@ -50,6 +50,7 @@ namespace pcclient
 
         // collection of messages
         private DirectMessageCollection messages = new DirectMessageCollection();
+        private DirectMessageCollection sysMessages = new DirectMessageCollection();
 
         // For Friend Group
         private FriendGroupCollection group = new FriendGroupCollection();
@@ -118,6 +119,8 @@ namespace pcclient
 
         private void SetButtonMenuBarBackground()
         {
+            //SendTweetBox.Visibility = Visibility.Collapsed;
+            //SearchFriendBox.Visibility = Visibility.Visible;
 
             BrushConverter bc = new BrushConverter();
             Brush selectedBrush,commonBrush;
@@ -129,16 +132,22 @@ namespace pcclient
                     MainMenuTweet.Background = selectedBrush;
                     MainMenuFriend.Background = commonBrush;
                     MainMenuMsg.Background = commonBrush;
+                    SendTweetBox.Visibility = Visibility.Visible;
+                    SearchFriendBox.Visibility = Visibility.Collapsed;
                     break;
                 case 1:
                     MainMenuTweet.Background = commonBrush;
                     MainMenuFriend.Background = selectedBrush;
                     MainMenuMsg.Background = commonBrush;
+                    SendTweetBox.Visibility = Visibility.Collapsed;
+                    SearchFriendBox.Visibility = Visibility.Visible;
                     break;
                 case 2:
                     MainMenuTweet.Background = commonBrush;
                     MainMenuFriend.Background = commonBrush;
                     MainMenuMsg.Background = selectedBrush;
+                    SendTweetBox.Visibility = Visibility.Collapsed;
+                    SearchFriendBox.Visibility = Visibility.Collapsed; 
                     break;
             }
         }
@@ -345,6 +354,15 @@ namespace pcclient
                 if(messages.Contains(msg)) continue;
                 messages.Add(msg);
             }
+
+            //DirectMessageCollection newSysMsgs;
+            //newSysMsgs = twitter.RetrieveMessages();
+            //for (int i = newSysMsgs.Count - 1; i >= 0; i--)
+            //{
+            //    DirectMessage msg = newSysMsgs[i];
+            //    if (sysMessages.Contains(msg)) continue;
+            //    sysMessages.Add(msg);
+            //}
 
             //StopStoryboard("Fetching");
         }

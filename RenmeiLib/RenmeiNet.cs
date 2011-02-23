@@ -1520,7 +1520,7 @@ namespace RenmeiLib
                     doc.Load(reader);
 
                     // Get statuses with XPath  
-                    XmlNodeList nodes = doc.SelectNodes("/results/messageList/message");
+                    XmlNodeList nodes = doc.SelectNodes("/result/messageList/message");
 
                     foreach (XmlNode node in nodes)
                     {

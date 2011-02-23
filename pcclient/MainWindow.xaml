@@ -420,7 +420,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="50" BorderBrush="White" BorderThickness="0">
-                        <Image Width="40" Height="40" Source="{Binding Path=User.ImageUrl}"/>
+                        <Image Width="40" Height="40" Source="{Binding Path=Sender.ImageUrl}"/>
                     </Border>
                     <Grid Grid.Row="0" Grid.Column="1">
                         <Grid.Resources>
@@ -438,7 +438,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Column="0" Grid.Row="0" Margin="0,5,0,0" Text="{Binding Path=User.ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Margin="0,5,0,0" Text="{Binding Path=Sender.ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
                         <StackPanel x:Name="rightTopButtons" Visibility="Hidden" Grid.Column="1" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                             <Image Style="{StaticResource ImageButtonStyle}" Source="assets/menu_dropdown.png" Opacity="30" PreviewMouseDown="Menu_MouseDown" ToolTip="其他操作">
                             </Image>
@@ -449,9 +449,7 @@
                             <TextBlock FontSize="12" TextWrapping="Wrap" Text="{Binding Path=RelativeTime}" Foreground="#AAAAAA"></TextBlock>
                         </StackPanel>
                         <StackPanel x:Name="rightBottomButtons" Visibility="Hidden" Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                            <Image Source="assets/reply.png" Style="{StaticResource ImageButtonStyle}" MouseDown="ReplyTweet_MouseDown" ToolTip="转发"/>
-                            <Image Source="assets/15.png" Style="{StaticResource ImageButtonStyle}" MouseDown="CommentTweet_MouseDown" ToolTip="评论"/>
-                            <Image Source="assets/17.png" Style="{StaticResource ImageButtonStyle}" MouseDown="FavTweet_MouseDown" ToolTip="收藏"/>
+                            <TextBlock FontSize="12" Text="回复" Margin="0,0,15,0"/>
                         </StackPanel>
                     </Grid>
                 </Grid>
@@ -947,7 +945,7 @@
                     <TabItem Header="Firends">
                         <!-- Friends TabControl -->
                         <TabControl x:Name="FriendsPad" TabStripPlacement="Top"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Template="{StaticResource FriendsTabControlTemplate}"  >
-                            <TabItem x:Name="FriendsGroupTab" Selector.Selected="ShowSearchTextBox" Selector.Unselected="HideSearchTextBox">
+                            <TabItem x:Name="FriendsGroupTab" Selector.Unselected="HideSearchTextBox">
                                 <TabItem.Header>
                                     <StackPanel HorizontalAlignment="Center">
                                         <TextBlock HorizontalAlignment="Center">我的好友</TextBlock>
