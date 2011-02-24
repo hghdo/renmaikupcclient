@@ -21,20 +21,24 @@ namespace pcclient
     /// </summary>
     public partial class SendPrivateMsg : EssentialWindow
     {
+        public IServiceApi twitterApi;
         private User mUser;
+        private User target;
 
         protected override Decorator GetWindowButtonsPlaceholder()
         {
             return WindowButtonsPlaceholder;
         }
 
-        public SendPrivateMsg( User user, User me )
+        public SendPrivateMsg( User user, User me ,IServiceApi twitterHandle)
         {
             InitializeComponent();
             UserTitleBar.DataContext = user;
+            target = user;
             MeTitleBar.DataContext = me;
-
+            twitterApi = twitterHandle;
         }
+
         private void Header_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
@@ -54,6 +58,7 @@ namespace pcclient
 
             //}
         }
+        
         private void Thumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
             if (this.Width + e.HorizontalChange > 10)
@@ -61,15 +66,18 @@ namespace pcclient
             if (this.Height + e.VerticalChange > 10)
                 this.Height += e.VerticalChange;
         }
+        
         private void PrivateMsgSend_Click(object sender, RoutedEventArgs e)
         {
+            twitterApi.SendMessage(target.Id, NewCommentBox.Text);
+            this.Close();
             //twitterApi.AddComment(NewCommentBox.Text, tweet);
             //UpdateComments();
         }
 
         private void CancelSend_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
     }

@@ -322,7 +322,7 @@ namespace RenmeiLib
             get
             {
                 if (string.IsNullOrEmpty(sendMessageUrl))
-                    return TwitterServerUrl + "direct_messages/new";
+                    return TwitterServerUrl + "service/twitter/messageManager.do";
                 else
                     return sendMessageUrl;
             }
@@ -766,7 +766,10 @@ namespace RenmeiLib
         /// <param name="id">id of the direct message to delete</param>
         public void DestroyDirectMessage(double id)
         {
-            string urlToCall = string.Format("{0}{1:g}{2}", DestroyDirectMessageUrl, id, Format);
+            //string urlToCall = string.Format("{0}{1:g}{2}", DestroyDirectMessageUrl, id, Format);
+            string urlToCall = TwitterServerUrl + "service/twitter/messageManager.do?";
+            urlToCall += string.Format("userId={0}&authCode={1}", email, authToken);
+            urlToCall += string.Format("&operType=delete&msgIds={0}", id);
             MakeDestroyRequestCall(urlToCall);
         }
 
@@ -1663,10 +1666,10 @@ namespace RenmeiLib
             return tweet;
         }
 
-        public void SendMessage(string user, string text)
+        public void SendMessage(double userid, string text)
         {
             // Jason Follas: Make sure that the user isn't trying to DM themselves.
-            if (String.Compare(user, CurrentlyLoggedInUser.ScreenName, true) == 0)
+            if (userid==CurrentlyLoggedInUser.Id)
                 return;
 
             if (string.IsNullOrEmpty(text))
@@ -1675,21 +1678,23 @@ namespace RenmeiLib
             text = HttpUtility.UrlEncode(text);
 
             // Create the web request  
-            HttpWebRequest request = CreateTwitterRequest(SendMessageUrl + Format);
+            string url = SendMessageUrl;
+            url += string.Format("?userId={0}&authCode={1}&operType=send&receiveUserIds={2}", email, authToken, userid);
+            HttpWebRequest request = CreateTwitterRequest(url);
             request.ServicePoint.Expect100Continue = false;
 
             request.Method = "POST";
 
             // Set values for the request back
             request.ContentType = "application/x-www-form-urlencoded";
-            string param = "text=" + text;
-            string userParam = "&user=" + user;
-            request.ContentLength = param.Length + userParam.Length;
+            string param = "content=" + text;
+            //string userParam = "&user=" + user;
+            request.ContentLength = param.Length;// +userParam.Length;
 
             // Write the request paramater
             StreamWriter stOut = new StreamWriter(request.GetRequestStream(), System.Text.Encoding.ASCII);
             stOut.Write(param);
-            stOut.Write(userParam);
+            //stOut.Write(userParam);
             stOut.Close();
 
             try
