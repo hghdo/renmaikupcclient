@@ -442,7 +442,7 @@
                         <StackPanel x:Name="rightTopButtons" Visibility="Hidden" Grid.Column="1" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                             <Image Style="{StaticResource ImageButtonStyle}" Source="assets/menu_dropdown.png" Opacity="30" PreviewMouseDown="Menu_MouseDown" ToolTip="其他操作">
                             </Image>
-                            <Image Style="{StaticResource ImageButtonStyle}" Source="assets/delete.png" MouseDown="DeleteTweet_MouseDown" ToolTip="删除"/>
+                            <Image Style="{StaticResource ImageButtonStyle}" Source="assets/delete.png" MouseDown="DeleteMessage_MouseDown" ToolTip="删除"/>
                         </StackPanel>
                         <TextBlock Grid.ColumnSpan="2" Grid.Row="1" FontSize="12" Margin="0,8,0,8" Text="{Binding Path=Text}" TextWrapping="Wrap"></TextBlock>
                         <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" Margin="0">
@@ -568,7 +568,7 @@
                   KeyboardNavigation.TabIndex="2"
                   KeyboardNavigation.TabNavigation="Local">
                     <ContentPresenter Name="PART_SelectedContentHost"
-                     Margin="{TemplateBinding Control.Padding}"
+                     Margin="-1"
                      Content="{TemplateBinding TabControl.SelectedContent}"
                      ContentSource="SelectedContent"
                      ContentStringFormat="{TemplateBinding TabControl.SelectedContentStringFormat}"
@@ -606,7 +606,7 @@
                   KeyboardNavigation.TabIndex="2"
                   KeyboardNavigation.TabNavigation="Local">
                     <ContentPresenter Name="PART_SelectedContentHost"
-                     Margin="{TemplateBinding Control.Padding}"
+                     Margin="-1"
                      Content="{TemplateBinding TabControl.SelectedContent}"
                      ContentSource="SelectedContent"
                      ContentStringFormat="{TemplateBinding TabControl.SelectedContentStringFormat}"
@@ -876,7 +876,8 @@
                             Template="{StaticResource OuterTabControlTemplate}" SelectionChanged="OuterTab_SelectionChanged" >
                     <TabItem Header="Tweets">
                         <!-- Tweets TabControl -->
-                        <TabControl x:Name="TweetsPad" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Template="{StaticResource TweetsTabControlTemplate}">
+                        <TabControl x:Name="TweetsPad" HorizontalAlignment="Stretch" 
+                                    VerticalAlignment="Stretch" Template="{StaticResource TweetsTabControlTemplate}">
                             <TabItem x:Name="TweetsTab">
                                 <TabItem.Header>
                                     <StackPanel HorizontalAlignment="Center" ToolTip="所有微博">
@@ -1010,7 +1011,7 @@
                     <TabItem Header="Messages">
                         <!-- Message TabControl -->
                         <TabControl x:Name="MessagesPad" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Template="{StaticResource MessageTabControlTemplate}">
-                            <TabItem x:Name="PrivateMessageTab">
+                            <TabItem x:Name="PrivateMessageTab" BorderThickness="0">
                                 <TabItem.Header>
                                     <StackPanel HorizontalAlignment="Center" ToolTip="私人消息">
                                         <TextBlock HorizontalAlignment="Center">私人消息</TextBlock>
@@ -1018,7 +1019,7 @@
                                 </TabItem.Header>
                                 <TabItem.Content>
                                     <ListBox x:Name="PrivateMessageListBox" ItemTemplate="{StaticResource MessagesTemplate}" 
-                                     ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
+                                     ItemContainerStyle="{StaticResource SimpleListBoxItem}"
                                      BorderThickness="0" HorizontalContentAlignment="Stretch" 
                                      ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" 
                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" 

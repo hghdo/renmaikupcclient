@@ -49,7 +49,7 @@ namespace pcclient
         private TweetCollection[] allTweetsCollection ;
 
         // collection of messages
-        private DirectMessageCollection messages = new DirectMessageCollection();
+        private DirectMessageCollection privateMessages = new DirectMessageCollection();
         private DirectMessageCollection sysMessages = new DirectMessageCollection();
 
         // For Friend Group
@@ -160,7 +160,7 @@ namespace pcclient
             TweetsCommentedByMeTab.DataContext = tweetsCommentByMe;
             TweetsFavTab.DataContext = favTweets;
             //Message DataContext binding.
-            PrivateMessageTab.DataContext = messages;
+            PrivateMessageTab.DataContext = privateMessages;
             FriendsTreeView.DataContext = group;
             FriendsTreeView.UpdateLayout();
             FollowMeTab.DataContext = followMeGroup;
@@ -351,8 +351,8 @@ namespace pcclient
             for (int i = newMsgs.Count - 1; i >= 0; i--)
             {
                 DirectMessage msg = newMsgs[i];
-                if(messages.Contains(msg)) continue;
-                messages.Add(msg);
+                if (privateMessages.Contains(msg)) continue;
+                privateMessages.Add(msg);
             }
 
             //DirectMessageCollection newSysMsgs;
@@ -949,7 +949,7 @@ namespace pcclient
 
             User me = App.LoggedInUser;
 
-            SendPrivateMsg spm = new SendPrivateMsg(curUser, me);
+            SendPrivateMsg spm = new SendPrivateMsg(curUser, me,twitter);
             spm.Show();
         }
 
@@ -1033,6 +1033,7 @@ namespace pcclient
             //Tweet tw = AllTweetsListBox.SelectedItem as Tweet;
             //MessageBox.Show("This is " + tw.Text + " tab");
         }
+
         private void DeleteTweet_MouseDown(object sender, MouseButtonEventArgs e)
         {
             try
@@ -1052,6 +1053,22 @@ namespace pcclient
             Tweet curItem = ((ListBoxItem)getTweetListBox().ContainerFromElement((Image)sender)).Content as Tweet;
             ExtendTweetsInputBox(true);
             NewTweetBox.Text = "RT @" + curItem.User.ScreenName +" "+ curItem.Text;
+        }
+
+        private void DeleteMessage_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+
+                //object obj = (ListBoxItem)PrivateMessageListBox.ContainerFromElement((Image)sender);
+                DirectMessage curItem = ((ListBoxItem)PrivateMessageListBox.ContainerFromElement((Image)sender)).Content as DirectMessage;
+                twitter.DestroyDirectMessage(curItem.Id);
+                privateMessages.Remove(curItem);
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message);
+            }
         }
 
         private void AddFollowAction_MouseDown(object sender, MouseButtonEventArgs e)

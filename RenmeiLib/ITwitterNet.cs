@@ -30,7 +30,7 @@
         void DestroyTweet(double id);
         void FollowUser(string userName);
         void ChangeFollowStatus(int userId,string action);
-        void SendMessage(string user, string text);
+        void SendMessage(double userid, string text);
 
 
         //UserCollection GetFriends(int userId);
