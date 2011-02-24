@@ -717,6 +717,45 @@
                 </Grid>
             </Border>
         </DataTemplate>
+
+        <ContextMenu x:Key="ConfirmFirend_ContextMenu" x:Name="ConfirmFirendMenuTemplate">
+            <MenuItem Header="查看微博" Click="viewTwitter_onClick" />
+            <MenuItem Header="查看好友" Click="watchFirend_onClick" />
+        </ContextMenu>
+        <DataTemplate x:Key="WaitingConfrimTemplate">
+            <Border x:Name="listBorder" Background="#ffffff" BorderBrush="#61738B" Margin="0" Padding="0,8,5,8" BorderThickness="0 0 0 1" VerticalAlignment="Stretch">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="50" BorderBrush="White" BorderThickness="0">
+                        <Image Width="40" Height="40" Source="{Binding Path=ImageUrl}"/>
+                    </Border>
+                    <StackPanel Grid.Row="0" Grid.Column="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                             </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                                <TextBlock Margin="3,0,3,0" Text="{Binding Path=ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
+                                <TextBlock Margin="3,0,3,0" Text="{Binding Path=Description}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
+                                <TextBlock Margin="30,0,3,0" Text="确认" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
+                                <TextBlock Margin="3,0,3,0" Text="忽略" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
+                            </StackPanel>
+                            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Text="{Binding Path=Company}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
+                            </Grid>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </DataTemplate>
         <!-- Search my friends -->
         <DataTemplate x:Key="SearchFriends">
             <Border x:Name="listBorder" Background="#ffffff" BorderBrush="#61738B" Margin="0" Padding="0,8,5,8" BorderThickness="0 0 0 1" VerticalAlignment="Stretch">
@@ -1001,7 +1040,7 @@
                                     </StackPanel>
                                 </TabItem.Header>
                                 <TabItem.Content>
-                                    <TextBlock>好友</TextBlock>
+                                    <ListBox ItemTemplate="{StaticResource WaitingConfrimTemplate}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></ListBox>
                                 </TabItem.Content>
                             </TabItem>
                         </TabControl>

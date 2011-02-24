@@ -65,5 +65,6 @@
 
         UserCollection getMyFollowFriendsList();
         UserCollection getFollowMeFriendsList();
+        UserCollection getWaitingConfirmList();
     }
 }

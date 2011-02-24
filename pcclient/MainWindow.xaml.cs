@@ -61,6 +61,7 @@ namespace pcclient
         public static UserCollection myFollowGroup = new UserCollection();
 
         public static UserCollection searchFriends = new UserCollection();
+        public static UserCollection waitingConfirmFriends = new UserCollection();
 
         // Main TwitterNet object used to make Twitter API calls
         private IServiceApi twitter;
@@ -167,6 +168,9 @@ namespace pcclient
             FollowMeTab.UpdateLayout();
             MyFollowTab.DataContext = myFollowGroup;
             MyFollowTab.UpdateLayout();
+            WaitingConfirmTab.DataContext = waitingConfirmFriends;
+            WaitingConfirmTab.UpdateLayout();
+
 
            SearchFriendListBox.DataContext = searchFriends;            
         }
@@ -393,13 +397,16 @@ namespace pcclient
                 // Schedule the update functions in the UI thread.
                 FriendsTreeView.Dispatcher.BeginInvoke(
                     DispatcherPriority.Normal,
-                    new OneArgDelegateFriend(UpdateFriendsList), twitter.getFriendGroups());
+                    new NoArgDelegate(UpdateFriendsList));
                 FollowMeTab.Dispatcher.BeginInvoke(
                     DispatcherPriority.Normal,
                     new NoArgDelegate(UpdateFollowMeList));
                 MyFollowTab.Dispatcher.BeginInvoke(
                     DispatcherPriority.Normal,
-                    new OneArgDelegateFollow(UpdateMyFollowList), twitter.getMyFollowFriendsList());
+                    new NoArgDelegate(UpdateMyFollowList));
+                WaitingConfirmTab.Dispatcher.BeginInvoke(
+                    DispatcherPriority.Normal,
+                    new NoArgDelegate(UpdateWaitingConfirmList));
 
 
             }
@@ -426,8 +433,9 @@ namespace pcclient
             }
 
         }
-        private void UpdateFriendsList(FriendGroupCollection newFriends)
+        private void UpdateFriendsList()
         {
+            FriendGroupCollection newFriends = twitter.getFriendGroups();
             if (0 != newFriends.Count)
             {
                 group.Clear();
@@ -449,8 +457,9 @@ namespace pcclient
                     followMeGroup.Add(guy);
                 }
         }
-        private void UpdateMyFollowList(UserCollection newUsers)
+        private void UpdateMyFollowList()
         {
+            UserCollection newUsers = twitter.getMyFollowFriendsList();
             if (0 != newUsers.Count)
             {
                 
@@ -460,6 +469,20 @@ namespace pcclient
                         continue;
                     User nu = newUsers[i];
                     myFollowGroup.Add(nu);
+                }
+            }
+        }
+        private void UpdateWaitingConfirmList()
+        {
+            UserCollection newUsers = twitter.getWaitingConfirmList();
+            if (0 != newUsers.Count)
+            {
+                for (int i = newUsers.Count - 1; i >= 0; i--)
+                {
+                    if (waitingConfirmFriends.Contains(newUsers[i]))
+                        continue;
+                    User nu = newUsers[i];
+                    waitingConfirmFriends.Add(nu);
                 }
             }
         }
