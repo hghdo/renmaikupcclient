@@ -976,9 +976,22 @@ namespace pcclient
 
         }
 
-        private void shildTweets_onClick(object sender, RoutedEventArgs e)
+        private void watchFirend_onClick(object sender, RoutedEventArgs e)
         {
+            MenuItem curMenu = sender as MenuItem;
+            ContextMenu curContext = curMenu.Parent as ContextMenu;
 
+            Point p = curContext.TranslatePoint(new Point(0, 0), FriendsTreeView);
+
+            // 取父节点的父节点
+            DependencyObject obj = FriendsTreeView.InputHitTest(p) as DependencyObject;
+            obj = VisualTreeHelper.GetParent(obj);
+            obj = VisualTreeHelper.GetParent(obj);
+
+            User curUser = ((ContentPresenter)obj).Content as User;
+
+            ShowFriendInfo sfi = new ShowFriendInfo(curUser);
+            sfi.Show();
         }
 
         private ListBox getTweetListBox()

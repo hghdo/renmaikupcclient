@@ -650,7 +650,7 @@
             <MenuItem Header="发私信" Click="sendPrivateMsg_onClick" />
             <MenuItem Header="查看微博" Click="viewTwitter_onClick" />
             <MenuItem Header="解除好友" Click="removeFriend_onClick" />
-            <MenuItem Header="屏蔽微博" Click="shildTweets_onClick" />
+            <MenuItem Header="查看好友" Click="watchFirend_onClick" />
         </ContextMenu>
         <DataTemplate x:Key="SingleFriendTemplate">
             <Grid ContextMenu="{StaticResource SingleFirend_ContextMenu}">

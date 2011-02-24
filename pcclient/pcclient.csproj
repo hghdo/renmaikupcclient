@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{17CFAB2C-AA4F-49D6-AFF1-A56C1C8D63EC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -125,6 +125,9 @@
     <Compile Include="SendPrivateMsg.xaml.cs">
       <DependentUpon>SendPrivateMsg.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ShowFriendInfo.xaml.cs">
+      <DependentUpon>ShowFriendInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SingleOneAllTweets.xaml.cs">
       <DependentUpon>SingleOneAllTweets.xaml</DependentUpon>
     </Compile>
@@ -186,6 +189,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="SendPrivateMsg.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowFriendInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
