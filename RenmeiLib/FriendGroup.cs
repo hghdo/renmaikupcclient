@@ -50,6 +50,10 @@ namespace RenmeiLib
                 }
             }
         }
+        public String GroupName
+        {
+            get { return title; }
+        }
 
         private int order;
 

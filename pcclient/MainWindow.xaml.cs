@@ -54,6 +54,7 @@ namespace pcclient
 
         // For Friend Group
         private FriendGroupCollection group = new FriendGroupCollection();
+        private List<String> gpNameList = new List<string>();
         private DispatcherTimer friendsRefreshTimer = new DispatcherTimer();
         private DateTime lastFriendsUpdate = DateTime.MinValue;
 
@@ -439,9 +440,11 @@ namespace pcclient
             if (0 != newFriends.Count)
             {
                 group.Clear();
+                
                 for (int i = newFriends.Count - 1; i >= 0; i--)
                 {
                     FriendGroup fg = newFriends[i];
+                    gpNameList.Add(fg.GroupName);
                     group.Add(fg);
                 }
             }
@@ -1005,17 +1008,56 @@ namespace pcclient
             ContextMenu curContext = curMenu.Parent as ContextMenu;
 
             Point p = curContext.TranslatePoint(new Point(0, 0), FriendsTreeView);
+            if (p.X < 60)
+                p.X += 60;
 
             // 取父节点的父节点
             DependencyObject obj = FriendsTreeView.InputHitTest(p) as DependencyObject;
             obj = VisualTreeHelper.GetParent(obj);
             obj = VisualTreeHelper.GetParent(obj);
 
+            UIElement uie = FriendsTreeView.InputHitTest(p) as UIElement;
+            Point np = uie.PointToScreen(new Point(0, 0));
+            
             User curUser = ((ContentPresenter)obj).Content as User;
 
             ShowFriendInfo sfi = new ShowFriendInfo(curUser);
+
+            if (np.X > 400)
+            {
+                sfi.Left = np.X - 260;
+            }
+            else
+            {
+                sfi.Left = np.X + 200;
+            }
+
+            sfi.Top = np.Y-10;
             sfi.Show();
         }
+
+        //private void watchFriend_MouseDown(object sender, MouseEventArgs e)
+        //{
+        //    UIElement obj = (TreeViewItem)sender as UIElement;
+        //    Point np = obj.PointToScreen(new Point(0,0));
+
+        //    User curUser = ((ContentPresenter)obj).Content as User;
+
+        //    ShowFriendInfo sfi = new ShowFriendInfo(curUser);
+
+        //    if (np.X > 400)
+        //    {
+        //        sfi.Left = np.X - 260;
+        //    }
+        //    else
+        //    {
+        //        sfi.Left = np.X + 260;
+        //    }
+
+        //    sfi.Top = np.Y - 10;
+        //    sfi.Show();
+
+        //}
 
         private ListBox getTweetListBox()
         {

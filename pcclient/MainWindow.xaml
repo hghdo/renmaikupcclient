@@ -651,6 +651,7 @@
             <MenuItem Header="查看微博" Click="viewTwitter_onClick" />
             <MenuItem Header="解除好友" Click="removeFriend_onClick" />
             <MenuItem Header="查看好友" Click="watchFirend_onClick" />
+            <MenuItem Header="好友分组" ></MenuItem>
         </ContextMenu>
         <DataTemplate x:Key="SingleFriendTemplate">
             <Grid ContextMenu="{StaticResource SingleFirend_ContextMenu}">
@@ -712,7 +713,7 @@
                     </Border>
                     <TextBlock HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0" Text="{Binding Path=ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
                     <Border Grid.Row="0" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="50" BorderBrush="White" BorderThickness="0">
-                        <Image Width="16" Height="16" Source="assets/friend.png" MouseDown="AddFollowAction_MouseDown"/>
+                        <Image Width="16" Height="16" Source="assets/friend.png" MouseDown="AddFollowAction_MouseDown" ToolTip="关注他"/>
                     </Border>
                 </Grid>
             </Border>
@@ -843,7 +844,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="5" />
+
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
@@ -906,9 +907,7 @@
                         <StackPanel Grid.Column="3" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainMenuMsg" MouseDown="OpenMessagesPad" ToolTip="消息">
                             <Image Width="26" Margin="5" Source="assets/4.png"/>
                         </StackPanel>
-                        <DockPanel Grid.Column="4" Grid.Row="0" Margin="0" VerticalAlignment="Bottom">
-                            <Thumb DragDelta="Thumb_DragDelta" Cursor="SizeNWSE" Height="5" Opacity="1.0" HorizontalAlignment="Right" DockPanel.Dock="Bottom" Visibility="Visible"/>
-                        </DockPanel>
+
                     </Grid>
                 </Border>
                 <TabControl x:Name="OuterTab" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
@@ -1000,7 +999,8 @@
                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                               ScrollViewer.VerticalScrollBarVisibility="Auto"
                                               ScrollViewer.CanContentScroll="True"
-                                                      Visibility="Visible">
+                                                      Visibility="Visible"
+                                                  >
                                         </TreeView>
                                         <TextBlock x:Name="SearchContent" Visibility="Collapsed"></TextBlock>
                                         <ListBox x:Name="SearchFriendListBox" ItemTemplate="{StaticResource SearchFriends}" 
