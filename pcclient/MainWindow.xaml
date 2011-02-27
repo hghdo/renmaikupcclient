@@ -644,17 +644,18 @@
         </Style>
 
         <!-- DateTemplate for FriendsGroup -->
-        <ContextMenu x:Key="SingleFirend_ContextMenu" x:Name="ContextMenuTemplate">
+        <ContextMenu x:Key="SingleFriend_ContextMenu" x:Name="ContextMenuTemplate">
             <MenuItem Header="TA主页" Click="taHomePage_onClick" />
             <MenuItem Header="发微博" Click="sendTweet_onClick" />
             <MenuItem Header="发私信" Click="sendPrivateMsg_onClick" />
             <MenuItem Header="查看微博" Click="viewTwitter_onClick" />
             <MenuItem Header="解除好友" Click="removeFriend_onClick" />
             <MenuItem Header="查看好友" Click="watchFirend_onClick" />
-            <MenuItem Header="好友分组" ></MenuItem>
         </ContextMenu>
         <DataTemplate x:Key="SingleFriendTemplate">
-            <Grid ContextMenu="{StaticResource SingleFirend_ContextMenu}">
+            <!--<Grid ContextMenu="{StaticResource SingleFriend_ContextMenu}" PreviewMouseDown="createFriend_ContextMenu"> -->
+            <Grid>
+            
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="60" />
                     <ColumnDefinition Width="*" />
@@ -667,7 +668,7 @@
                     <Image Width="40" Height="40" Source="{Binding Path=ImageUrl}" Margin="-10,0,0,0"/>
                 </Border>
                 <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Path=ScreenName}" FontSize="16" FontWeight="Bold" Foreground="#3E7DB0" HorizontalAlignment="Stretch" />
-                <Image Grid.Row="0"  Grid.Column="2" Source="assets/10.png" Stretch="UniformToFill" Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Image Grid.Row="0"  Grid.Column="2" Source="assets/10.png" Stretch="UniformToFill" Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center" PreviewMouseDown="createFriend_ContextMenu"/>
              </Grid>
         </DataTemplate>
         <HierarchicalDataTemplate x:Key="GroupNameTemplate">

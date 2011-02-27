@@ -46,7 +46,7 @@ namespace pcclient
         private TweetCollection tweetsCommentByMe = new TweetCollection();
         private TweetCollection favTweets = new TweetCollection();
 
-        private TweetCollection[] allTweetsCollection ;
+        private TweetCollection[] allTweetsCollection;
 
         // collection of messages
         private DirectMessageCollection privateMessages = new DirectMessageCollection();
@@ -64,6 +64,9 @@ namespace pcclient
         public static UserCollection searchFriends = new UserCollection();
         public static UserCollection waitingConfirmFriends = new UserCollection();
 
+        public ContextMenu friendItemContextMenu = new ContextMenu();
+        public MenuItem dynamicFriendGroup;
+
         // Main TwitterNet object used to make Twitter API calls
         private IServiceApi twitter;
 
@@ -78,8 +81,8 @@ namespace pcclient
         private delegate void AddTweetsUpdateDelegate(TweetCollection arg);
         private delegate void MessagesDelegate(DirectMessageCollection arg);
         private delegate void SendMessageDelegate(string user, string text);
-//        private delegate void LoginDelegate(User arg);
-//        private delegate void DeleteTweetDelegate(double id);
+        //        private delegate void LoginDelegate(User arg);
+        //        private delegate void DeleteTweetDelegate(double id);
 
         private delegate void LoginDelegate(RenmeiNet arg);
         private delegate void PostLoginDelegate(User arg);
@@ -115,6 +118,7 @@ namespace pcclient
 
             SendTweetBox.Visibility = Visibility.Visible;
             SearchFriendBox.Visibility = Visibility.Collapsed;
+            CreateFriendItemContextMenu();
 
         }
         #endregion
@@ -125,7 +129,7 @@ namespace pcclient
             //SearchFriendBox.Visibility = Visibility.Visible;
 
             BrushConverter bc = new BrushConverter();
-            Brush selectedBrush,commonBrush;
+            Brush selectedBrush, commonBrush;
             commonBrush = (Brush)bc.ConvertFrom("#1D9CDF");
             selectedBrush = (Brush)bc.ConvertFrom("#1783B4");
             switch (OuterTab.SelectedIndex)
@@ -149,7 +153,7 @@ namespace pcclient
                     MainMenuFriend.Background = commonBrush;
                     MainMenuMsg.Background = selectedBrush;
                     SendTweetBox.Visibility = Visibility.Collapsed;
-                    SearchFriendBox.Visibility = Visibility.Collapsed; 
+                    SearchFriendBox.Visibility = Visibility.Collapsed;
                     break;
             }
         }
@@ -173,7 +177,7 @@ namespace pcclient
             WaitingConfirmTab.UpdateLayout();
 
 
-           SearchFriendListBox.DataContext = searchFriends;            
+            SearchFriendListBox.DataContext = searchFriends;
         }
 
         #region Get Tweets
@@ -227,7 +231,7 @@ namespace pcclient
             //BottmNavigation.Visibility = Visibility.Visible;
             MainFrame.Visibility = Visibility.Visible;
         }
-        
+
         private void GetTweets()
         {
             try
@@ -246,11 +250,11 @@ namespace pcclient
                 string since = DateTime.Now.AddHours(-70).ToString();
 
 
-        //private TweetCollection tweets = new TweetCollection();
-        //private TweetCollection tweetsSentByMe = new TweetCollection();
-        //private TweetCollection tweetsRefersMe = new TweetCollection();
-        //private TweetCollection tweetsCommentByMe = new TweetCollection();
-        //private TweetCollection favTweets = new TweetCollection();
+                //private TweetCollection tweets = new TweetCollection();
+                //private TweetCollection tweetsSentByMe = new TweetCollection();
+                //private TweetCollection tweetsRefersMe = new TweetCollection();
+                //private TweetCollection tweetsCommentByMe = new TweetCollection();
+                //private TweetCollection favTweets = new TweetCollection();
 
 
                 //LayoutRoot.Dispatcher.BeginInvoke(
@@ -440,7 +444,7 @@ namespace pcclient
             if (0 != newFriends.Count)
             {
                 group.Clear();
-                
+
                 for (int i = newFriends.Count - 1; i >= 0; i--)
                 {
                     FriendGroup fg = newFriends[i];
@@ -452,20 +456,20 @@ namespace pcclient
         private void UpdateFollowMeList()
         {
             UserCollection newUsers = twitter.getFollowMeFriendsList();
-                for (int i = newUsers.Count - 1; i >= 0; i--)
-                {
-                    if (followMeGroup.Contains(newUsers[i]))
-                        continue;
-                    User guy = newUsers[i];
-                    followMeGroup.Add(guy);
-                }
+            for (int i = newUsers.Count - 1; i >= 0; i--)
+            {
+                if (followMeGroup.Contains(newUsers[i]))
+                    continue;
+                User guy = newUsers[i];
+                followMeGroup.Add(guy);
+            }
         }
         private void UpdateMyFollowList()
         {
             UserCollection newUsers = twitter.getMyFollowFriendsList();
             if (0 != newUsers.Count)
             {
-                
+
                 for (int i = newUsers.Count - 1; i >= 0; i--)
                 {
                     if (myFollowGroup.Contains(newUsers[i]))
@@ -496,7 +500,7 @@ namespace pcclient
 
             fetcher.BeginInvoke(null, null);
         }
- 
+
         private void SetupFriendsListTimer()
         {
             friendsRefreshTimer.Interval = new TimeSpan(0, 0, 5);
@@ -520,13 +524,13 @@ namespace pcclient
             UserNameBox.IsEnabled = false;
 
             //HttpRequest htr = new HttpRequest(MainWindows.website);
-            twitter = new RenmeiNet(UserNameBox.Text,RenmeiNet.ToSecureString(PasswordTextBox.Password));
+            twitter = new RenmeiNet(UserNameBox.Text, RenmeiNet.ToSecureString(PasswordTextBox.Password));
             twitter.TwitterServerUrl = AppSettings.RenmeiHost;
 
             // 等待效果
             // 加一个等待循环的图片，然后现在enable可见
 
-            
+
             // 用线程实现的效果比较好
             //# TryLogin(twitter);
             LoginButton.Dispatcher.BeginInvoke(
@@ -556,7 +560,7 @@ namespace pcclient
             }
             catch (WebException ex)
             {
-                App.Logger.Error("There was a problem logging in Renmei.",ex);
+                App.Logger.Error("There was a problem logging in Renmei.", ex);
                 MessageBox.Show("There was a problem logging in to Renmei. " + ex.Message);
             }
         }
@@ -606,7 +610,7 @@ namespace pcclient
             NoArgDelegate fetcher = new NoArgDelegate(
                 this.GetTweets);
 
-            fetcher.BeginInvoke(null, null);         
+            fetcher.BeginInvoke(null, null);
 
         }
 
@@ -693,7 +697,7 @@ namespace pcclient
                 _storedWindowState = this.WindowState;
                 this.WindowState = WindowState.Minimized;
                 this.Visibility = Visibility.Hidden;
-                
+
                 if (_notifyIcon != null)
                 {
                     _notifyIcon.Visible = true;
@@ -771,31 +775,31 @@ namespace pcclient
         #endregion
 
         #region Single Instance
-//        /// <summary>
-//        /// Enforce single instance for release mode
-//        /// </summary>
-//        private void SetupSingleInstance()
-//        {
-//#if !DEBUG
-//            Application.Current.Exit += new ExitEventHandler(Current_Exit);
-//            _instanceManager = new SingleInstanceManager(this, ShowApplication);
-//#endif
-//        }
+        //        /// <summary>
+        //        /// Enforce single instance for release mode
+        //        /// </summary>
+        //        private void SetupSingleInstance()
+        //        {
+        //#if !DEBUG
+        //            Application.Current.Exit += new ExitEventHandler(Current_Exit);
+        //            _instanceManager = new SingleInstanceManager(this, ShowApplication);
+        //#endif
+        //        }
 
-//        SingleInstanceManager _instanceManager;
+        //        SingleInstanceManager _instanceManager;
 
-//        public void ShowApplication()
-//        {
-//            if (this.Visibility == Visibility.Hidden)
-//            {
-//                this.Visibility = Visibility.Visible;
-//            }
-//        }
+        //        public void ShowApplication()
+        //        {
+        //            if (this.Visibility == Visibility.Hidden)
+        //            {
+        //                this.Visibility = Visibility.Visible;
+        //            }
+        //        }
 
-//        void Current_Exit(object sender, ExitEventArgs e)
-//        {
-//            Environment.Exit(0);
-//        }
+        //        void Current_Exit(object sender, ExitEventArgs e)
+        //        {
+        //            Environment.Exit(0);
+        //        }
 
         #endregion
 
@@ -864,7 +868,7 @@ namespace pcclient
                 NewTweetButtons.Visibility = Visibility.Collapsed;
             }
         }
-        
+
         private void NewTweetBox_GotFocus(object sender, RoutedEventArgs e)
         {
             ExtendTweetsInputBox(true);
@@ -951,7 +955,7 @@ namespace pcclient
 
             //System.Diagnostics.Process.Start(AppSettings.RenmeiHost); 
             System.Diagnostics.Process.Start(curUser.ImageUrl);
-            
+
         }
 
         private void sendTweet_onClick(object sender, RoutedEventArgs e)
@@ -975,7 +979,7 @@ namespace pcclient
 
             User me = App.LoggedInUser;
 
-            SendPrivateMsg spm = new SendPrivateMsg(curUser, me,twitter);
+            SendPrivateMsg spm = new SendPrivateMsg(curUser, me, twitter);
             spm.Show();
         }
 
@@ -1018,7 +1022,7 @@ namespace pcclient
 
             UIElement uie = FriendsTreeView.InputHitTest(p) as UIElement;
             Point np = uie.PointToScreen(new Point(0, 0));
-            
+
             User curUser = ((ContentPresenter)obj).Content as User;
 
             ShowFriendInfo sfi = new ShowFriendInfo(curUser);
@@ -1032,7 +1036,7 @@ namespace pcclient
                 sfi.Left = np.X + 200;
             }
 
-            sfi.Top = np.Y-10;
+            sfi.Top = np.Y - 10;
             sfi.Show();
         }
 
@@ -1077,7 +1081,7 @@ namespace pcclient
                     return AllTweetsListBox;
             }
         }
-        
+
         private void CommentTweet_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Tweet curItem = ((ListBoxItem)getTweetListBox().ContainerFromElement((Image)sender)).Content as Tweet;
@@ -1117,7 +1121,7 @@ namespace pcclient
         {
             Tweet curItem = ((ListBoxItem)getTweetListBox().ContainerFromElement((Image)sender)).Content as Tweet;
             ExtendTweetsInputBox(true);
-            NewTweetBox.Text = "RT @" + curItem.User.ScreenName +" "+ curItem.Text;
+            NewTweetBox.Text = "RT @" + curItem.User.ScreenName + " " + curItem.Text;
         }
 
         private void DeleteMessage_MouseDown(object sender, MouseButtonEventArgs e)
@@ -1140,7 +1144,7 @@ namespace pcclient
         {
             //MessageBox.Show("服务器端异常");
             User curUser = ((ListBoxItem)FollowMeListBox.ContainerFromElement((Image)sender)).Content as User;
-            twitter.ChangeFollowStatus( curUser.Id, "add" );
+            twitter.ChangeFollowStatus(curUser.Id, "add");
             myFollowGroup.Add(curUser);
         }
 
@@ -1201,6 +1205,130 @@ namespace pcclient
 
         }
 
+        private void CreateFriendItemContextMenu()
+        {
+
+            MenuItem menu = new MenuItem();
+            menu.Header = "TA主页";
+            menu.Click += taHomePage_onClick;
+            friendItemContextMenu.Items.Add(menu);
+
+            menu = new MenuItem();
+            menu.Header = "发微博";
+            menu.Click += sendTweet_onClick;
+            friendItemContextMenu.Items.Add(menu);
+
+            menu = new MenuItem();
+            menu.Header = "发私信";
+            menu.Click += sendPrivateMsg_onClick;
+            friendItemContextMenu.Items.Add(menu);
+
+            menu = new MenuItem();
+            menu.Header = "查看微博";
+            menu.Click += viewTwitter_onClick;
+            friendItemContextMenu.Items.Add(menu);
+
+            menu = new MenuItem();
+            menu.Header = "解除好友";
+            menu.Click += removeFriend_onClick;
+            friendItemContextMenu.Items.Add(menu);
+
+            menu = new MenuItem();
+            menu.Header = "查看好友";
+            menu.Click += watchFirend_onClick;
+            friendItemContextMenu.Items.Add(menu);
+ 
+        }
+
+        private void MoveFriendHander(object sender, RoutedEventArgs e)
+        {
+            MenuItem m = sender as MenuItem;
+            MenuItem curMenu = m.Parent as MenuItem;
+            ContextMenu curContext = curMenu.Parent as ContextMenu;
+
+            Point p = curContext.TranslatePoint(new Point(0, 0), FriendsTreeView);
+
+            // 取父节点的父节点
+            DependencyObject obj = FriendsTreeView.InputHitTest(p) as DependencyObject;
+            obj = VisualTreeHelper.GetParent(obj);
+            obj = VisualTreeHelper.GetParent(obj);
+
+            User curUser = ((ContentPresenter)obj).Content as User;
+
+            // Remove user from origin group at frist
+            foreach (FriendGroup fg in group)
+            {
+                if (fg.MemberList.Contains(curUser))
+                {
+                    fg.MemberList.Remove(curUser);
+                    break;
+                }
+            }
+                
+
+            for (int i = 0; i < gpNameList.Count; i++)
+            {
+                if (group[i].GroupName.Equals(m.Header.ToString()))
+                {
+                    group[i].MemberList.Add(curUser);
+                    break;
+                }
+            }
+
+
+        }
+
+        private void dynamicFriendGroupContextMenu(User us)
+        {
+            bool bGroupName = false;
+            string strGroupName = null;
+            for (int i = 0; i < group.Count && !bGroupName; i++)
+            {
+                if (group[i].MemberList.Contains(us))
+                {
+                    bGroupName = true;
+                    strGroupName = group[i].GroupName;
+                }
+            }
+
+            
+            if (friendItemContextMenu.Items.Contains(dynamicFriendGroup))
+                friendItemContextMenu.Items.Remove(dynamicFriendGroup);
+
+            dynamicFriendGroup = new MenuItem();
+            dynamicFriendGroup.Header = "移动好友至";
+            for (int i = 0; i < gpNameList.Count; i++)
+            {
+                if (!gpNameList[i].Equals(strGroupName))
+                {
+                    MenuItem fgmi = new MenuItem();
+                    fgmi.Header = gpNameList[i];
+                    fgmi.Click += MoveFriendHander;
+                    dynamicFriendGroup.Items.Add(fgmi);
+                }
+            }
+            friendItemContextMenu.Items.Add(dynamicFriendGroup);
+
+            
+        }
+
+
+        // Create friend context menu
+        private void createFriend_ContextMenu(object sender, MouseButtonEventArgs e)
+        {
+            Image img = sender as Image;
+            DependencyObject cur = VisualTreeHelper.GetParent(img.Parent);
+            User us = ((ContentPresenter)cur).Content as User;
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                dynamicFriendGroupContextMenu(us);
+                friendItemContextMenu.PlacementTarget = img;
+                friendItemContextMenu.IsOpen = true;
+
+            }
+
+        }
+
         #endregion
 
         private void Menu_MouseDown(object sender, MouseButtonEventArgs e)
@@ -1210,32 +1338,32 @@ namespace pcclient
                 curItemRelated2ContextMenu = ((ListBoxItem)getTweetListBox().ContainerFromElement((Image)sender)).Content as Tweet;
                 if (curItemRelated2ContextMenu == null) return;
                 Image image = sender as Image;
-                ContextMenu cm=PrepareTweetContextMenuTemplate();
+                ContextMenu cm = PrepareTweetContextMenuTemplate();
                 cm.PlacementTarget = image;
                 cm.IsOpen = true;
 
-            }            
+            }
         }
 
         private ContextMenu PrepareTweetContextMenuTemplate()
         {
             //if (tweetContextMenuTemplate == null)
             //{
-                tweetContextMenuTemplate = new ContextMenu();
-                bool ttt = myFollowGroup.Contains(curItemRelated2ContextMenu.User);
-                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("TA主页", "homepage"));
-                //if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id && !myFollowGroup.Contains(curItemRelated2ContextMenu.User))
-                //    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("关注", "follow"));
-                //if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id && myFollowGroup.Contains(curItemRelated2ContextMenu.User))
-                //    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("取消关注", "unfollow"));
-                if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id )
-                    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("发微博", "sendTweet"));
-                if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id)
-                    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("发私信", "sendMsg"));
-                if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id)
-                    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("查看微博", "viewTweet"));
-                //if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id)
-                //    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("屏蔽微博", "block"));
+            tweetContextMenuTemplate = new ContextMenu();
+            bool ttt = myFollowGroup.Contains(curItemRelated2ContextMenu.User);
+            tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("TA主页", "homepage"));
+            //if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id && !myFollowGroup.Contains(curItemRelated2ContextMenu.User))
+            //    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("关注", "follow"));
+            //if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id && myFollowGroup.Contains(curItemRelated2ContextMenu.User))
+            //    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("取消关注", "unfollow"));
+            if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id)
+                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("发微博", "sendTweet"));
+            if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id)
+                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("发私信", "sendMsg"));
+            if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id)
+                tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("查看微博", "viewTweet"));
+            //if (curItemRelated2ContextMenu.User.Id != App.LoggedInUser.Id)
+            //    tweetContextMenuTemplate.Items.Add(creatTweetMenuItem("屏蔽微博", "block"));
             //}
             return tweetContextMenuTemplate;
         }
