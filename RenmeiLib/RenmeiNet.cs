@@ -1526,22 +1526,22 @@ namespace RenmeiLib
             return result;
         }
 
-        public DirectMessageCollection RetrieveMessages()
+        public DirectMessageCollection RetrieveMessages(string category)
         {
-            return RetrieveMessages(string.Empty);
+            return RetrieveMessages(category,string.Empty);
         }
 
         /// <summary>
         /// Gets direct messages for the user
         /// </summary>
         /// <returns>Collection of direct messages</returns>
-        public DirectMessageCollection RetrieveMessages(string since)
+        public DirectMessageCollection RetrieveMessages(string category,string since)
         {
             DirectMessageCollection messages = new DirectMessageCollection();
 
             string url = DirectMessagesUrl;// +Format;
-            url += string.Format("userId={0}&authCode={1}", email, authToken);
-            url += "&msgType=001";
+            url += string.Format("userId={0}&authCode={1}&msgType={2}&limit=20", email, authToken,category);
+            //url += "&msgType=002";
 
             if (!string.IsNullOrEmpty(since))
             {

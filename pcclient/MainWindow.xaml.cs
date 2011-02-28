@@ -167,6 +167,7 @@ namespace pcclient
             TweetsFavTab.DataContext = favTweets;
             //Message DataContext binding.
             PrivateMessageTab.DataContext = privateMessages;
+            SystemMessageTab.DataContext = sysMessages;
             FriendsTreeView.DataContext = group;
             FriendsTreeView.UpdateLayout();
             FollowMeTab.DataContext = followMeGroup;
@@ -356,8 +357,9 @@ namespace pcclient
             }
             //Retrieve Messages
             DirectMessageCollection newMsgs;
-            newMsgs = twitter.RetrieveMessages();
-            for (int i = newMsgs.Count - 1; i >= 0; i--)
+            newMsgs = twitter.RetrieveMessages("001");
+            //for (int i = newMsgs.Count - 1; i >= 0; i--)
+            for (int i = 0; i < newMsgs.Count;i++ )
             {
                 DirectMessage msg = newMsgs[i];
                 if (privateMessages.Contains(msg)) continue;
@@ -365,13 +367,14 @@ namespace pcclient
             }
 
             //DirectMessageCollection newSysMsgs;
-            //newSysMsgs = twitter.RetrieveMessages();
-            //for (int i = newSysMsgs.Count - 1; i >= 0; i--)
-            //{
-            //    DirectMessage msg = newSysMsgs[i];
-            //    if (sysMessages.Contains(msg)) continue;
-            //    sysMessages.Add(msg);
-            //}
+            newMsgs = twitter.RetrieveMessages("002");
+            //for (int i = newMsgs.Count - 1; i >= 0; i--)
+            for (int i = 0; i < newMsgs.Count; i++)
+            {
+                DirectMessage msg = newMsgs[i];
+                if (sysMessages.Contains(msg)) continue;
+                sysMessages.Add(msg);
+            }
 
             //StopStoryboard("Fetching");
         }
@@ -1399,10 +1402,27 @@ namespace pcclient
                     twitter.ChangeFollowStatus(curItemRelated2ContextMenu.User.Id, "delete");
                     myFollowGroup.Remove(curItemRelated2ContextMenu.User);
                 }
+                else if (m.Name.Equals("sendMsg"))
+                {
+                    SendPrivateMsg spm = new SendPrivateMsg(curItemRelated2ContextMenu.User, App.LoggedInUser, twitter);
+                    spm.Show();
+                }
             }
             catch (Exception ee)
             {
                 MessageBox.Show(ee.Message);
+            }
+        }
+
+        private void ListBox_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            //MessageBox.Show("aaaaaaaaaaa");
+            //MessageBox.Show(sender.GetType().ToString());
+            ListBox lb = sender as ListBox;
+            ScrollViewer sv = lb.Template.FindName("Scroller",lb) as ScrollViewer;
+            if (sv.VerticalOffset>0 && sv.VerticalOffset == sv.ScrollableHeight)
+            {
+                MessageBox.Show("aaaaaaaaaaa");
             }
         }
 

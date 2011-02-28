@@ -462,6 +462,62 @@
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
+        <DataTemplate x:Key="SysMessagesTemplate">
+            <Border x:Name="listBorder" Background="#ffffff" BorderBrush="#61738B" Margin="0" Padding="0,8,5,8" BorderThickness="0 0 0 1" VerticalAlignment="Stretch">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="50" BorderBrush="White" BorderThickness="0">
+                        <Image Width="40" Height="40" Source="{Binding Path=Sender.ImageUrl}"/>
+                    </Border>
+                    <Grid Grid.Row="0" Grid.Column="1">
+                        <Grid.Resources>
+                            <Style x:Key="ImageButtonStyle" TargetType="{x:Type Image}">
+                                <Setter Property="Width" Value="16" />
+                                <Setter Property="Margin" Value="0,0,15,0" />
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Margin="0,5,0,0" Text="{Binding Path=Sender.ScreenName}" FontSize="12" FontWeight="Bold" Foreground="#3E7DB0"></TextBlock>
+                        <StackPanel x:Name="rightTopButtons" Visibility="Hidden" Grid.Column="1" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <!--
+                            <Image Style="{StaticResource ImageButtonStyle}" Source="assets/menu_dropdown.png" Opacity="30" PreviewMouseDown="Menu_MouseDown" ToolTip="其他操作"></Image>
+                            <Image Style="{StaticResource ImageButtonStyle}" Source="assets/delete.png" MouseDown="DeleteMessage_MouseDown" ToolTip="删除"/>
+                            -->
+                        </StackPanel>
+                        <TextBlock Grid.ColumnSpan="2" Grid.Row="1" FontSize="12" Margin="0,8,0,8" Text="{Binding Path=Text}" TextWrapping="Wrap"></TextBlock>
+                        <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" Margin="0">
+                            <TextBlock FontSize="12" TextWrapping="Wrap" Text="{Binding Path=RelativeTime}" Foreground="#AAAAAA"></TextBlock>
+                        </StackPanel>
+                        <StackPanel x:Name="rightBottomButtons" Visibility="Hidden" Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <!--
+                            <TextBlock FontSize="12" Text="回复" Margin="0,0,15,0" Visibility="Hidden"/>
+                            -->
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsMouseOver,RelativeSource={RelativeSource TemplatedParent}}" Value="True">
+                    <Setter Property="Background" TargetName="listBorder" Value="#F4F9FF" />
+                    <Setter Property="Visibility" TargetName="rightTopButtons" Value="Visible" />
+                    <Setter Property="Visibility" TargetName="rightBottomButtons" Value="Visible" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
 
         <ControlTemplate x:Key="OuterTabControlTemplate" TargetType="{x:Type TabControl}">
             <Grid ClipToBounds="True" KeyboardNavigation.TabNavigation="Local" SnapsToDevicePixels="True">
@@ -928,8 +984,26 @@
                                      ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
                                      BorderThickness="0" HorizontalContentAlignment="Stretch" 
                                      ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" 
+                                     VirtualizingStackPanel.VirtualizationMode="Recycling"
                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                                     ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                     ScrollViewer.ScrollChanged="ListBox_ScrollChanged">
+                                        <ListBox.Template>
+                                            <ControlTemplate>
+                                                <ScrollViewer x:Name="Scroller" VerticalAlignment="Bottom" Focusable="False" >
+                                                    <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Focusable="False" Panel.ZIndex="999"  />
+                                                </ScrollViewer>
+                                            </ControlTemplate>
+                                        </ListBox.Template>
+                                        <ListBox.ToolTip>
+                                            <ToolTip Background="Transparent" HasDropShadow="False" BorderBrush="Transparent" HorizontalOffset="100"
+                                                     Placement="Bottom" VerticalOffset="-30">
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                                <Button Content="更多内容..." Padding="5"></Button>
+                                                </StackPanel>
+                                            </ToolTip>
+                                        </ListBox.ToolTip>
+                                    </ListBox>
                                 </TabItem.Content>
                             </TabItem>
                             <TabItem x:Name="TweetsSendByMeTab" BorderThickness="0">
@@ -1085,8 +1159,12 @@
                                     </StackPanel>
                                 </TabItem.Header>
                                 <TabItem.Content>
-                                    <!--ListBox x:Name="TweetsListBox" ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"-->
-                                    <TextBlock HorizontalAlignment="Center">系统消息</TextBlock>
+                                    <ListBox x:Name="SysMessageListBox" ItemTemplate="{StaticResource SysMessagesTemplate}" 
+                                     ItemContainerStyle="{StaticResource SimpleListBoxItem}"
+                                     BorderThickness="0" HorizontalContentAlignment="Stretch" 
+                                     ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" 
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto"/>
                                 </TabItem.Content>
                             </TabItem>
                         </TabControl>

@@ -50,8 +50,8 @@
         TweetCollection GetReplies(string since);
         TweetCollection GetFavoriteTweets();
         TweetCollection GetUserTimeline(string userId);
-        DirectMessageCollection RetrieveMessages();
-        DirectMessageCollection RetrieveMessages(string since);
+        DirectMessageCollection RetrieveMessages(string category);
+        DirectMessageCollection RetrieveMessages(string category,string since);
         CommentCollection RetriveComments(Tweet tweet);
         TweetCollection RetriveCommentedTweets();
         TweetCollection RetriveMySelfTweets();

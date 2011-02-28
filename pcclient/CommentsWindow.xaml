@@ -107,7 +107,7 @@
                     </StackPanel>
                 </StackPanel>
                 <ListBox x:Name="CommentsListBox" ItemTemplate="{StaticResource CommentsTemplate}" 
-                         Margin="10" Background="Transparent" ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
+                         Margin="10,10,0,10" Background="Transparent" ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
                          BorderThickness="0" HorizontalContentAlignment="Stretch" 
                          ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" 
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled" 

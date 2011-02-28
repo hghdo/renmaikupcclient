@@ -119,6 +119,48 @@ namespace RenmeiLib
         }
 
         /// <summary>
+        /// Calculates a friendly display string based on an input timespan
+        /// </summary>
+        public static string CalculateRelativeTimeString(TimeSpan ts)
+        {
+            double delta = ts.TotalSeconds;
+
+            if (delta <= 1)
+            {
+                return "1秒钟前";// "a second ago";
+            }
+            else if (delta < 60)
+            {
+                return ts.Seconds + "秒钟前";// " seconds ago";
+            }
+            else if (delta < 120)
+            {
+                return "1分钟前";//"about a minute ago";
+            }
+            else if (delta < (45 * 60))
+            {
+                return ts.Minutes + "分钟前";// " minutes ago";
+            }
+            else if (delta < (90 * 60))
+            {
+                return "1小时前";//"about an hour ago";
+            }
+            else if (delta < (24 * 60 * 60))
+            {
+                return ts.Hours + "小时前"; //"about " + ts.Hours + " hours ago";
+            }
+            else if (delta < (48 * 60 * 60))
+            {
+                return "1天前";//"1 day ago";
+            }
+            else
+            {
+                return ts.Days + "天前";//" days ago";
+            }
+        }
+
+
+        /// <summary>
         /// Updates the relativeTime based on the DateCreated and DateTime.Now
         /// </summary>
         public void UpdateRelativeTime()
@@ -126,40 +168,41 @@ namespace RenmeiLib
             DateTime StatusCreatedDate = dateCreated;
 
             TimeSpan ts = new TimeSpan(DateTime.Now.Ticks - StatusCreatedDate.Ticks);
-            double delta = ts.TotalSeconds;
+            //double delta = ts.TotalSeconds;
+            RelativeTime = CalculateRelativeTimeString(ts);
 
-            if (delta == 1)
-            {
-                RelativeTime = "a second ago";
-            }
-            else if (delta < 60)
-            {
-                RelativeTime = ts.Seconds + " seconds ago";
-            }
-            else if (delta < 120)
-            {
-                RelativeTime = "about a minute ago";
-            }
-            else if (delta < (45 * 60))
-            {
-                RelativeTime = ts.Minutes + " minutes ago";
-            }
-            else if (delta < (90 * 60))
-            {
-                RelativeTime = "about an hour ago";
-            }
-            else if (delta < (24 * 60 * 60))
-            {
-                RelativeTime = "about " + ts.Hours + " hours ago";
-            }
-            else if (delta < (48 * 60 * 60))
-            {
-                RelativeTime = "1 day ago";
-            }
-            else
-            {
-                RelativeTime = ts.Days + " days ago";
-            }
+            //if (delta == 1)
+            //{
+            //    RelativeTime = "a second ago";
+            //}
+            //else if (delta < 60)
+            //{
+            //    RelativeTime = ts.Seconds + " seconds ago";
+            //}
+            //else if (delta < 120)
+            //{
+            //    RelativeTime = "about a minute ago";
+            //}
+            //else if (delta < (45 * 60))
+            //{
+            //    RelativeTime = ts.Minutes + " minutes ago";
+            //}
+            //else if (delta < (90 * 60))
+            //{
+            //    RelativeTime = "about an hour ago";
+            //}
+            //else if (delta < (24 * 60 * 60))
+            //{
+            //    RelativeTime = "about " + ts.Hours + " hours ago";
+            //}
+            //else if (delta < (48 * 60 * 60))
+            //{
+            //    RelativeTime = "1 day ago";
+            //}
+            //else
+            //{
+            //    RelativeTime = ts.Days + " days ago";
+            //}
         }
 
         #region INotifyPropertyChanged Members

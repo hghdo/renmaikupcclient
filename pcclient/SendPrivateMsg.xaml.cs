@@ -30,11 +30,11 @@ namespace pcclient
             return WindowButtonsPlaceholder;
         }
 
-        public SendPrivateMsg( User user, User me ,IServiceApi twitterHandle)
+        public SendPrivateMsg( User targetUser, User me ,IServiceApi twitterHandle)
         {
             InitializeComponent();
-            UserTitleBar.DataContext = user;
-            target = user;
+            UserTitleBar.DataContext = targetUser;
+            target = targetUser;
             MeTitleBar.DataContext = me;
             twitterApi = twitterHandle;
         }

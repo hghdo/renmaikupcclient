@@ -55,7 +55,7 @@
                 </Border>
                 <Thumb DragDelta="Thumb_DragDelta" HorizontalAlignment="Right" DockPanel.Dock="Bottom" Cursor="SizeNWSE" />
                 <ListBox x:Name="AllTweetsListBox" ItemTemplate="{StaticResource OneAllTweetsTemplate}" 
-                         Margin="10" Background="Transparent"
+                         Margin="10,10,0,10" Background="Transparent" Padding="0,0,10,0"
                          BorderThickness="0" HorizontalContentAlignment="Stretch" 
                          ItemsSource="{Binding Mode=OneWay}" ScrollViewer.CanContentScroll="False" 
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
