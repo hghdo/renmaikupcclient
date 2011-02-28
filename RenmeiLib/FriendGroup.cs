@@ -40,7 +40,7 @@ namespace RenmeiLib
         private string title;
         public string Title
         {
-            get { return title + "(" + Count.ToString() + ")";  }
+            get { return groupname + "(" + Count.ToString() + ")";  }
             set
             {
                 if (value != title)
@@ -50,9 +50,18 @@ namespace RenmeiLib
                 }
             }
         }
+        private string groupname;
         public String GroupName
         {
-            get { return title; }
+            get { return groupname; }
+            set
+            {
+                if (value != groupname)
+                {
+                    groupname = value;
+                    OnPropertyChanged("GroupName");
+                }
+            }
         }
 
         private int order;

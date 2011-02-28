@@ -1006,6 +1006,27 @@ namespace pcclient
 
         private void removeFriend_onClick(object sender, RoutedEventArgs e)
         {
+            MenuItem curMenu = sender as MenuItem;
+            ContextMenu curContext = curMenu.Parent as ContextMenu;
+
+            Point p = curContext.TranslatePoint(new Point(0, 0), FriendsTreeView);
+            if (p.X < 60)
+                p.X += 60;
+
+            // 取父节点的父节点
+            DependencyObject obj = FriendsTreeView.InputHitTest(p) as DependencyObject;
+            obj = VisualTreeHelper.GetParent(obj);
+            obj = VisualTreeHelper.GetParent(obj);
+
+            UIElement uie = FriendsTreeView.InputHitTest(p) as UIElement;
+            Point np = uie.PointToScreen(new Point(0, 0));
+
+            User curUser = ((ContentPresenter)obj).Content as User;
+
+            if ( MessageBoxResult.Yes == MessageBox.Show("确定删除该好友么?", "提示", MessageBoxButton.YesNo, MessageBoxImage.Warning))
+            {
+                twitter.UnLockFriend(curUser);
+            }
 
         }
 
@@ -1032,11 +1053,11 @@ namespace pcclient
 
             if (np.X > 400)
             {
-                sfi.Left = np.X - 260;
+                sfi.Left = np.X - 560;
             }
             else
             {
-                sfi.Left = np.X + 200;
+                sfi.Left = np.X + 100;
             }
 
             sfi.Top = np.Y - 10;
@@ -1216,10 +1237,10 @@ namespace pcclient
             menu.Click += taHomePage_onClick;
             friendItemContextMenu.Items.Add(menu);
 
-            menu = new MenuItem();
-            menu.Header = "发微博";
-            menu.Click += sendTweet_onClick;
-            friendItemContextMenu.Items.Add(menu);
+            //menu = new MenuItem();
+            //menu.Header = "发微博";
+            //menu.Click += sendTweet_onClick;
+            //friendItemContextMenu.Items.Add(menu);
 
             menu = new MenuItem();
             menu.Header = "发私信";
@@ -1264,20 +1285,26 @@ namespace pcclient
                 if (fg.MemberList.Contains(curUser))
                 {
                     fg.MemberList.Remove(curUser);
+                    fg.Count -= 1;
+                    fg.Title = fg.GroupName + "(" + fg.Count + ")";
                     break;
                 }
             }
                 
+            long targetGroupName = 0; 
 
             for (int i = 0; i < gpNameList.Count; i++)
             {
                 if (group[i].GroupName.Equals(m.Header.ToString()))
                 {
                     group[i].MemberList.Add(curUser);
+                    group[i].Count += 1;
+                    targetGroupName = group[i].GroupId;
+                    group[i].Title = group[i].GroupName + "(" + group[i].Count + ")";
                     break;
                 }
             }
-
+            twitter.ChangeSpecialFriendToGroup(curUser, targetGroupName);
 
         }
 

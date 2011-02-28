@@ -66,5 +66,8 @@
         UserCollection getMyFollowFriendsList();
         UserCollection getFollowMeFriendsList();
         UserCollection getWaitingConfirmList();
+
+        void UnLockFriend(User curUser);
+        void ChangeSpecialFriendToGroup(User curUser, long targetGroupName);
     }
 }

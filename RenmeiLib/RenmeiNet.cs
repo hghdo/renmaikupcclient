@@ -1121,7 +1121,7 @@ namespace RenmeiLib
                 int temp = -1;
                 //int.TryParse(GetPropertyFromXml(groupNode, "groupId"), out temp);
                 //group.Id = temp;
-                group.Title = GetPropertyFromXml(groupNode, "title");
+                group.GroupName = GetPropertyFromXml(groupNode, "title");
 
                 long ltmp;
                 long.TryParse(GetPropertyFromXml(groupNode, "groupId"), out ltmp);
@@ -1729,6 +1729,23 @@ namespace RenmeiLib
             followUrl += "?" + getAuthUrl();
             followUrl += string.Format("&operType={0}&concernIds={1}", action, userId);
             MakeTwitterApiCall(followUrl, "POST");
+        }
+
+        public void UnLockFriend(User curUser)
+        {
+            string removeFriendUrl = CreateFriendshipUrl;// +userName + Format;
+            removeFriendUrl += "?" + getAuthUrl();
+            removeFriendUrl += string.Format("&operType={0}&deleteUserId={1}", "delete", curUser.Id);
+            MakeTwitterApiCall(removeFriendUrl, "POST");
+
+        }
+        public void ChangeSpecialFriendToGroup(User curUser, long targetGroupName)
+        {
+            string changeGroup = CreateFriendshipUrl;// +userName + Format;
+            changeGroup += "?" + getAuthUrl();
+            changeGroup += string.Format("&operType={0}&groupId={1}&relationId={2}", "change", targetGroupName, curUser.Id);
+            MakeTwitterApiCall(changeGroup, "POST");
+
         }
 
         public bool isFollowed(User us, UserCollection uscoll)
