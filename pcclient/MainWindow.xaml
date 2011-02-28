@@ -1000,8 +1000,9 @@
                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                               ScrollViewer.VerticalScrollBarVisibility="Auto"
                                               ScrollViewer.CanContentScroll="True"
-                                                      Visibility="Visible"
-                                                  >
+                                              VirtualizingStackPanel.IsVirtualizing="True"
+                                              VirtualizingStackPanel.VirtualizationMode="Recycling" 
+                                              Visibility="Visible">
                                         </TreeView>
                                         <TextBlock x:Name="SearchContent" Visibility="Collapsed"></TextBlock>
                                         <ListBox x:Name="SearchFriendListBox" ItemTemplate="{StaticResource SearchFriends}" 
