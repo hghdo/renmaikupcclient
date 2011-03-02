@@ -1,6 +1,8 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace RenmeiLib
 {
@@ -15,6 +17,9 @@ namespace RenmeiLib
         private string screenName;
         private string imageUrl;
         private string siteUrl;
+        private string sex;
+        private string email;
+
         private string location;
         private string description;
 
@@ -89,6 +94,33 @@ namespace RenmeiLib
             }
         }
 
+        public string Location
+        {
+            get { return location; }
+            set
+            {
+                if (value != location)
+                {
+                    location = value;
+                    OnPropertyChanged("Location");
+                }
+            }
+        }
+
+        public string Description
+        {
+            get { return description; }
+            set
+            {
+                if (value != description)
+                {
+                    description = value;
+                    OnPropertyChanged("Description");
+                }
+            }
+        }
+
+
         public string ImageUrl
         {
             get 
@@ -103,6 +135,14 @@ namespace RenmeiLib
                     OnPropertyChanged("ImageUrl");
                 }
             }
+        }
+
+        public BitmapImage HeaderImage
+        {
+            get{
+
+                return new BitmapImage(new Uri(ImageUrl));
+                }
         }
 
         public string SiteUrl
@@ -126,28 +166,28 @@ namespace RenmeiLib
             }
         }
 
-        public string Location
+        public string Sex
         {
-            get { return location; }
+            get { return sex; }
             set
             {
-                if (value != location)
+                if (value != sex)
                 {
-                    location = value;
-                    OnPropertyChanged("location");
+                    sex = value;
+                    OnPropertyChanged("Sex");
                 }
             }
         }
 
-        public string Description
+        public string Email
         {
-            get { return description; }
+            get { return email; }
             set
             {
-                if (value != description)
+                if (value != email)
                 {
-                    description = value;
-                    OnPropertyChanged("Description");
+                    email = value;
+                    OnPropertyChanged("Email");
                 }
             }
         }

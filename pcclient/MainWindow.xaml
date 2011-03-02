@@ -721,7 +721,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="50" BorderBrush="White" BorderThickness="0">
-                    <Image Width="40" Height="40" Source="{Binding Path=ImageUrl}" Margin="-10,0,0,0"/>
+                    <Image Width="40" Height="40" Source="{Binding Path=HeaderImage}" Margin="-10,0,0,0"/>
                 </Border>
                 <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Path=ScreenName}" FontSize="16" FontWeight="Bold" Foreground="#3E7DB0" HorizontalAlignment="Stretch" />
                 <Image Grid.Row="0"  Grid.Column="2" Source="assets/10.png" Stretch="UniformToFill" Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center" PreviewMouseDown="createFriend_ContextMenu"/>
