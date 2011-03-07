@@ -99,7 +99,7 @@
                 <StackPanel Orientation="Vertical" Margin="10" HorizontalAlignment="Stretch" DockPanel.Dock="Bottom">
                     <TextBox x:Name="NewCommentBox" BorderThickness="1" TextWrapping="Wrap" BorderBrush="Black" Margin="0,10,0,10" Height="50" SnapsToDevicePixels="False"></TextBox>
                     <StackPanel x:Name="NewTweetButtons" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button x:Name="AddAttachment" Width="16">
+                        <Button x:Name="AddAttachment" Width="16" Visibility="Collapsed">
                             <Image Source="assets/paperclip4_black_16.png"/>
                         </Button>
                         <Button x:Name="SendTweet" Content="发送" Click="Comment_Click"/>

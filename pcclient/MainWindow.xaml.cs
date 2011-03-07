@@ -112,8 +112,8 @@ namespace pcclient
             SetDataContextForAllOfTabs();
 
             //Handle login DebugAutoLogin() used to login auto use hbcjob@126.com/hbcjob and it is for dev only.
-            DebugAutoLogin();
-            //DisplayLoginIfUserNotLoggedIn();
+            //DebugAutoLogin();
+            DisplayLoginIfUserNotLoggedIn();
             SetButtonMenuBarBackground();
 
             SendTweetBox.Visibility = Visibility.Visible;
@@ -1449,7 +1449,12 @@ namespace pcclient
             ScrollViewer sv = lb.Template.FindName("Scroller",lb) as ScrollViewer;
             if (sv.VerticalOffset>0 && sv.VerticalOffset == sv.ScrollableHeight)
             {
-                MessageBox.Show("aaaaaaaaaaa");
+                //MessageBox.Show("aaaaaaaaaaa");
+                //ToolTipService.IsOpenProperty
+                
+                //AllTweetsListBoxToolTip.Visibility = Visibility.Visible;
+                //AllTweetsListBoxToolTip.IsOpen = true;
+                //AllTweetsListBoxToolTip.
             }
         }
 

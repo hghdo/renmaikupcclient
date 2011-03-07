@@ -835,7 +835,7 @@
     </CustomWindow:EssentialWindow.Resources>
 
     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="#3BB2EA" x:Name="LayoutRoot" SnapsToDevicePixels="True">
-        <!--Border BorderBrush="#55FFFF" BorderThickness="1" CornerRadius="5"-->
+        <Border BorderBrush="#3BB2EA" BorderThickness="1" CornerRadius="5" SnapsToDevicePixels="True">
         <DockPanel Background="#EFF7FA">
             <!--  LastChildFill="True" -->
             <!-- Title Bar -->
@@ -847,17 +847,26 @@
             </Border>
 
             <!-- This is used for Login -->
-            <Border x:Name="LoginLayoutRoot" CornerRadius="5,5,5,5" BorderBrush="{DynamicResource PrimaryBorderBrush}" BorderThickness="1,1,1,1" Background="{DynamicResource LoginBackgroundBrush}" Width="300" VerticalAlignment="Top">
-                <StackPanel Width="280" VerticalAlignment="Top">
+            <Border x:Name="LoginLayoutRoot" BorderBrush="{DynamicResource PrimaryBorderBrush}" BorderThickness="0" Width="300" VerticalAlignment="Top">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#3BB2EA" Offset="0" />
+                        <GradientStop Color="#EFF7FA" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <StackPanel Width="280" VerticalAlignment="Top" HorizontalAlignment="Center">
                     <StackPanel Width="280" VerticalAlignment="Top" Margin="0,80,0,60">
                         <Image HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" Source="assets/title.png"/>
                     </StackPanel>
-                    <ComboBox HorizontalAlignment="Stretch" Margin="20,10,20,0" x:Name="UserNameBox" Width="Auto" IsEditable="True" BorderThickness="1" />
-                    <PasswordBox HorizontalAlignment="Stretch" Margin="20,10,20,0" x:Name="PasswordTextBox" Width="Auto" BorderThickness="1" />
+                    <!--ComboBox HorizontalAlignment="Stretch" Margin="20,10,20,0" Padding="3" x:Name="UserNameBox" Width="Auto" IsEditable="True" BorderThickness="1" /-->
+                    <TextBox HorizontalAlignment="Stretch" Margin="20,10,20,0" Padding="3,5,3,5" x:Name="UserNameBox" Width="Auto" BorderThickness="1" />
+                    <PasswordBox HorizontalAlignment="Stretch" Margin="20,10,20,0" Padding="3,5,3,5" x:Name="PasswordTextBox" Width="Auto" BorderThickness="1" />
                     <CheckBox HorizontalAlignment="Left" Margin="20,30,20,0" x:Name="AutoLoginCheckBox" Width="Auto" IsChecked="False">自动登录</CheckBox>
                     <CheckBox HorizontalAlignment="Left" Margin="20,10,20,0" x:Name="RememberPwdCheckBox" Width="Auto" IsChecked="False">记住密码</CheckBox>
-                    <Button Margin="60,30,60,0" x:Name="LoginButton" IsDefault="True" Click="LoginButton_Click" Width="Auto" BorderThickness="1" Content="登录" />
-                </StackPanel>
+                    <Button Margin="60,30,60,0" Padding="3,5,3,5" x:Name="LoginButton" IsDefault="True" Click="LoginButton_Click" Width="Auto" BorderThickness="1" Content="登录" />
+                    <TextBlock Margin="60,10,60,0" >注册人脉库账号</TextBlock>
+                    <TextBlock Margin="60,10,60,0" >找回密码</TextBlock>
+                    </StackPanel>
             </Border>
             <!-- This is used for After Logged in-->
             <DockPanel Name="MainFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -878,12 +887,12 @@
                         </DockPanel>
                         <StackPanel x:Name="SendTweetBox" HorizontalAlignment="Stretch">
                             <TextBox x:Name="NewTweetBox" BorderThickness="0" BorderBrush="Black" Margin="0,10,0,10" Height="35" TextWrapping="Wrap" GotFocus="NewTweetBox_GotFocus" LostFocus="NewTweetBox_LostFocus"></TextBox>
-                            <StackPanel x:Name="NewTweetButtons" Orientation="Horizontal">
-                                <Button x:Name="AddAttachment" Width="16">
+                            <StackPanel x:Name="NewTweetButtons" Orientation="Horizontal" Visibility="Collapsed" HorizontalAlignment="Right">
+                                <Button x:Name="AddAttachment" Width="16" Visibility="Collapsed">
                                     <Image Source="assets/paperclip4_black_16.png"/>
                                 </Button>
-                                <Button x:Name="SendTweet" Content="发送" Click="SendTweet_Click"/>
-                                <Button x:Name="CancelTweet" Content="取消" Click="CancelTweet_Click"/>
+                                <Button x:Name="SendTweet" Content="发送" Click="SendTweet_Click" Background="#3BB2FA" Foreground="White" Padding="4,2,4,2"/>
+                                <Button x:Name="CancelTweet" Content="取消" Click="CancelTweet_Click" Background="#3BB2EA" Foreground="White" Padding="4,2,4,2"/>
                             </StackPanel>
                         </StackPanel>
                         <DockPanel x:Name="SearchFriendBox" LastChildFill="True">
@@ -967,6 +976,7 @@
 
                     </Grid>
                 </Border>
+                <Button DockPanel.Dock="Bottom" Content="更多"/>
                 <TabControl x:Name="OuterTab" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                             Template="{StaticResource OuterTabControlTemplate}" SelectionChanged="OuterTab_SelectionChanged" >
                     <TabItem Header="Tweets">
@@ -990,19 +1000,22 @@
                                      ScrollViewer.ScrollChanged="ListBox_ScrollChanged">
                                         <ListBox.Template>
                                             <ControlTemplate>
-                                                <ScrollViewer x:Name="Scroller" VerticalAlignment="Bottom" Focusable="False" >
+                                                <ScrollViewer x:Name="Scroller" Focusable="False" >
                                                     <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Focusable="False" Panel.ZIndex="999"  />
                                                 </ScrollViewer>
                                             </ControlTemplate>
                                         </ListBox.Template>
+                                        <!-- 
                                         <ListBox.ToolTip>
-                                            <ToolTip Background="Transparent" HasDropShadow="False" BorderBrush="Transparent" HorizontalOffset="100"
-                                                     Placement="Bottom" VerticalOffset="-30">
+                                            <ToolTip x:Name="AllTweetsListBoxToolTip" Background="Transparent" HasDropShadow="False" BorderBrush="Transparent" 
+                                                     
+                                                     Placement="Bottom">
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                                 <Button Content="更多内容..." Padding="5"></Button>
                                                 </StackPanel>
                                             </ToolTip>
                                         </ListBox.ToolTip>
+                                        -->
                                     </ListBox>
                                 </TabItem.Content>
                             </TabItem>
@@ -1172,7 +1185,7 @@
                 </TabControl>
             </DockPanel>
         </DockPanel>
-        <!--/Border-->
+        </Border>
     </Border>
 
 

@@ -74,11 +74,13 @@ namespace pcclient
         {
             twitterApi.AddComment(NewCommentBox.Text, tweet);
             UpdateComments();
+            NewCommentBox.Text = "";
         }
 
         private void CancelComment_Click(object sender, RoutedEventArgs e)
         {
-
+            NewCommentBox.Text = "";
+            this.Close();
         }
 
         private void UpdateComments()

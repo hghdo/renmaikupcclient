@@ -15,61 +15,61 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_3DB09A642F4BF572C1AE784DF44F9A33"
+        "MsmKey" = "8:_1212B8E41805348CD755AFB0C1AA1B97"
         "OwnerKey" = "8:_F41F7A3D9992420DB0F9A9ED9250B007"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_5144978BB5C86FBDDE97A880CB62048F"
+        "MsmKey" = "8:_22F58E8CCB6F1F50FE10FCF743FF37B6"
+        "OwnerKey" = "8:_C749F16661F05B478E14C62D0A141D0C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_22F58E8CCB6F1F50FE10FCF743FF37B6"
         "OwnerKey" = "8:_F41F7A3D9992420DB0F9A9ED9250B007"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_519EF74DAEC63E191F0CEAD9A9EC8084"
-        "OwnerKey" = "8:_8D4E7D97ADE7B4AA63307BE92B5D3958"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_519EF74DAEC63E191F0CEAD9A9EC8084"
+        "MsmKey" = "8:_9E144D3BBBF5298F083900A5F44140E7"
         "OwnerKey" = "8:_F41F7A3D9992420DB0F9A9ED9250B007"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_5784D6AF34C3F26640621CBA15D12DB0"
-        "OwnerKey" = "8:_8E000DF0562FADF211D72831A7A87C5B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5784D6AF34C3F26640621CBA15D12DB0"
+        "MsmKey" = "8:_C5758843EA8819BBDAFDA8B06462422D"
         "OwnerKey" = "8:_F41F7A3D9992420DB0F9A9ED9250B007"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_8D4E7D97ADE7B4AA63307BE92B5D3958"
+        "MsmKey" = "8:_C749F16661F05B478E14C62D0A141D0C"
         "OwnerKey" = "8:_F41F7A3D9992420DB0F9A9ED9250B007"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_8D4E7D97ADE7B4AA63307BE92B5D3958"
-        "OwnerKey" = "8:_B15BE4E34FE58959BCB561B0EDBBA700"
+        "MsmKey" = "8:_C749F16661F05B478E14C62D0A141D0C"
+        "OwnerKey" = "8:_1212B8E41805348CD755AFB0C1AA1B97"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_8E000DF0562FADF211D72831A7A87C5B"
+        "MsmKey" = "8:_C7FC93A351F6B026C56C0E60EA3B8D0D"
         "OwnerKey" = "8:_F41F7A3D9992420DB0F9A9ED9250B007"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B15BE4E34FE58959BCB561B0EDBBA700"
+        "MsmKey" = "8:_D043B32571712BA1836B8F8FD1FC6D87"
+        "OwnerKey" = "8:_9E144D3BBBF5298F083900A5F44140E7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D043B32571712BA1836B8F8FD1FC6D87"
         "OwnerKey" = "8:_F41F7A3D9992420DB0F9A9ED9250B007"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -88,43 +88,43 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B15BE4E34FE58959BCB561B0EDBBA700"
+        "OwnerKey" = "8:_1212B8E41805348CD755AFB0C1AA1B97"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8D4E7D97ADE7B4AA63307BE92B5D3958"
+        "OwnerKey" = "8:_C749F16661F05B478E14C62D0A141D0C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_519EF74DAEC63E191F0CEAD9A9EC8084"
+        "OwnerKey" = "8:_22F58E8CCB6F1F50FE10FCF743FF37B6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5144978BB5C86FBDDE97A880CB62048F"
+        "OwnerKey" = "8:_C7FC93A351F6B026C56C0E60EA3B8D0D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8E000DF0562FADF211D72831A7A87C5B"
+        "OwnerKey" = "8:_9E144D3BBBF5298F083900A5F44140E7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5784D6AF34C3F26640621CBA15D12DB0"
+        "OwnerKey" = "8:_D043B32571712BA1836B8F8FD1FC6D87"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3DB09A642F4BF572C1AE784DF44F9A33"
+        "OwnerKey" = "8:_C5758843EA8819BBDAFDA8B06462422D"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -149,15 +149,15 @@
             {
             "Enabled" = "11:TRUE"
             "PromptEnabled" = "11:TRUE"
-            "PrerequisitesLocation" = "2:1"
+            "PrerequisitesLocation" = "2:2"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
                 "Items"
                 {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5"
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5.SP1"
                     {
-                    "Name" = "8:.NET Framework 3.5"
-                    "ProductCode" = "8:Microsoft.Net.Framework.3.5"
+                    "Name" = "8:.NET Framework 3.5 SP1"
+                    "ProductCode" = "8:Microsoft.Net.Framework.3.5.SP1"
                     }
                     "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
                     {
@@ -172,7 +172,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\SetupPro.msi"
+        "OutputFilename" = "8:Release\\RenMaiKuSetup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -186,7 +186,7 @@
             {
             "Enabled" = "11:TRUE"
             "PromptEnabled" = "11:TRUE"
-            "PrerequisitesLocation" = "2:1"
+            "PrerequisitesLocation" = "2:2"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
                 "Items"
@@ -195,6 +195,11 @@
                     {
                     "Name" = "8:.NET Framework 3.5"
                     "ProductCode" = "8:Microsoft.Net.Framework.3.5"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5.SP1"
+                    {
+                    "Name" = "8:.NET Framework 3.5 SP1"
+                    "ProductCode" = "8:Microsoft.Net.Framework.3.5.SP1"
                     }
                     "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
                     {
@@ -232,20 +237,20 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3DB09A642F4BF572C1AE784DF44F9A33"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1212B8E41805348CD755AFB0C1AA1B97"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:CustomWindow, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:RenmeiLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=19392ef3ce00d32c, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_3DB09A642F4BF572C1AE784DF44F9A33"
+                    "_1212B8E41805348CD755AFB0C1AA1B97"
                     {
-                    "Name" = "8:CustomWindow.dll"
+                    "Name" = "8:RenmeiLib.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:CustomWindow.dll"
+            "SourcePath" = "8:RenmeiLib.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_54E1824CB335484EA14763086441C682"
@@ -263,45 +268,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5144978BB5C86FBDDE97A880CB62048F"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_5144978BB5C86FBDDE97A880CB62048F"
-                    {
-                    "Name" = "8:log4net.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:log4net.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_54E1824CB335484EA14763086441C682"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_519EF74DAEC63E191F0CEAD9A9EC8084"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_22F58E8CCB6F1F50FE10FCF743FF37B6"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_519EF74DAEC63E191F0CEAD9A9EC8084"
+                    "_22F58E8CCB6F1F50FE10FCF743FF37B6"
                     {
                     "Name" = "8:Newtonsoft.Json.dll"
                     "Attributes" = "3:512"
@@ -325,76 +299,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5784D6AF34C3F26640621CBA15D12DB0"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Growl.CoreLibrary, Version=2.0.0.0, Culture=neutral, PublicKeyToken=13e59d82e007b064, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_5784D6AF34C3F26640621CBA15D12DB0"
-                    {
-                    "Name" = "8:Growl.CoreLibrary.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Growl.CoreLibrary.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_54E1824CB335484EA14763086441C682"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8D4E7D97ADE7B4AA63307BE92B5D3958"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Dimebrain.TweetSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c148cfba29ed1a4d, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_8D4E7D97ADE7B4AA63307BE92B5D3958"
-                    {
-                    "Name" = "8:Dimebrain.TweetSharp.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Dimebrain.TweetSharp.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_54E1824CB335484EA14763086441C682"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8E000DF0562FADF211D72831A7A87C5B"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9E144D3BBBF5298F083900A5F44140E7"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:Growl.Connector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=980c2339411be384, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_8E000DF0562FADF211D72831A7A87C5B"
+                    "_9E144D3BBBF5298F083900A5F44140E7"
                     {
                     "Name" = "8:Growl.Connector.dll"
                     "Attributes" = "3:512"
@@ -418,20 +330,113 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B15BE4E34FE58959BCB561B0EDBBA700"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C5758843EA8819BBDAFDA8B06462422D"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:RenmeiLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=19392ef3ce00d32c, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:CustomWindow, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_B15BE4E34FE58959BCB561B0EDBBA700"
+                    "_C5758843EA8819BBDAFDA8B06462422D"
                     {
-                    "Name" = "8:RenmeiLib.dll"
+                    "Name" = "8:CustomWindow.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:RenmeiLib.dll"
+            "SourcePath" = "8:CustomWindow.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_54E1824CB335484EA14763086441C682"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C749F16661F05B478E14C62D0A141D0C"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Dimebrain.TweetSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c148cfba29ed1a4d, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_C749F16661F05B478E14C62D0A141D0C"
+                    {
+                    "Name" = "8:Dimebrain.TweetSharp.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Dimebrain.TweetSharp.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_54E1824CB335484EA14763086441C682"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C7FC93A351F6B026C56C0E60EA3B8D0D"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_C7FC93A351F6B026C56C0E60EA3B8D0D"
+                    {
+                    "Name" = "8:log4net.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:log4net.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_54E1824CB335484EA14763086441C682"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D043B32571712BA1836B8F8FD1FC6D87"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Growl.CoreLibrary, Version=2.0.0.0, Culture=neutral, PublicKeyToken=13e59d82e007b064, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_D043B32571712BA1836B8F8FD1FC6D87"
+                    {
+                    "Name" = "8:Growl.CoreLibrary.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Growl.CoreLibrary.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_54E1824CB335484EA14763086441C682"
