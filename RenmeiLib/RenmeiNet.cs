@@ -1141,6 +1141,7 @@ namespace RenmeiLib
             FriendGroupCollection groups = new FriendGroupCollection();
             string groupUrl = TwitterServerUrl + "service/twitter/groupList.do";
             groupUrl += "?" + getAuthUrl();
+            groupUrl += "&listType=friend";
             // Create the web request
             HttpWebRequest request = CreateTwitterRequest(groupUrl);
 
