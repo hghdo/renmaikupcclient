@@ -841,7 +841,9 @@
             <!-- Title Bar -->
             <Border Height="20" MouseMove="Header_MouseMove" DockPanel.Dock="Top" Background="#169DE1" >
                 <DockPanel>
-                    <Border Name="TitleFrame"></Border>
+                    <Border Name="TitleFrame">
+                       <TextBlock Foreground="White" Margin="10,0,0,0" VerticalAlignment="Center" Visibility="Collapsed" x:Name="LoginWindowTitle">登录人脉库</TextBlock>
+                    </Border>
                     <Border Name="WindowButtonsPlaceholder" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-1,10,0" />
                 </DockPanel>
             </Border>

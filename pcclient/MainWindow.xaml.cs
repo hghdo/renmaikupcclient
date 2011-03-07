@@ -220,6 +220,7 @@ namespace pcclient
         private void ShowLogin()
         {
             LoginLayoutRoot.Visibility = Visibility.Visible;
+            LoginWindowTitle.Visibility = Visibility.Visible;
             //TopFrame.Visibility = Visibility.Collapsed;
             //BottmNavigation.Visibility = Visibility.Collapsed;
             MainFrame.Visibility = Visibility.Collapsed;
@@ -228,6 +229,8 @@ namespace pcclient
         private void HideLogin()
         {
             LoginLayoutRoot.Visibility = Visibility.Collapsed;
+            LoginWindowTitle.Visibility = Visibility.Collapsed;
+
             //TopFrame.Visibility = Visibility.Visible;
             //BottmNavigation.Visibility = Visibility.Visible;
             MainFrame.Visibility = Visibility.Visible;
