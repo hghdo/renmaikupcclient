@@ -1052,12 +1052,12 @@ namespace RenmeiLib
                 //# user.ImageUrl = GetPropertyFromXml(userNode, "profile_image_url");
                 user.ImageUrl = GetPropertyFromXml(userNode, "headImgUrl");
                 //# user.SiteUrl = GetPropertyFromXml(userNode, "url");
-                //# user.Location = GetPropertyFromXml(userNode, "location");
-                //# user.Description = GetPropertyFromXml(userNode, "description");
+                user.Email = GetPropertyFromXml(userNode, "email");
+                user.Sex = GetPropertyFromXml(userNode, "sex");
 
                 // Add for Renmei.com
-                user.Description = GetPropertyFromXml(userNode, "company");
-                user.Description = GetPropertyFromXml(userNode, "position");
+                user.Company = GetPropertyFromXml(userNode, "company");
+                user.Position = GetPropertyFromXml(userNode, "position");
 
                 //# user.BackgroundColor = GetPropertyFromXml(userNode, "profile_background_color");
                 //# user.TextColor = GetPropertyFromXml(userNode, "profile_text_color");
@@ -1108,6 +1108,7 @@ namespace RenmeiLib
                 user.FavoritesCount = twitterUser.FavouritesCount;
                 user.StatusesCount = twitterUser.StatusesCount;
                 user.FollowersCount = twitterUser.FollowersCount;
+
             }
 
             return user;
