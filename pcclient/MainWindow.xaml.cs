@@ -112,8 +112,14 @@ namespace pcclient
             SetDataContextForAllOfTabs();
 
             //Handle login DebugAutoLogin() used to login auto use hbcjob@126.com/hbcjob and it is for dev only.
-            DebugAutoLogin();
-            DisplayLoginIfUserNotLoggedIn();
+            if (AppSettings._autoLogin)
+            {
+                EnableAutoLogin();
+            }
+            else
+            {
+                DisplayLoginIfUserNotLoggedIn();
+            }
             SetButtonMenuBarBackground();
 
             SendTweetBox.Visibility = Visibility.Visible;
@@ -526,8 +532,23 @@ namespace pcclient
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             // TODO enable the two below control if login process failed.
-            PasswordTextBox.IsEnabled = false;
-            UserNameBox.IsEnabled = false;
+            //PasswordTextBox.IsEnabled = false;
+            //UserNameBox.IsEnabled = false;
+
+            if (true == AutoLoginCheckBox.IsChecked)
+            {
+                AppSettings._saveUserName = UserNameBox.Text;
+                AppSettings._saveUserPwd = PasswordTextBox.Password;
+
+            }
+            if (true == RememberPwdCheckBox.IsChecked)
+            {
+                AppSettings._autoLogin = true;
+            }
+            else
+            {
+                AppSettings._autoLogin = false;
+            }
 
             //HttpRequest htr = new HttpRequest(MainWindows.website);
             twitter = new RenmeiNet(UserNameBox.Text, RenmeiNet.ToSecureString(PasswordTextBox.Password));
@@ -545,12 +566,14 @@ namespace pcclient
 
         }
 
-        private void DebugAutoLogin()
+        private void EnableAutoLogin()
         {
 
-            twitter = new RenmeiNet("hbcjob@126.com", RenmeiNet.ToSecureString("hbcjob"));
+            // twitter = new RenmeiNet("hbcjob@126.com", RenmeiNet.ToSecureString("hbcjob"));
             //twitter = new RenmeiNet("binzhi_web@126.com", RenmeiNet.ToSecureString("111111"));
             //twitter = new RenmeiNet("renmaikuadmin@126.com", RenmeiNet.ToSecureString("woaini737727"));
+            twitter = new RenmeiNet(AppSettings._saveUserName, RenmeiNet.ToSecureString(AppSettings._saveUserPwd));
+
             twitter.TwitterServerUrl = AppSettings.RenmeiHost;
             TryLogin(twitter);
         }
